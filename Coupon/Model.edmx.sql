@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 04/27/2015 16:19:55
+-- Date Created: 04/27/2015 16:38:12
 -- Generated from EDMX file: C:\Users\Sagi\Documents\GitHub\Coupon\Coupon\Model.edmx
 -- --------------------------------------------------
 
@@ -20,11 +20,14 @@ GO
 IF OBJECT_ID(N'[dbo].[FK_AdminBusiness]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[Businesses] DROP CONSTRAINT [FK_AdminBusiness];
 GO
+IF OBJECT_ID(N'[dbo].[FK_BusinessCoupon]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Coupons] DROP CONSTRAINT [FK_BusinessCoupon];
+GO
 IF OBJECT_ID(N'[dbo].[FK_OwnerBusiness]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[Businesses] DROP CONSTRAINT [FK_OwnerBusiness];
 GO
-IF OBJECT_ID(N'[dbo].[FK_BusinessCoupon]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[Coupons] DROP CONSTRAINT [FK_BusinessCoupon];
+IF OBJECT_ID(N'[dbo].[FK_CouponOrderedCoupon]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[OrderedCoupons] DROP CONSTRAINT [FK_CouponOrderedCoupon];
 GO
 IF OBJECT_ID(N'[dbo].[FK_Admin_inherits_User]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[Users_Admin] DROP CONSTRAINT [FK_Admin_inherits_User];
@@ -45,6 +48,9 @@ IF OBJECT_ID(N'[dbo].[Businesses]', 'U') IS NOT NULL
 GO
 IF OBJECT_ID(N'[dbo].[Coupons]', 'U') IS NOT NULL
     DROP TABLE [dbo].[Coupons];
+GO
+IF OBJECT_ID(N'[dbo].[OrderedCoupons]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[OrderedCoupons];
 GO
 IF OBJECT_ID(N'[dbo].[Users_Admin]', 'U') IS NOT NULL
     DROP TABLE [dbo].[Users_Admin];
@@ -82,7 +88,25 @@ GO
 -- Creating table 'Coupons'
 CREATE TABLE [dbo].[Coupons] (
     [Id] int IDENTITY(1,1) NOT NULL,
+    [Name] nvarchar(max)  NOT NULL,
+    [Description] nvarchar(max)  NOT NULL,
+    [OriginalPrice] nvarchar(max)  NOT NULL,
+    [DiscountPrice] nvarchar(max)  NOT NULL,
+    [ExperationDate] nvarchar(max)  NOT NULL,
+    [AvarageRanking] nvarchar(max)  NOT NULL,
     [Business_BusinessID] varchar(500)  NOT NULL
+);
+GO
+
+-- Creating table 'OrderedCoupons'
+CREATE TABLE [dbo].[OrderedCoupons] (
+    [Id] int IDENTITY(1,1) NOT NULL,
+    [Status] int  NOT NULL,
+    [PurchaseDate] nvarchar(max)  NOT NULL,
+    [UseDate] nvarchar(max)  NOT NULL,
+    [Opinion] nvarchar(max)  NOT NULL,
+    [Rank] nvarchar(max)  NOT NULL,
+    [Coupon_Id] int  NOT NULL
 );
 GO
 
@@ -117,6 +141,12 @@ GO
 -- Creating primary key on [Id] in table 'Coupons'
 ALTER TABLE [dbo].[Coupons]
 ADD CONSTRAINT [PK_Coupons]
+    PRIMARY KEY CLUSTERED ([Id] ASC);
+GO
+
+-- Creating primary key on [Id] in table 'OrderedCoupons'
+ALTER TABLE [dbo].[OrderedCoupons]
+ADD CONSTRAINT [PK_OrderedCoupons]
     PRIMARY KEY CLUSTERED ([Id] ASC);
 GO
 
@@ -179,6 +209,21 @@ GO
 CREATE INDEX [IX_FK_OwnerBusiness]
 ON [dbo].[Businesses]
     ([Owner_UserName]);
+GO
+
+-- Creating foreign key on [Coupon_Id] in table 'OrderedCoupons'
+ALTER TABLE [dbo].[OrderedCoupons]
+ADD CONSTRAINT [FK_CouponOrderedCoupon]
+    FOREIGN KEY ([Coupon_Id])
+    REFERENCES [dbo].[Coupons]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_CouponOrderedCoupon'
+CREATE INDEX [IX_FK_CouponOrderedCoupon]
+ON [dbo].[OrderedCoupons]
+    ([Coupon_Id]);
 GO
 
 -- Creating foreign key on [UserName] in table 'Users_Admin'
