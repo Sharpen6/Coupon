@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="basicModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="basicModelStoreContainer">
+    <EntitySet Name="Users" EntityType="basicModel.Store.Users" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Users_Owner" EntityType="basicModel.Store.Users_Owner" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="FK_Owner_inherits_User" Association="basicModel.Store.FK_Owner_inherits_User">
+      <End Role="User" EntitySet="Users" />
+      <End Role="Owner" EntitySet="Users_Owner" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Users">
+    <Key>
+      <PropertyRef Name="UserName" />
+    </Key>
+    <Property Name="UserName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Password" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Email" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="PhoneKidomet" Type="int" Nullable="true" />
+    <Property Name="PhoneNum" Type="int" Nullable="true" />
+  </EntityType>
+  <EntityType Name="Users_Owner">
+    <Key>
+      <PropertyRef Name="UserName" />
+    </Key>
+    <Property Name="UserName" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_Owner_inherits_User">
+    <End Role="User" Type="basicModel.Store.Users" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Owner" Type="basicModel.Store.Users_Owner" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UserName" />
+      </Principal>
+      <Dependent Role="Owner">
+        <PropertyRef Name="UserName" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>
