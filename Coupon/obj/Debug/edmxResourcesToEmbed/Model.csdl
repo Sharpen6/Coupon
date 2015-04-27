@@ -16,6 +16,11 @@
       <End Role="Owner" EntitySet="Users" />
       <End Role="Business" EntitySet="Businesses" />
     </AssociationSet>
+    <EntitySet Name="OrderedCoupons" EntityType="basicModel.OrderedCoupon" />
+    <AssociationSet Name="CouponOrderedCoupon" Association="basicModel.CouponOrderedCoupon">
+      <End Role="Coupon" EntitySet="Coupons" />
+      <End Role="OrderedCoupon" EntitySet="OrderedCoupons" />
+    </AssociationSet>
   </EntityContainer>
   <EntityType Name="User">
     <Key>
@@ -59,6 +64,13 @@
     </Key>
     <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <NavigationProperty Name="Business" Relationship="basicModel.BusinessCoupon" FromRole="Coupon" ToRole="Business" />
+    <Property Name="Name" Type="String" Nullable="false" />
+    <Property Name="Description" Type="String" />
+    <Property Name="OriginalPrice" Type="String" Nullable="false" />
+    <Property Name="DiscountPrice" Type="String" Nullable="false" />
+    <Property Name="ExperationDate" Type="String" Nullable="false" />
+    <Property Name="AvarageRanking" Type="String" />
+    <NavigationProperty Name="OrderedCoupons" Relationship="basicModel.CouponOrderedCoupon" FromRole="Coupon" ToRole="OrderedCoupon" />
   </EntityType>
   <Association Name="BusinessCoupon">
     <End Type="basicModel.Business" Role="Business" Multiplicity="1" />
@@ -68,4 +80,26 @@
     <End Type="basicModel.Owner" Role="Owner" Multiplicity="1" />
     <End Type="basicModel.Business" Role="Business" Multiplicity="*" />
   </Association>
+  <EntityType Name="OrderedCoupon">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Status" Type="basicModel.SourceType" Nullable="false" />
+    <Property Name="PurchaseDate" Type="String" Nullable="false" />
+    <Property Name="UseDate" Type="String" Nullable="false" />
+    <Property Name="Opinion" Type="String" Nullable="true" />
+    <Property Name="Rank" Type="String" Nullable="true" />
+    <NavigationProperty Name="Coupon" Relationship="basicModel.CouponOrderedCoupon" FromRole="OrderedCoupon" ToRole="Coupon" />
+  </EntityType>
+  <EnumType Name="SourceType">
+    <Member Name="Used" />
+    <Member Name="NotUsed" />
+    <Member Name="Canceled" />
+  </EnumType>
+  <Association Name="CouponOrderedCoupon">
+    <End Type="basicModel.Coupon" Role="Coupon" Multiplicity="1" />
+    <End Type="basicModel.OrderedCoupon" Role="OrderedCoupon" Multiplicity="*" />
+  </Association>
+  <EntityType Name="Customer" BaseType="basicModel.User" />
 </Schema>

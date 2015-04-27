@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 04/27/2015 16:38:12
+-- Date Created: 04/27/2015 21:40:42
 -- Generated from EDMX file: C:\Users\Sagi\Documents\GitHub\Coupon\Coupon\Model.edmx
 -- --------------------------------------------------
 
@@ -35,6 +35,9 @@ GO
 IF OBJECT_ID(N'[dbo].[FK_Owner_inherits_User]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[Users_Owner] DROP CONSTRAINT [FK_Owner_inherits_User];
 GO
+IF OBJECT_ID(N'[dbo].[FK_Customer_inherits_User]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Users_Customer] DROP CONSTRAINT [FK_Customer_inherits_User];
+GO
 
 -- --------------------------------------------------
 -- Dropping existing tables
@@ -57,6 +60,9 @@ IF OBJECT_ID(N'[dbo].[Users_Admin]', 'U') IS NOT NULL
 GO
 IF OBJECT_ID(N'[dbo].[Users_Owner]', 'U') IS NOT NULL
     DROP TABLE [dbo].[Users_Owner];
+GO
+IF OBJECT_ID(N'[dbo].[Users_Customer]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Users_Customer];
 GO
 
 -- --------------------------------------------------
@@ -89,11 +95,11 @@ GO
 CREATE TABLE [dbo].[Coupons] (
     [Id] int IDENTITY(1,1) NOT NULL,
     [Name] nvarchar(max)  NOT NULL,
-    [Description] nvarchar(max)  NOT NULL,
+    [Description] nvarchar(max)  NULL,
     [OriginalPrice] nvarchar(max)  NOT NULL,
     [DiscountPrice] nvarchar(max)  NOT NULL,
     [ExperationDate] nvarchar(max)  NOT NULL,
-    [AvarageRanking] nvarchar(max)  NOT NULL,
+    [AvarageRanking] nvarchar(max)  NULL,
     [Business_BusinessID] varchar(500)  NOT NULL
 );
 GO
@@ -104,8 +110,8 @@ CREATE TABLE [dbo].[OrderedCoupons] (
     [Status] int  NOT NULL,
     [PurchaseDate] nvarchar(max)  NOT NULL,
     [UseDate] nvarchar(max)  NOT NULL,
-    [Opinion] nvarchar(max)  NOT NULL,
-    [Rank] nvarchar(max)  NOT NULL,
+    [Opinion] nvarchar(max)  NULL,
+    [Rank] nvarchar(max)  NULL,
     [Coupon_Id] int  NOT NULL
 );
 GO
@@ -118,6 +124,12 @@ GO
 
 -- Creating table 'Users_Owner'
 CREATE TABLE [dbo].[Users_Owner] (
+    [UserName] varchar(500)  NOT NULL
+);
+GO
+
+-- Creating table 'Users_Customer'
+CREATE TABLE [dbo].[Users_Customer] (
     [UserName] varchar(500)  NOT NULL
 );
 GO
@@ -159,6 +171,12 @@ GO
 -- Creating primary key on [UserName] in table 'Users_Owner'
 ALTER TABLE [dbo].[Users_Owner]
 ADD CONSTRAINT [PK_Users_Owner]
+    PRIMARY KEY CLUSTERED ([UserName] ASC);
+GO
+
+-- Creating primary key on [UserName] in table 'Users_Customer'
+ALTER TABLE [dbo].[Users_Customer]
+ADD CONSTRAINT [PK_Users_Customer]
     PRIMARY KEY CLUSTERED ([UserName] ASC);
 GO
 
@@ -238,6 +256,15 @@ GO
 -- Creating foreign key on [UserName] in table 'Users_Owner'
 ALTER TABLE [dbo].[Users_Owner]
 ADD CONSTRAINT [FK_Owner_inherits_User]
+    FOREIGN KEY ([UserName])
+    REFERENCES [dbo].[Users]
+        ([UserName])
+    ON DELETE CASCADE ON UPDATE NO ACTION;
+GO
+
+-- Creating foreign key on [UserName] in table 'Users_Customer'
+ALTER TABLE [dbo].[Users_Customer]
+ADD CONSTRAINT [FK_Customer_inherits_User]
     FOREIGN KEY ([UserName])
     REFERENCES [dbo].[Users]
         ([UserName])

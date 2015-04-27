@@ -8,10 +8,10 @@ using Coupon;
 namespace UnitTestProject
 {
     [TestClass]
-    public class TestCoupon
+    public class TestOrderedCoupon
     {
         [TestMethod]
-        public void TestAddCoupon()
+        public void TestAddOrderedCoupon()
         {
             using (basicEntities be = new basicEntities())
             {
@@ -22,7 +22,7 @@ namespace UnitTestProject
                 User u = new Owner();
 
                 u.Name = "adam";
-                u.UserName = "ownerr";
+                u.UserName = "owner";
                 User sameKey = be.Users.Find(u.UserName);
                 while (sameKey != null && sameKey.UserName == u.UserName)
                 {
@@ -83,12 +83,19 @@ namespace UnitTestProject
                 cop.DiscountPrice = "40";
                 cop.Business = b;
                 cop.ExperationDate = "10/10/2014";
+                
                 be.Coupons.Add(cop);
 
                 be.SaveChanges();
 
 
-
+                OrderedCoupon oc = new OrderedCoupon();
+                oc.Id = 4;
+                oc.Status = SourceType.NotUsed;
+                oc.PurchaseDate = "27/04/1990";
+                oc.Coupon = cop;
+                be.OrderedCoupons.Add(oc);
+                be.SaveChanges();
             }
         }
     }

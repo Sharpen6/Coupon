@@ -58,6 +58,9 @@
   </Choose>
   <ItemGroup>
     <Compile Include="TestBusiness.cs" />
+    <Compile Include="TestCustomer.cs" />
+    <Compile Include="TestOrderedCoupon.cs" />
+    <Compile Include="TestCoupon.cs" />
     <Compile Include="TestOwner.cs" />
     <Compile Include="TestUser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

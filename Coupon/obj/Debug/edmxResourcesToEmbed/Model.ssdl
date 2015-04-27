@@ -4,8 +4,10 @@
     <EntitySet Name="Users" EntityType="basicModel.Store.Users" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Businesses" EntityType="basicModel.Store.Businesses" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Coupons" EntityType="basicModel.Store.Coupons" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="OrderedCoupons" EntityType="basicModel.Store.OrderedCoupons" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Users_Admin" EntityType="basicModel.Store.Users_Admin" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Users_Owner" EntityType="basicModel.Store.Users_Owner" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Users_Customer" EntityType="basicModel.Store.Users_Customer" store:Type="Tables" Schema="dbo" />
     <AssociationSet Name="AdminBusiness" Association="basicModel.Store.AdminBusiness">
       <End Role="Admin" EntitySet="Users_Admin" />
       <End Role="Business" EntitySet="Businesses" />
@@ -18,6 +20,10 @@
       <End Role="Owner" EntitySet="Users_Owner" />
       <End Role="Business" EntitySet="Businesses" />
     </AssociationSet>
+    <AssociationSet Name="CouponOrderedCoupon" Association="basicModel.Store.CouponOrderedCoupon">
+      <End Role="Coupon" EntitySet="Coupons" />
+      <End Role="OrderedCoupon" EntitySet="OrderedCoupons" />
+    </AssociationSet>
     <AssociationSet Name="FK_Admin_inherits_User" Association="basicModel.Store.FK_Admin_inherits_User">
       <End Role="User" EntitySet="Users" />
       <End Role="Admin" EntitySet="Users_Admin" />
@@ -25,6 +31,10 @@
     <AssociationSet Name="FK_Owner_inherits_User" Association="basicModel.Store.FK_Owner_inherits_User">
       <End Role="User" EntitySet="Users" />
       <End Role="Owner" EntitySet="Users_Owner" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Customer_inherits_User" Association="basicModel.Store.FK_Customer_inherits_User">
+      <End Role="User" EntitySet="Users" />
+      <End Role="Customer" EntitySet="Users_Customer" />
     </AssociationSet>
   </EntityContainer>
   <EntityType Name="Users">
@@ -54,7 +64,25 @@
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Description" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="OriginalPrice" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="DiscountPrice" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="ExperationDate" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="AvarageRanking" Type="nvarchar(max)" Nullable="true" />
     <Property Name="Business_BusinessID" Type="varchar" MaxLength="500" Nullable="false" />
+  </EntityType>
+  <EntityType Name="OrderedCoupons">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Status" Type="int" Nullable="false" />
+    <Property Name="PurchaseDate" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="UseDate" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Opinion" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="Rank" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="Coupon_Id" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="Users_Admin">
     <Key>
@@ -63,6 +91,12 @@
     <Property Name="UserName" Type="varchar" Nullable="false" MaxLength="500" />
   </EntityType>
   <EntityType Name="Users_Owner">
+    <Key>
+      <PropertyRef Name="UserName" />
+    </Key>
+    <Property Name="UserName" Type="varchar" Nullable="false" MaxLength="500" />
+  </EntityType>
+  <EntityType Name="Users_Customer">
     <Key>
       <PropertyRef Name="UserName" />
     </Key>
@@ -104,6 +138,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="CouponOrderedCoupon">
+    <End Role="Coupon" Type="basicModel.Store.Coupons" Multiplicity="1" />
+    <End Role="OrderedCoupon" Type="basicModel.Store.OrderedCoupons" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Coupon">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="OrderedCoupon">
+        <PropertyRef Name="Coupon_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_Admin_inherits_User">
     <End Role="User" Type="basicModel.Store.Users" Multiplicity="1">
       <OnDelete Action="Cascade" />
@@ -128,6 +174,20 @@
         <PropertyRef Name="UserName" />
       </Principal>
       <Dependent Role="Owner">
+        <PropertyRef Name="UserName" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Customer_inherits_User">
+    <End Role="User" Type="basicModel.Store.Users" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Customer" Type="basicModel.Store.Users_Customer" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UserName" />
+      </Principal>
+      <Dependent Role="Customer">
         <PropertyRef Name="UserName" />
       </Dependent>
     </ReferentialConstraint>

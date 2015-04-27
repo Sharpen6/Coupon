@@ -14,8 +14,20 @@ namespace Coupon
     
     public partial class Coupon
     {
+        public Coupon()
+        {
+            this.OrderedCoupons = new HashSet<OrderedCoupon>();
+        }
+    
         public int Id { get; set; }
+        public string Name { get; set; }
+        public string Description { get; set; }
+        public string OriginalPrice { get; set; }
+        public string DiscountPrice { get; set; }
+        public string ExperationDate { get; set; }
+        public string AvarageRanking { get; set; }
     
         public virtual Business Business { get; set; }
+        public virtual ICollection<OrderedCoupon> OrderedCoupons { get; set; }
     }
 }
