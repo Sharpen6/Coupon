@@ -12,11 +12,57 @@
           <ScalarProperty Name="PhoneNum" ColumnName="PhoneNum" />
         </MappingFragment>
       </EntityTypeMapping>
+      <EntityTypeMapping TypeName="IsTypeOf(basicModel.Admin)">
+        <MappingFragment StoreEntitySet="Users_Admin">
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
+        </MappingFragment>
+      </EntityTypeMapping>
       <EntityTypeMapping TypeName="IsTypeOf(basicModel.Owner)">
         <MappingFragment StoreEntitySet="Users_Owner">
           <ScalarProperty Name="UserName" ColumnName="UserName" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="Businesses">
+      <EntityTypeMapping TypeName="IsTypeOf(basicModel.Business)">
+        <MappingFragment StoreEntitySet="Businesses">
+          <ScalarProperty Name="BusinessID" ColumnName="BusinessID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="Category" ColumnName="Category" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Coupons">
+      <EntityTypeMapping TypeName="IsTypeOf(basicModel.Coupon)">
+        <MappingFragment StoreEntitySet="Coupons">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="AdminBusiness" TypeName="basicModel.AdminBusiness" StoreEntitySet="Businesses">
+      <EndProperty Name="Admin">
+        <ScalarProperty Name="UserName" ColumnName="Admin_UserName" />
+      </EndProperty>
+      <EndProperty Name="Business">
+        <ScalarProperty Name="BusinessID" ColumnName="BusinessID" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="BusinessCoupon" TypeName="basicModel.BusinessCoupon" StoreEntitySet="Coupons">
+      <EndProperty Name="Business">
+        <ScalarProperty Name="BusinessID" ColumnName="Business_BusinessID" />
+      </EndProperty>
+      <EndProperty Name="Coupon">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="OwnerBusiness" TypeName="basicModel.OwnerBusiness" StoreEntitySet="Businesses">
+      <EndProperty Name="Owner">
+        <ScalarProperty Name="UserName" ColumnName="Owner_UserName" />
+      </EndProperty>
+      <EndProperty Name="Business">
+        <ScalarProperty Name="BusinessID" ColumnName="BusinessID" />
+      </EndProperty>
+    </AssociationSetMapping>
   </EntityContainerMapping>
 </Mapping>

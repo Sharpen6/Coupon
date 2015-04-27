@@ -7,7 +7,26 @@
     <Schema Namespace="basicModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
   <EntityContainer Name="basicModelStoreContainer">
     <EntitySet Name="Users" EntityType="basicModel.Store.Users" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Businesses" EntityType="basicModel.Store.Businesses" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Coupons" EntityType="basicModel.Store.Coupons" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Users_Admin" EntityType="basicModel.Store.Users_Admin" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Users_Owner" EntityType="basicModel.Store.Users_Owner" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="AdminBusiness" Association="basicModel.Store.AdminBusiness">
+      <End Role="Admin" EntitySet="Users_Admin" />
+      <End Role="Business" EntitySet="Businesses" />
+    </AssociationSet>
+    <AssociationSet Name="BusinessCoupon" Association="basicModel.Store.BusinessCoupon">
+      <End Role="Business" EntitySet="Businesses" />
+      <End Role="Coupon" EntitySet="Coupons" />
+    </AssociationSet>
+    <AssociationSet Name="OwnerBusiness" Association="basicModel.Store.OwnerBusiness">
+      <End Role="Owner" EntitySet="Users_Owner" />
+      <End Role="Business" EntitySet="Businesses" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Admin_inherits_User" Association="basicModel.Store.FK_Admin_inherits_User">
+      <End Role="User" EntitySet="Users" />
+      <End Role="Admin" EntitySet="Users_Admin" />
+    </AssociationSet>
     <AssociationSet Name="FK_Owner_inherits_User" Association="basicModel.Store.FK_Owner_inherits_User">
       <End Role="User" EntitySet="Users" />
       <End Role="Owner" EntitySet="Users_Owner" />
@@ -17,19 +36,93 @@
     <Key>
       <PropertyRef Name="UserName" />
     </Key>
-    <Property Name="UserName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="UserName" Type="varchar" Nullable="false" MaxLength="500" />
     <Property Name="Password" Type="nvarchar(max)" Nullable="false" />
     <Property Name="Email" Type="nvarchar(max)" Nullable="true" />
     <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
     <Property Name="PhoneKidomet" Type="int" Nullable="true" />
     <Property Name="PhoneNum" Type="int" Nullable="true" />
   </EntityType>
+  <EntityType Name="Businesses">
+    <Key>
+      <PropertyRef Name="BusinessID" />
+    </Key>
+    <Property Name="BusinessID" Type="varchar" Nullable="false" MaxLength="500" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Address" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Category" Type="int" Nullable="false" />
+    <Property Name="Admin_UserName" Type="varchar" MaxLength="500" Nullable="false" />
+    <Property Name="Owner_UserName" Type="varchar" MaxLength="500" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Coupons">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Business_BusinessID" Type="varchar" MaxLength="500" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Users_Admin">
+    <Key>
+      <PropertyRef Name="UserName" />
+    </Key>
+    <Property Name="UserName" Type="varchar" Nullable="false" MaxLength="500" />
+  </EntityType>
   <EntityType Name="Users_Owner">
     <Key>
       <PropertyRef Name="UserName" />
     </Key>
-    <Property Name="UserName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="UserName" Type="varchar" Nullable="false" MaxLength="500" />
   </EntityType>
+  <Association Name="AdminBusiness">
+    <End Role="Admin" Type="basicModel.Store.Users_Admin" Multiplicity="1" />
+    <End Role="Business" Type="basicModel.Store.Businesses" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Admin">
+        <PropertyRef Name="UserName" />
+      </Principal>
+      <Dependent Role="Business">
+        <PropertyRef Name="Admin_UserName" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="BusinessCoupon">
+    <End Role="Business" Type="basicModel.Store.Businesses" Multiplicity="1" />
+    <End Role="Coupon" Type="basicModel.Store.Coupons" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Business">
+        <PropertyRef Name="BusinessID" />
+      </Principal>
+      <Dependent Role="Coupon">
+        <PropertyRef Name="Business_BusinessID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="OwnerBusiness">
+    <End Role="Owner" Type="basicModel.Store.Users_Owner" Multiplicity="1" />
+    <End Role="Business" Type="basicModel.Store.Businesses" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Owner">
+        <PropertyRef Name="UserName" />
+      </Principal>
+      <Dependent Role="Business">
+        <PropertyRef Name="Owner_UserName" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Admin_inherits_User">
+    <End Role="User" Type="basicModel.Store.Users" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Admin" Type="basicModel.Store.Users_Admin" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UserName" />
+      </Principal>
+      <Dependent Role="Admin">
+        <PropertyRef Name="UserName" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_Owner_inherits_User">
     <End Role="User" Type="basicModel.Store.Users" Multiplicity="1">
       <OnDelete Action="Cascade" />
@@ -50,19 +143,74 @@
       <Schema Namespace="basicModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="basicEntities" annotation:LazyLoadingEnabled="true" >
           <EntitySet Name="Users" EntityType="basicModel.User" />
+          <EntitySet Name="Businesses" EntityType="basicModel.Business" />
+          <AssociationSet Name="AdminBusiness" Association="basicModel.AdminBusiness">
+            <End Role="Admin" EntitySet="Users" />
+            <End Role="Business" EntitySet="Businesses" />
+          </AssociationSet>
+          <EntitySet Name="Coupons" EntityType="basicModel.Coupon" />
+          <AssociationSet Name="BusinessCoupon" Association="basicModel.BusinessCoupon">
+            <End Role="Business" EntitySet="Businesses" />
+            <End Role="Coupon" EntitySet="Coupons" />
+          </AssociationSet>
+          <AssociationSet Name="OwnerBusiness" Association="basicModel.OwnerBusiness">
+            <End Role="Owner" EntitySet="Users" />
+            <End Role="Business" EntitySet="Businesses" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="User">
           <Key>
             <PropertyRef Name="UserName" />
           </Key>
-          <Property Name="UserName" Type="String" Nullable="false" />
-          <Property Name="Password" Type="String" Nullable="false" />
-          <Property Name="Email" Type="String" />
-          <Property Name="Name" Type="String" Nullable="false" />
+          <Property Name="UserName" Type="String" Nullable="false" MaxLength="500" Unicode="false" FixedLength="false" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="Email" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
           <Property Name="PhoneKidomet" Type="Int32" />
           <Property Name="PhoneNum" Type="Int32" />
         </EntityType>
-        <EntityType Name="Owner" BaseType="basicModel.User" />
+        <EntityType Name="Owner" BaseType="basicModel.User" >
+        </EntityType>
+        <EntityType Name="Admin" BaseType="basicModel.User" >
+        </EntityType>
+        <EnumType Name="Category">
+          <Member Name="Restaurant" />
+          <Member Name="CarsAccessories" />
+          <Member Name="Food" />
+          <Member Name="Vacations" />
+          <Member Name="Spa" />
+        </EnumType>
+        <EntityType Name="Business">
+          <Key>
+            <PropertyRef Name="BusinessID" />
+          </Key>
+          <Property Name="BusinessID" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Admin" Relationship="basicModel.AdminBusiness" FromRole="Business" ToRole="Admin" />
+          <Property Name="Name" Type="String" Nullable="false" />
+          <Property Name="Address" Type="String" Nullable="false" />
+          <Property Name="Category" Type="basicModel.Category" Nullable="false" />
+          <NavigationProperty Name="Coupons" Relationship="basicModel.BusinessCoupon" FromRole="Business" ToRole="Coupon" />
+          <NavigationProperty Name="Owner" Relationship="basicModel.OwnerBusiness" FromRole="Business" ToRole="Owner" />
+        </EntityType>
+        <Association Name="AdminBusiness">
+          <End Type="basicModel.Admin" Role="Admin" Multiplicity="1" />
+          <End Type="basicModel.Business" Role="Business" Multiplicity="*" />
+        </Association>
+        <EntityType Name="Coupon">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Business" Relationship="basicModel.BusinessCoupon" FromRole="Coupon" ToRole="Business" />
+        </EntityType>
+        <Association Name="BusinessCoupon">
+          <End Type="basicModel.Business" Role="Business" Multiplicity="1" />
+          <End Type="basicModel.Coupon" Role="Coupon" Multiplicity="*" />
+        </Association>
+        <Association Name="OwnerBusiness">
+          <End Type="basicModel.Owner" Role="Owner" Multiplicity="1" />
+          <End Type="basicModel.Business" Role="Business" Multiplicity="*" />
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -80,12 +228,58 @@
           <ScalarProperty Name="PhoneNum" ColumnName="PhoneNum" />
         </MappingFragment>
       </EntityTypeMapping>
+      <EntityTypeMapping TypeName="IsTypeOf(basicModel.Admin)">
+        <MappingFragment StoreEntitySet="Users_Admin">
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
+        </MappingFragment>
+      </EntityTypeMapping>
       <EntityTypeMapping TypeName="IsTypeOf(basicModel.Owner)">
         <MappingFragment StoreEntitySet="Users_Owner">
           <ScalarProperty Name="UserName" ColumnName="UserName" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="Businesses">
+      <EntityTypeMapping TypeName="IsTypeOf(basicModel.Business)">
+        <MappingFragment StoreEntitySet="Businesses">
+          <ScalarProperty Name="BusinessID" ColumnName="BusinessID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="Category" ColumnName="Category" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Coupons">
+      <EntityTypeMapping TypeName="IsTypeOf(basicModel.Coupon)">
+        <MappingFragment StoreEntitySet="Coupons">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="AdminBusiness" TypeName="basicModel.AdminBusiness" StoreEntitySet="Businesses">
+      <EndProperty Name="Admin">
+        <ScalarProperty Name="UserName" ColumnName="Admin_UserName" />
+      </EndProperty>
+      <EndProperty Name="Business">
+        <ScalarProperty Name="BusinessID" ColumnName="BusinessID" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="BusinessCoupon" TypeName="basicModel.BusinessCoupon" StoreEntitySet="Coupons">
+      <EndProperty Name="Business">
+        <ScalarProperty Name="BusinessID" ColumnName="Business_BusinessID" />
+      </EndProperty>
+      <EndProperty Name="Coupon">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="OwnerBusiness" TypeName="basicModel.OwnerBusiness" StoreEntitySet="Businesses">
+      <EndProperty Name="Owner">
+        <ScalarProperty Name="UserName" ColumnName="Owner_UserName" />
+      </EndProperty>
+      <EndProperty Name="Business">
+        <ScalarProperty Name="BusinessID" ColumnName="BusinessID" />
+      </EndProperty>
+    </AssociationSetMapping>
   </EntityContainerMapping>
 </Mapping></edmx:Mappings>
   </edmx:Runtime>

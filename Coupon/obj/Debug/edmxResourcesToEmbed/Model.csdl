@@ -2,17 +2,70 @@
 <Schema Namespace="basicModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
   <EntityContainer Name="basicEntities" annotation:LazyLoadingEnabled="true">
     <EntitySet Name="Users" EntityType="basicModel.User" />
+    <EntitySet Name="Businesses" EntityType="basicModel.Business" />
+    <AssociationSet Name="AdminBusiness" Association="basicModel.AdminBusiness">
+      <End Role="Admin" EntitySet="Users" />
+      <End Role="Business" EntitySet="Businesses" />
+    </AssociationSet>
+    <EntitySet Name="Coupons" EntityType="basicModel.Coupon" />
+    <AssociationSet Name="BusinessCoupon" Association="basicModel.BusinessCoupon">
+      <End Role="Business" EntitySet="Businesses" />
+      <End Role="Coupon" EntitySet="Coupons" />
+    </AssociationSet>
+    <AssociationSet Name="OwnerBusiness" Association="basicModel.OwnerBusiness">
+      <End Role="Owner" EntitySet="Users" />
+      <End Role="Business" EntitySet="Businesses" />
+    </AssociationSet>
   </EntityContainer>
   <EntityType Name="User">
     <Key>
       <PropertyRef Name="UserName" />
     </Key>
-    <Property Name="UserName" Type="String" Nullable="false" />
-    <Property Name="Password" Type="String" Nullable="false" />
-    <Property Name="Email" Type="String" />
-    <Property Name="Name" Type="String" Nullable="false" />
+    <Property Name="UserName" Type="String" Nullable="false" MaxLength="500" Unicode="false" FixedLength="false" />
+    <Property Name="Password" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <Property Name="Email" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
     <Property Name="PhoneKidomet" Type="Int32" />
     <Property Name="PhoneNum" Type="Int32" />
   </EntityType>
   <EntityType Name="Owner" BaseType="basicModel.User" />
+  <EntityType Name="Admin" BaseType="basicModel.User" />
+  <EnumType Name="Category">
+    <Member Name="Restaurant" />
+    <Member Name="CarsAccessories" />
+    <Member Name="Food" />
+    <Member Name="Vacations" />
+    <Member Name="Spa" />
+  </EnumType>
+  <EntityType Name="Business">
+    <Key>
+      <PropertyRef Name="BusinessID" />
+    </Key>
+    <Property Name="BusinessID" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Admin" Relationship="basicModel.AdminBusiness" FromRole="Business" ToRole="Admin" />
+    <Property Name="Name" Type="String" Nullable="false" />
+    <Property Name="Address" Type="String" Nullable="false" />
+    <Property Name="Category" Type="basicModel.Category" Nullable="false" />
+    <NavigationProperty Name="Coupons" Relationship="basicModel.BusinessCoupon" FromRole="Business" ToRole="Coupon" />
+    <NavigationProperty Name="Owner" Relationship="basicModel.OwnerBusiness" FromRole="Business" ToRole="Owner" />
+  </EntityType>
+  <Association Name="AdminBusiness">
+    <End Type="basicModel.Admin" Role="Admin" Multiplicity="1" />
+    <End Type="basicModel.Business" Role="Business" Multiplicity="*" />
+  </Association>
+  <EntityType Name="Coupon">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <NavigationProperty Name="Business" Relationship="basicModel.BusinessCoupon" FromRole="Coupon" ToRole="Business" />
+  </EntityType>
+  <Association Name="BusinessCoupon">
+    <End Type="basicModel.Business" Role="Business" Multiplicity="1" />
+    <End Type="basicModel.Coupon" Role="Coupon" Multiplicity="*" />
+  </Association>
+  <Association Name="OwnerBusiness">
+    <End Type="basicModel.Owner" Role="Owner" Multiplicity="1" />
+    <End Type="basicModel.Business" Role="Business" Multiplicity="*" />
+  </Association>
 </Schema>

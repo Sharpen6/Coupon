@@ -5,9 +5,16 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="bef01f2a947441528f3848978ae000bd" Name="Diagram1" >
-        <EntityTypeShape EntityType="basicModel.User" Width="1.5" PointX="5" PointY="5.25" />
-        <EntityTypeShape EntityType="basicModel.Owner" Width="1.5" PointX="2.75" PointY="5.875" />
+        <EntityTypeShape EntityType="basicModel.User" Width="1.5" PointX="5" PointY="5.125" />
+        <EntityTypeShape EntityType="basicModel.Owner" Width="1.5" PointX="2.875" PointY="6.75" />
         <InheritanceConnector EntityType="basicModel.Owner" />
+        <EntityTypeShape EntityType="basicModel.Admin" Width="1.5" PointX="2.875" PointY="4.5" />
+        <InheritanceConnector EntityType="basicModel.Admin" />
+        <EntityTypeShape EntityType="basicModel.Business" Width="1.5" PointX="0.5" PointY="4.5" />
+        <AssociationConnector Association="basicModel.AdminBusiness" />
+        <EntityTypeShape EntityType="basicModel.Coupon" Width="1.5" PointX="0.5" PointY="1.625" />
+        <AssociationConnector Association="basicModel.BusinessCoupon" />
+        <AssociationConnector Association="basicModel.OwnerBusiness" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

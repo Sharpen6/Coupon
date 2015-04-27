@@ -8,3 +8,13 @@ C:\Users\Sagi\Documents\Visual Studio 2013\Projects\Coupon\Coupon\bin\Debug\Enti
 C:\Users\Sagi\Documents\Visual Studio 2013\Projects\Coupon\Coupon\obj\Debug\Coupon.csprojResolveAssemblyReference.cache
 C:\Users\Sagi\Documents\Visual Studio 2013\Projects\Coupon\Coupon\obj\Debug\Coupon.exe
 C:\Users\Sagi\Documents\Visual Studio 2013\Projects\Coupon\Coupon\obj\Debug\Coupon.pdb
+C:\Users\Sagi\Documents\GitHub\Coupon\Coupon\bin\Debug\Coupon.exe.config
+C:\Users\Sagi\Documents\GitHub\Coupon\Coupon\obj\Debug\Coupon.exe
+C:\Users\Sagi\Documents\GitHub\Coupon\Coupon\obj\Debug\Coupon.pdb
+C:\Users\Sagi\Documents\GitHub\Coupon\Coupon\bin\Debug\Coupon.exe
+C:\Users\Sagi\Documents\GitHub\Coupon\Coupon\bin\Debug\Coupon.pdb
+C:\Users\Sagi\Documents\GitHub\Coupon\Coupon\bin\Debug\EntityFramework.dll
+C:\Users\Sagi\Documents\GitHub\Coupon\Coupon\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\Sagi\Documents\GitHub\Coupon\Coupon\bin\Debug\EntityFramework.xml
+C:\Users\Sagi\Documents\GitHub\Coupon\Coupon\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\Sagi\Documents\GitHub\Coupon\Coupon\obj\Debug\Coupon.csprojResolveAssemblyReference.cache

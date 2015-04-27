@@ -26,5 +26,7 @@ namespace Coupon
         }
     
         public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<Business> Businesses { get; set; }
+        public virtual DbSet<Coupon> Coupons { get; set; }
     }
 }
