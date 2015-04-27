@@ -4,37 +4,37 @@ using Coupon;
 
 namespace UnitTestProject
 {
-  [TestClass]
-    public class TestOwner
+    [TestClass]
+    public class TestAdmin
     {
         [TestMethod]
-        public void TestAddOwner()
+        public void TestAddAdmin()
         {
             using (basicEntities be = new basicEntities())
             {
-                Owner o=AddOwner("owner123","adam","admin123123",054, 3134195, "adamin@gmail.com");
-                be.Users.Add(o);
-                be.SaveChanges();
-                Assert.AreEqual(be.Users.Find(o.UserName).UserName, o.UserName);
+                Admin A = AddAdmin("Admin123", "adam", "admin123123", 054, 3134195, "adamin@gmail.com");
+                be.Users.Add(A);
+                 be.SaveChanges();
+                Assert.AreEqual(be.Users.Find(A.UserName).UserName, A.UserName);
 
             }
         }
-      
+
         [TestMethod]
-        public void TestRemoveOwner()
+        public void TestRemoveAdmin()
         {
             using (basicEntities be = new basicEntities())
             {
-                RemoveOwner("owner123");
-                Assert.AreEqual(be.Users.Find("owner123"), null);
+                RemoveAdmin("Admin123");
+                Assert.AreEqual(be.Users.Find("Admin123"), null);
             }
         }
-   
-        public Owner AddOwner(string UserName, String Name, String Password, int PhoneKidumet, int PhoneNum, string Email)
+
+        public Admin AddAdmin(string UserName, String Name, String Password, int PhoneKidumet, int PhoneNum, string Email)
         {
             using (basicEntities be = new basicEntities())
             {
-                Owner u = new Owner();
+                Admin u = new Admin();
                 u.Name = Name;
                 u.UserName = UserName;
                 User sameKey = be.Users.Find(u.UserName);
@@ -53,13 +53,13 @@ namespace UnitTestProject
             }
         }
 
-        public void RemoveOwner(string owner)
+        public void RemoveAdmin(string admin)
         {
             using (basicEntities be = new basicEntities())
             {
-                User userToRemove = be.Users.Find(owner);
-                
-                be.Users.Remove(userToRemove);
+                User AdminToRemove = be.Users.Find(admin);
+
+                be.Users.Remove(AdminToRemove);
                 be.SaveChanges();
             }
         }

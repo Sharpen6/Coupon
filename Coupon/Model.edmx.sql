@@ -2,8 +2,8 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 04/27/2015 21:40:42
--- Generated from EDMX file: C:\Users\Sagi\Documents\GitHub\Coupon\Coupon\Model.edmx
+-- Date Created: 04/27/2015 23:46:04
+-- Generated from EDMX file: C:\Users\DorinS\Documents\GitHub\Coupon\Coupon\Model.edmx
 -- --------------------------------------------------
 
 SET QUOTED_IDENTIFIER OFF;
@@ -191,7 +191,6 @@ ADD CONSTRAINT [FK_AdminBusiness]
     REFERENCES [dbo].[Users_Admin]
         ([UserName])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
-GO
 
 -- Creating non-clustered index for FOREIGN KEY 'FK_AdminBusiness'
 CREATE INDEX [IX_FK_AdminBusiness]
@@ -206,7 +205,6 @@ ADD CONSTRAINT [FK_BusinessCoupon]
     REFERENCES [dbo].[Businesses]
         ([BusinessID])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
-GO
 
 -- Creating non-clustered index for FOREIGN KEY 'FK_BusinessCoupon'
 CREATE INDEX [IX_FK_BusinessCoupon]
@@ -221,7 +219,6 @@ ADD CONSTRAINT [FK_OwnerBusiness]
     REFERENCES [dbo].[Users_Owner]
         ([UserName])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
-GO
 
 -- Creating non-clustered index for FOREIGN KEY 'FK_OwnerBusiness'
 CREATE INDEX [IX_FK_OwnerBusiness]
@@ -236,7 +233,6 @@ ADD CONSTRAINT [FK_CouponOrderedCoupon]
     REFERENCES [dbo].[Coupons]
         ([Id])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
-GO
 
 -- Creating non-clustered index for FOREIGN KEY 'FK_CouponOrderedCoupon'
 CREATE INDEX [IX_FK_CouponOrderedCoupon]

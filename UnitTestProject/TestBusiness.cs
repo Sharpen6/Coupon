@@ -4,83 +4,71 @@ using Coupon;
 
 namespace UnitTestProject
 {
-    [TestClass]
+   [TestClass]
     public class TestBusiness
     {
-        User owner;
-        User admin;
-        [TestInitialize]
-        public void Init()
-        {
-            using (basicEntities be = new basicEntities())
-            {
-                owner = new Owner();
+        TestOwner to = new TestOwner();
+        TestAdmin ad = new TestAdmin();
 
-                owner.Name = "ownerName";
-                owner.UserName = "owner";
-                User sameKey = be.Users.Find(owner.UserName);
-                while (sameKey != null)
-                {
-                    owner.UserName += "1";
-                    sameKey = be.Users.Find(owner.UserName);
-                }
-                owner.Password = "admin123123";
-                owner.PhoneKidomet = 054;
-                owner.PhoneNum = 3134195;
-                owner.Email = "adamin@gmail.com";
-
-                admin = new Admin();
-
-                admin.Name = "adminName";
-                admin.UserName = "admin";
-                sameKey = be.Users.Find(admin.UserName);
-                while (sameKey != null)
-                {
-                    admin.UserName += "1";
-                    sameKey = be.Users.Find(admin.UserName);
-                }
-                admin.Password = "admin123123";
-                admin.PhoneKidomet = 054;
-                admin.PhoneNum = 3134195;
-                admin.Email = "adamin@gmail.com";
-
-
-            }
-        }
         [TestMethod]
         public void TestAddBusiness()
         {
-            
-
             using (basicEntities be = new basicEntities())
             {
-
-                Business existing = be.Businesses.Find("123");
-                if (existing != null)
-                {
-                    be.Businesses.Remove(existing);
-                    be.SaveChanges();
-                }
-
-                
+                Owner owner = to.AddOwner("ownerBus", "ownerName", "admin123123", 054, 3134195, "adamin@gmail.com");
+                Admin admin = ad.AddAdmin("AdminBus", "ownerName", "admin123123", 054, 3134195, "adamin@gmail.com");
                 be.Users.Add(owner);
                 be.Users.Add(admin);
-                //be.SaveChanges();
-
-                Business b = new Business();
-                
-                b.BusinessID = "123";
-                b.Admin = (Admin)admin;
-                b.Owner = (Owner)owner;
-                b.Address = "beer sheva";
-                b.Name = "plastics maker";
-                b.Category = Category.CarsAccessories;
-
-                
+                Business b = AddBusinesses("123", admin, owner, "beer-Sheva", "bla", Category.CarsAccessories);
                 be.Businesses.Add(b);
                 be.SaveChanges();
-
                 Assert.AreEqual(be.Businesses.Find(b.BusinessID).Name, b.Name);
+            }
+        }
+
+
+        [TestMethod]
+        public void TestRemoveBusiness()
+        {
+            using (basicEntities be = new basicEntities())
+            {
+                RemoveBusinesses("123");
+                Assert.AreEqual(be.Businesses.Find("123"), null);
+            }
+        }
+         
+         public Business AddBusinesses(string BusinessID, Admin ad, Owner owner,String address, string name, Category c)
+        {
+            using (basicEntities be = new basicEntities())
+            {
+                Business b = new Business();
+                b.BusinessID = BusinessID;
+
+                Business sameKey = be.Businesses.Find(b.BusinessID);
+                while (sameKey != null && sameKey.BusinessID == b.BusinessID)
+                {
+                    b.BusinessID += "1";
+                    sameKey = be.Businesses.Find(b.BusinessID);
+                }
+                b.Admin = ad;
+                b.Owner = owner;
+                b.Address = address;
+                b.Name = name;
+                b.Category = c;
+                return b;
+
+            }
+
+        }
+
+        public void RemoveBusinesses(string BusinessID)
+        {
+            using (basicEntities be = new basicEntities())
+            {
+                Business BusinessesToRemove = be.Businesses.Find(BusinessID);
+                be.Businesses.Remove(BusinessesToRemove);
+                be.SaveChanges();
+                
             }
         }
     }

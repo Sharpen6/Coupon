@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Coupon;
 namespace UnitTestProject
 {
-    [TestClass]
+   // [TestClass]
     public class TestOrderedCoupon
     {
         [TestMethod]

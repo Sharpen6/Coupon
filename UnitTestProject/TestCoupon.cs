@@ -7,89 +7,65 @@ using System.Threading.Tasks;
 using Coupon;
 namespace UnitTestProject
 {
-    [TestClass]
+   [TestClass]
     public class TestCoupon
     {
+        TestOwner t=new TestOwner();
+        TestAdmin t1=new TestAdmin();
+        TestBusiness t2=new TestBusiness();
         [TestMethod]
         public void TestAddCoupon()
         {
             using (basicEntities be = new basicEntities())
             {
-                Business existing = be.Businesses.Find("123");
-                if (existing != null)
-                    be.Businesses.Remove(existing);
-
-                User u = new Owner();
-
-                u.Name = "adam";
-                u.UserName = "ownerr";
-                User sameKey = be.Users.Find(u.UserName);
-                while (sameKey != null && sameKey.UserName == u.UserName)
-                {
-                    u.UserName += "1";
-                    sameKey = be.Users.Find(u.UserName);
-                }
-                sameKey = be.Users.Find(u.UserName);
-                u.Password = "admin123123";
-                u.PhoneKidomet = 054;
-                u.PhoneNum = 3134195;
-                u.Email = "adamin@gmail.com";
-
-                be.Users.Add(u);
-                be.SaveChanges();
-
-                User a = new Admin();
-
-                a.Name = "adam";
-                a.UserName = "admin";
-                sameKey = be.Users.Find(a.UserName);
-                while (sameKey != null && sameKey.UserName == a.UserName)
-                {
-                    a.UserName += "1";
-                    sameKey = be.Users.Find(a.UserName);
-                }
-                sameKey = be.Users.Find(a.UserName);
-                a.Password = "admin123123";
-                a.PhoneKidomet = 054;
-                a.PhoneNum = 3134195;
-                a.Email = "adamin@gmail.com";
-
+                Owner u = t.AddOwner("CouponOwnerr", "adam", "admin123123", 054, 3134195, "adamin@gmail.com");
+                be.Users.Add(u);   
+                Admin a = t1.AddAdmin("CouponAdmin", "adam", "admin123123", 054, 3134195, "adamin@gmail.com");    
                 be.Users.Add(a);
-                be.SaveChanges();
-
-
-
-
-
-                Business b = new Business();
-
-
-                b.BusinessID = "123";
-                b.Admin = (Admin)a;
-                b.Owner = (Owner)u;
-                b.Address = "beer sheva";
-                b.Name = "plastics maker";
-                b.Category = Category.CarsAccessories;
-
-
+                Business b = t2.AddBusinesses("123", a, u, "beer-sheva", "d", Category.CarsAccessories);
                 be.Businesses.Add(b);
-                be.SaveChanges();
-
-                Coupon.Coupon cop = new Coupon.Coupon();
-
-                cop.Id = 2;
-                cop.Name = "Fly PIZZA";
-                cop.OriginalPrice = "100";
-                cop.DiscountPrice = "40";
-                cop.Business = b;
-                cop.ExperationDate = "10/10/2014";
+                Coupon.Coupon cop = CreateCoupon(2, "Fly PIZZA", "100", "40", b, "10/10/2014");       
                 be.Coupons.Add(cop);
-
                 be.SaveChanges();
 
+            }
+        }
+
+        public   Coupon.Coupon CreateCoupon(int id, string name, string orgprice, string discount, Business b, string datee)
+        {
+            Coupon.Coupon cop = new Coupon.Coupon();
+            cop.Id = id;
+            cop.Name = name;
+            cop.OriginalPrice = orgprice;
+            cop.DiscountPrice = discount;
+            cop.Business = b;
+            cop.ExperationDate = datee;
+
+            return cop;
+        }
+
+        public void RemoveCoupon(string CouponID)
+        {
+            using (basicEntities be = new basicEntities())
+            {
+                Coupon.Coupon CouponToRemove = be.Coupons.Find(CouponID);
+                be.Coupons.Remove(CouponToRemove);
+              //  t2.RemoveBusinesses(CouponToRemove.Business.BusinessID);
+                RemoveCoupon("2");
+                be.SaveChanges();
+            }
+        }
+
+        [TestMethod]
+        public void TestRemoveCoupon()
+        {
+            using (basicEntities be = new basicEntities())
+            {
+       
+                Assert.AreEqual(be.Businesses.Find("2"), null);
 
 
             }
         }
-    }
+   }
 }
