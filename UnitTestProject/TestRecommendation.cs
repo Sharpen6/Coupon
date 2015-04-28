@@ -10,12 +10,12 @@ namespace UnitTestProject
     [TestClass]
     public class TestRecommendation
     {
-        User customer;
         Recommendation rec;
 
-        [TestInitialize]
+        /*[TestInitialize]
         public void TestInit()
         {
+
             using (basicEntities be = new basicEntities())
             {
                 customer = be.Users.Find("customer");
@@ -28,22 +28,26 @@ namespace UnitTestProject
                     customer.PhoneKidomet = 054;
                     customer.PhoneNum = 3134195;
                     customer.Email = "adamin@gmail.com";
+                    be.Users.Add(customer);
+                    be.SaveChanges();
                 }
             }
         }
-
+        */
         [TestMethod]
         public void TestAddRecommendation()
         {
             using (basicEntities be = new basicEntities())
             {
+                Customer customer = TestCustomer.AddCustomer("Customer123", "adam", "admin123123", 054, 3134195, "adamin@gmail.com");
+                
                 rec = new Recommendation();
                 rec.Description = "blabla";
                 rec.Id = 4;
                 rec.Link = "www.google.com";
                 rec.Source = SourceType.GooglePlus;
 
-                rec.Customer = (Customer)customer;
+                rec.Customer = customer;
                 be.Users.Add(customer);
                 be.Recommendations.Add(rec);
                 be.SaveChanges();
@@ -51,14 +55,64 @@ namespace UnitTestProject
                 Assert.AreEqual(be.Recommendations.Find(rec.Id).Link, rec.Link);
             }
         }
+        [TestMethod]
+        public void TestRemoveRecommendation()
+        {
+            using (basicEntities be = new basicEntities())
+            {
+                Customer customer = TestCustomer.AddCustomer("Customer123", "adam", "admin123123", 054, 3134195, "adamin@gmail.com");
 
+                rec = new Recommendation();
+                rec.Description = "blabla";
+                rec.Id = 4;
+                rec.Link = "www.google.com";
+                rec.Source = SourceType.GooglePlus;
+
+                rec.Customer = customer;
+                be.Users.Add(customer);
+                be.Recommendations.Add(rec);
+                be.SaveChanges();
+
+
+                be.Recommendations.Remove(rec);
+                be.SaveChanges();
+
+                Assert.IsNull(be.Recommendations.Find(rec.Id));
+            }
+        }
+        [TestMethod]
+        public void TestModifyRecommendation()
+        {
+            using (basicEntities be = new basicEntities())
+            {
+                Customer customer = TestCustomer.AddCustomer("Customer123", "adam", "admin123123", 054, 3134195, "adamin@gmail.com");
+
+                rec = new Recommendation();
+                rec.Description = "blabla";
+                rec.Id = 4;
+                rec.Link = "www.google.com";
+                rec.Source = SourceType.GooglePlus;
+
+                rec.Customer = customer;
+                be.Users.Add(customer);
+                be.Recommendations.Add(rec);
+                be.SaveChanges();
+
+
+                rec.Link = "www.twitter.com";
+                be.SaveChanges();
+
+                Assert.AreEqual(be.Recommendations.Find(rec.Id).Link, rec.Link);
+            }
+        }
         [TestCleanup]
         public void Cleanup()
         {
             using (basicEntities be = new basicEntities())
             {
                 be.Recommendations.Remove(be.Recommendations.Find(rec.Id));
-                be.Users.Remove(be.Users.Find(customer.UserName));
+                TestCustomer.RemoveCustomer("Customer123");
+                //be.Users.Remove(be.Users.Find(customer.UserName));
                 be.SaveChanges();
             }
         }
