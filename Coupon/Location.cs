@@ -12,21 +12,16 @@ namespace Coupon
     using System;
     using System.Collections.Generic;
     
-    public partial class Business
+    public partial class Location
     {
-        public Business()
+        public Location()
         {
-            this.Coupons = new HashSet<Coupon>();
+            this.Businesses = new HashSet<Business>();
         }
     
-        public string BusinessID { get; set; }
-        public string Name { get; set; }
-        public string Address { get; set; }
-        public Category Category { get; set; }
+        public int Id { get; set; }
+        public string Coordinates { get; set; }
     
-        public virtual Admin Admin { get; set; }
-        public virtual ICollection<Coupon> Coupons { get; set; }
-        public virtual Owner Owner { get; set; }
-        public virtual Location Location { get; set; }
+        public virtual ICollection<Business> Businesses { get; set; }
     }
 }

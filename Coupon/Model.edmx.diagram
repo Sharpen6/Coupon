@@ -5,21 +5,29 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="bef01f2a947441528f3848978ae000bd" Name="Diagram1" >
-        <EntityTypeShape EntityType="basicModel.User" Width="1.5" PointX="5" PointY="4.625" />
-        <EntityTypeShape EntityType="basicModel.Owner" Width="1.5" PointX="2.875" PointY="6" />
+        <EntityTypeShape EntityType="basicModel.User" Width="1.5" PointX="6.375" PointY="5.25" />
+        <EntityTypeShape EntityType="basicModel.Owner" Width="1.5" PointX="2.875" PointY="6.625" />
         <InheritanceConnector EntityType="basicModel.Owner" />
-        <EntityTypeShape EntityType="basicModel.Admin" Width="1.5" PointX="2.875" PointY="4.5" />
+        <EntityTypeShape EntityType="basicModel.Admin" Width="1.5" PointX="2.875" PointY="5.5" />
         <InheritanceConnector EntityType="basicModel.Admin" />
         <EntityTypeShape EntityType="basicModel.Business" Width="1.5" PointX="0.5" PointY="4.5" />
         <AssociationConnector Association="basicModel.AdminBusiness" />
         <EntityTypeShape EntityType="basicModel.Coupon" Width="1.5" PointX="0.5" PointY="1.125" IsExpanded="true" />
         <AssociationConnector Association="basicModel.BusinessCoupon" />
         <AssociationConnector Association="basicModel.OwnerBusiness" />
-        <EntityTypeShape EntityType="basicModel.OrderedCoupon" Width="1.5" PointX="3" PointY="1.25" />
+        <EntityTypeShape EntityType="basicModel.OrderedCoupon" Width="1.5" PointX="3" PointY="0.75" />
         <AssociationConnector Association="basicModel.CouponOrderedCoupon" />
-        <EntityTypeShape EntityType="basicModel.Customer" Width="1.5" PointX="5.625" PointY="2" />
+        <EntityTypeShape EntityType="basicModel.Customer" Width="1.5" PointX="5.625" PointY="0.625" />
         <InheritanceConnector EntityType="basicModel.Customer" />
         <AssociationConnector Association="basicModel.CustomerOrderedCoupon" />
+        <EntityTypeShape EntityType="basicModel.Visit" Width="1.5" PointX="5.125" PointY="3" />
+        <EntityTypeShape EntityType="basicModel.Location" Width="1.5" PointX="2.875" PointY="3.75" />
+        <AssociationConnector Association="basicModel.LocationVisit" />
+        <AssociationConnector Association="basicModel.CustomerVisit" />
+        <AssociationConnector Association="basicModel.BusinessLocation" />
+        <EntityTypeShape EntityType="basicModel.Recommendation" Width="1.5" PointX="7.75" PointY="2.625" />
+        <AssociationConnector Association="basicModel.CustomerRecommendation" />
+        <EntityTypeShape EntityType="basicModel.CustomerIntrests" Width="1.5" PointX="8.125" PointY="0.5" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

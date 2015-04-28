@@ -10,18 +10,11 @@
 namespace Coupon
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class OrderedCoupon
+    public enum StatusType : int
     {
-        public int Id { get; set; }
-        public StatusType Status { get; set; }
-        public string PurchaseDate { get; set; }
-        public string UseDate { get; set; }
-        public string Opinion { get; set; }
-        public string Rank { get; set; }
-    
-        public virtual Coupon Coupon { get; set; }
-        public virtual Customer Customer { get; set; }
+        Used = 0,
+        NotUsed = 1,
+        Canceled = 2
     }
 }

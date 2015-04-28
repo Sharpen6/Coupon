@@ -63,6 +63,40 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="Visits">
+      <EntityTypeMapping TypeName="IsTypeOf(basicModel.Visit)">
+        <MappingFragment StoreEntitySet="Visits">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Date" ColumnName="Date" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Locations">
+      <EntityTypeMapping TypeName="IsTypeOf(basicModel.Location)">
+        <MappingFragment StoreEntitySet="Locations">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Coordinates" ColumnName="Coordinates" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Recommendations">
+      <EntityTypeMapping TypeName="IsTypeOf(basicModel.Recommendation)">
+        <MappingFragment StoreEntitySet="Recommendations">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Source" ColumnName="Source" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Link" ColumnName="Link" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CustomerIntrests">
+      <EntityTypeMapping TypeName="IsTypeOf(basicModel.CustomerIntrests)">
+        <MappingFragment StoreEntitySet="CustomerIntrests">
+          <ScalarProperty Name="CustomerUserName" ColumnName="CustomerUserName" />
+          <ScalarProperty Name="InterestID" ColumnName="InterestID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <AssociationSetMapping Name="AdminBusiness" TypeName="basicModel.AdminBusiness" StoreEntitySet="Businesses">
       <EndProperty Name="Admin">
         <ScalarProperty Name="UserName" ColumnName="Admin_UserName" />
@@ -100,6 +134,38 @@
         <ScalarProperty Name="UserName" ColumnName="Customer_UserName" />
       </EndProperty>
       <EndProperty Name="OrderedCoupon">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="LocationVisit" TypeName="basicModel.LocationVisit" StoreEntitySet="Visits">
+      <EndProperty Name="Location">
+        <ScalarProperty Name="Id" ColumnName="Location_Id" />
+      </EndProperty>
+      <EndProperty Name="Visit">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="CustomerVisit" TypeName="basicModel.CustomerVisit" StoreEntitySet="Visits">
+      <EndProperty Name="Customer">
+        <ScalarProperty Name="UserName" ColumnName="CustomerVisit_Visit_UserName" />
+      </EndProperty>
+      <EndProperty Name="Visit">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="BusinessLocation" TypeName="basicModel.BusinessLocation" StoreEntitySet="Businesses">
+      <EndProperty Name="Location">
+        <ScalarProperty Name="Id" ColumnName="Location_Id" />
+      </EndProperty>
+      <EndProperty Name="Business">
+        <ScalarProperty Name="BusinessID" ColumnName="BusinessID" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="CustomerRecommendation" TypeName="basicModel.CustomerRecommendation" StoreEntitySet="Recommendations">
+      <EndProperty Name="Customer">
+        <ScalarProperty Name="UserName" ColumnName="CustomerRecommendation_Recommendation_UserName" />
+      </EndProperty>
+      <EndProperty Name="Recommendation">
         <ScalarProperty Name="Id" ColumnName="Id" />
       </EndProperty>
     </AssociationSetMapping>

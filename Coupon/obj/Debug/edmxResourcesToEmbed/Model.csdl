@@ -25,6 +25,26 @@
       <End Role="Customer" EntitySet="Users" />
       <End Role="OrderedCoupon" EntitySet="OrderedCoupons" />
     </AssociationSet>
+    <EntitySet Name="Visits" EntityType="basicModel.Visit" />
+    <EntitySet Name="Locations" EntityType="basicModel.Location" />
+    <AssociationSet Name="LocationVisit" Association="basicModel.LocationVisit">
+      <End Role="Location" EntitySet="Locations" />
+      <End Role="Visit" EntitySet="Visits" />
+    </AssociationSet>
+    <AssociationSet Name="CustomerVisit" Association="basicModel.CustomerVisit">
+      <End Role="Customer" EntitySet="Users" />
+      <End Role="Visit" EntitySet="Visits" />
+    </AssociationSet>
+    <AssociationSet Name="BusinessLocation" Association="basicModel.BusinessLocation">
+      <End Role="Business" EntitySet="Businesses" />
+      <End Role="Location" EntitySet="Locations" />
+    </AssociationSet>
+    <EntitySet Name="Recommendations" EntityType="basicModel.Recommendation" />
+    <AssociationSet Name="CustomerRecommendation" Association="basicModel.CustomerRecommendation">
+      <End Role="Customer" EntitySet="Users" />
+      <End Role="Recommendation" EntitySet="Recommendations" />
+    </AssociationSet>
+    <EntitySet Name="CustomerIntrests" EntityType="basicModel.CustomerIntrests" />
   </EntityContainer>
   <EntityType Name="User">
     <Key>
@@ -57,6 +77,7 @@
     <Property Name="Category" Type="basicModel.Category" Nullable="false" />
     <NavigationProperty Name="Coupons" Relationship="basicModel.BusinessCoupon" FromRole="Business" ToRole="Coupon" />
     <NavigationProperty Name="Owner" Relationship="basicModel.OwnerBusiness" FromRole="Business" ToRole="Owner" />
+    <NavigationProperty Name="Location" Relationship="basicModel.BusinessLocation" FromRole="Business" ToRole="Location" />
   </EntityType>
   <Association Name="AdminBusiness">
     <End Type="basicModel.Admin" Role="Admin" Multiplicity="1" />
@@ -89,7 +110,7 @@
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="Status" Type="basicModel.SourceType" Nullable="false" />
+    <Property Name="Status" Type="basicModel.StatusType" Nullable="false" />
     <Property Name="PurchaseDate" Type="String" Nullable="false" />
     <Property Name="UseDate" Type="String" Nullable="false" />
     <Property Name="Opinion" Type="String" Nullable="true" />
@@ -108,9 +129,70 @@
   </Association>
   <EntityType Name="Customer" BaseType="basicModel.User">
     <NavigationProperty Name="OrderedCoupons" Relationship="basicModel.CustomerOrderedCoupon" FromRole="Customer" ToRole="OrderedCoupon" />
+    <NavigationProperty Name="Visits" Relationship="basicModel.CustomerVisit" FromRole="Customer" ToRole="Visit" />
+    <NavigationProperty Name="Recommendations" Relationship="basicModel.CustomerRecommendation" FromRole="Customer" ToRole="Recommendation" />
   </EntityType>
   <Association Name="CustomerOrderedCoupon">
     <End Type="basicModel.Customer" Role="Customer" Multiplicity="1" />
     <End Type="basicModel.OrderedCoupon" Role="OrderedCoupon" Multiplicity="*" />
   </Association>
+  <EntityType Name="Visit">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Date" Type="String" Nullable="false" />
+    <NavigationProperty Name="Location" Relationship="basicModel.LocationVisit" FromRole="Visit" ToRole="Location" />
+  </EntityType>
+  <EntityType Name="Location">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Coordinates" Type="String" Nullable="false" />
+    <NavigationProperty Name="Businesses" Relationship="basicModel.BusinessLocation" FromRole="Location" ToRole="Business" />
+  </EntityType>
+  <Association Name="LocationVisit">
+    <End Type="basicModel.Location" Role="Location" Multiplicity="1" />
+    <End Type="basicModel.Visit" Role="Visit" Multiplicity="*" />
+  </Association>
+  <Association Name="CustomerVisit">
+    <End Type="basicModel.Customer" Role="Customer" Multiplicity="1" />
+    <End Type="basicModel.Visit" Role="Visit" Multiplicity="*" />
+  </Association>
+  <Association Name="BusinessLocation">
+    <End Type="basicModel.Business" Role="Business" Multiplicity="*" />
+    <End Type="basicModel.Location" Role="Location" Multiplicity="1" />
+  </Association>
+  <EntityType Name="Recommendation">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Source" Type="basicModel.SourceType" Nullable="false" />
+    <Property Name="Description" Type="String" Nullable="false" />
+    <Property Name="Link" Type="String" Nullable="false" />
+  </EntityType>
+  <Association Name="CustomerRecommendation">
+    <End Type="basicModel.Customer" Role="Customer" Multiplicity="1" />
+    <End Type="basicModel.Recommendation" Role="Recommendation" Multiplicity="*" />
+  </Association>
+  <EntityType Name="CustomerIntrests">
+    <Key>
+      <PropertyRef Name="CustomerUserName" />
+      <PropertyRef Name="InterestID" />
+    </Key>
+    <Property Name="CustomerUserName" Type="String" Nullable="false" />
+    <Property Name="InterestID" Type="basicModel.InterestType" Nullable="false" />
+  </EntityType>
+  <EnumType Name="InterestType">
+    <Member Name="Dancing" />
+    <Member Name="GourmetFood" />
+    <Member Name="Vacation" />
+  </EnumType>
+  <EnumType Name="StatusType">
+    <Member Name="Used" />
+    <Member Name="NotUsed" />
+    <Member Name="Canceled" />
+  </EnumType>
 </Schema>

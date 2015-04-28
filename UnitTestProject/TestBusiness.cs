@@ -32,7 +32,19 @@ namespace UnitTestProject
         {
             using (basicEntities be = new basicEntities())
             {
-                RemoveBusinesses("123");
+                Owner owner = to.AddOwner("ownerBus", "ownerName", "admin123123", 054, 3134195, "adamin@gmail.com");
+                Admin admin = ad.AddAdmin("AdminBus", "ownerName", "admin123123", 054, 3134195, "adamin@gmail.com");
+                be.Users.Add(owner);
+                be.Users.Add(admin);
+                Business b = AddBusinesses("123", admin, owner, "beer-Sheva", "bla", Category.CarsAccessories);
+                be.Businesses.Add(b);
+                be.SaveChanges();
+
+
+                Business BusinessesToRemove = be.Businesses.Find("123");
+                be.Businesses.Remove(BusinessesToRemove);
+                be.SaveChanges();
+
                 Assert.AreEqual(be.Businesses.Find("123"), null);
             }
         }

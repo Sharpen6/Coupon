@@ -12,18 +12,11 @@ namespace Coupon
     using System;
     using System.Collections.Generic;
     
-    public partial class Customer : User
+    public partial class Recommendation
     {
-        public Customer()
-        {
-            this.OrderedCoupons = new HashSet<OrderedCoupon>();
-            this.Visits = new HashSet<Visit>();
-            this.Recommendations = new HashSet<Recommendation>();
-        }
-    
-    
-        public virtual ICollection<OrderedCoupon> OrderedCoupons { get; set; }
-        public virtual ICollection<Visit> Visits { get; set; }
-        public virtual ICollection<Recommendation> Recommendations { get; set; }
+        public int Id { get; set; }
+        public SourceType Source { get; set; }
+        public string Description { get; set; }
+        public string Link { get; set; }
     }
 }

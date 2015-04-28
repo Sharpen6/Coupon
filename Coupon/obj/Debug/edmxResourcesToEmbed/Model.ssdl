@@ -5,6 +5,10 @@
     <EntitySet Name="Businesses" EntityType="basicModel.Store.Businesses" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Coupons" EntityType="basicModel.Store.Coupons" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="OrderedCoupons" EntityType="basicModel.Store.OrderedCoupons" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Visits" EntityType="basicModel.Store.Visits" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Locations" EntityType="basicModel.Store.Locations" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Recommendations" EntityType="basicModel.Store.Recommendations" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="CustomerIntrests" EntityType="basicModel.Store.CustomerIntrests" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Users_Admin" EntityType="basicModel.Store.Users_Admin" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Users_Owner" EntityType="basicModel.Store.Users_Owner" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Users_Customer" EntityType="basicModel.Store.Users_Customer" store:Type="Tables" Schema="dbo" />
@@ -27,6 +31,22 @@
     <AssociationSet Name="CustomerOrderedCoupon" Association="basicModel.Store.CustomerOrderedCoupon">
       <End Role="Customer" EntitySet="Users_Customer" />
       <End Role="OrderedCoupon" EntitySet="OrderedCoupons" />
+    </AssociationSet>
+    <AssociationSet Name="LocationVisit" Association="basicModel.Store.LocationVisit">
+      <End Role="Location" EntitySet="Locations" />
+      <End Role="Visit" EntitySet="Visits" />
+    </AssociationSet>
+    <AssociationSet Name="CustomerVisit" Association="basicModel.Store.CustomerVisit">
+      <End Role="Customer" EntitySet="Users_Customer" />
+      <End Role="Visit" EntitySet="Visits" />
+    </AssociationSet>
+    <AssociationSet Name="BusinessLocation" Association="basicModel.Store.BusinessLocation">
+      <End Role="Business" EntitySet="Businesses" />
+      <End Role="Location" EntitySet="Locations" />
+    </AssociationSet>
+    <AssociationSet Name="CustomerRecommendation" Association="basicModel.Store.CustomerRecommendation">
+      <End Role="Customer" EntitySet="Users_Customer" />
+      <End Role="Recommendation" EntitySet="Recommendations" />
     </AssociationSet>
     <AssociationSet Name="FK_Admin_inherits_User" Association="basicModel.Store.FK_Admin_inherits_User">
       <End Role="User" EntitySet="Users" />
@@ -62,6 +82,7 @@
     <Property Name="Category" Type="int" Nullable="false" />
     <Property Name="Admin_UserName" Type="varchar" MaxLength="500" Nullable="false" />
     <Property Name="Owner_UserName" Type="varchar" MaxLength="500" Nullable="false" />
+    <Property Name="Location_Id" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="Coupons">
     <Key>
@@ -88,6 +109,40 @@
     <Property Name="Rank" Type="nvarchar(max)" Nullable="true" />
     <Property Name="Coupon_Id" Type="int" Nullable="false" />
     <Property Name="Customer_UserName" Type="varchar" MaxLength="500" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Visits">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Date" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Location_Id" Type="int" Nullable="false" />
+    <Property Name="CustomerVisit_Visit_UserName" Type="varchar" MaxLength="500" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Locations">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Coordinates" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Recommendations">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Source" Type="int" Nullable="false" />
+    <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Link" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="CustomerRecommendation_Recommendation_UserName" Type="varchar" MaxLength="500" Nullable="false" />
+  </EntityType>
+  <EntityType Name="CustomerIntrests">
+    <Key>
+      <PropertyRef Name="CustomerUserName" />
+      <PropertyRef Name="InterestID" />
+    </Key>
+    <Property Name="CustomerUserName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="InterestID" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="Users_Admin">
     <Key>
@@ -164,6 +219,54 @@
       </Principal>
       <Dependent Role="OrderedCoupon">
         <PropertyRef Name="Customer_UserName" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="LocationVisit">
+    <End Role="Location" Type="basicModel.Store.Locations" Multiplicity="1" />
+    <End Role="Visit" Type="basicModel.Store.Visits" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Location">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Visit">
+        <PropertyRef Name="Location_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="CustomerVisit">
+    <End Role="Customer" Type="basicModel.Store.Users_Customer" Multiplicity="1" />
+    <End Role="Visit" Type="basicModel.Store.Visits" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customer">
+        <PropertyRef Name="UserName" />
+      </Principal>
+      <Dependent Role="Visit">
+        <PropertyRef Name="CustomerVisit_Visit_UserName" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="BusinessLocation">
+    <End Role="Business" Type="basicModel.Store.Businesses" Multiplicity="*" />
+    <End Role="Location" Type="basicModel.Store.Locations" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Location">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Business">
+        <PropertyRef Name="Location_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="CustomerRecommendation">
+    <End Role="Customer" Type="basicModel.Store.Users_Customer" Multiplicity="1" />
+    <End Role="Recommendation" Type="basicModel.Store.Recommendations" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customer">
+        <PropertyRef Name="UserName" />
+      </Principal>
+      <Dependent Role="Recommendation">
+        <PropertyRef Name="CustomerRecommendation_Recommendation_UserName" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
