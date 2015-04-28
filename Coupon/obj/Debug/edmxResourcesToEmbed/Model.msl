@@ -97,6 +97,14 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="CouponInterests">
+      <EntityTypeMapping TypeName="IsTypeOf(basicModel.CouponInterests)">
+        <MappingFragment StoreEntitySet="CouponInterests">
+          <ScalarProperty Name="InterestID" ColumnName="InterestID" />
+          <ScalarProperty Name="CouponId" ColumnName="CouponId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <AssociationSetMapping Name="AdminBusiness" TypeName="basicModel.AdminBusiness" StoreEntitySet="Businesses">
       <EndProperty Name="Admin">
         <ScalarProperty Name="UserName" ColumnName="Admin_UserName" />
@@ -160,6 +168,7 @@
       <EndProperty Name="Business">
         <ScalarProperty Name="BusinessID" ColumnName="BusinessID" />
       </EndProperty>
+      <Condition ColumnName="Location_Id" IsNull="false" />
     </AssociationSetMapping>
     <AssociationSetMapping Name="CustomerRecommendation" TypeName="basicModel.CustomerRecommendation" StoreEntitySet="Recommendations">
       <EndProperty Name="Customer">
@@ -167,6 +176,14 @@
       </EndProperty>
       <EndProperty Name="Recommendation">
         <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="CustomerCustomer" TypeName="basicModel.CustomerCustomer" StoreEntitySet="CustomerCustomer">
+      <EndProperty Name="Customer">
+        <ScalarProperty Name="UserName" ColumnName="Customers1_UserName" />
+      </EndProperty>
+      <EndProperty Name="Customer1">
+        <ScalarProperty Name="UserName" ColumnName="Customers_UserName" />
       </EndProperty>
     </AssociationSetMapping>
   </EntityContainerMapping>

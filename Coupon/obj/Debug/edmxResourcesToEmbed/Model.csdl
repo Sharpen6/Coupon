@@ -45,6 +45,11 @@
       <End Role="Customer" EntitySet="Users" />
       <End Role="Recommendation" EntitySet="Recommendations" />
     </AssociationSet>
+    <EntitySet Name="CouponInterests" EntityType="basicModel.CouponInterests" />
+    <AssociationSet Name="CustomerCustomer" Association="basicModel.CustomerCustomer">
+      <End Role="Customer" EntitySet="Users" />
+      <End Role="Customer1" EntitySet="Users" />
+    </AssociationSet>
   </EntityContainer>
   <EntityType Name="User">
     <Key>
@@ -131,6 +136,8 @@
     <NavigationProperty Name="OrderedCoupons" Relationship="basicModel.CustomerOrderedCoupon" FromRole="Customer" ToRole="OrderedCoupon" />
     <NavigationProperty Name="Visits" Relationship="basicModel.CustomerVisit" FromRole="Customer" ToRole="Visit" />
     <NavigationProperty Name="Recommendations" Relationship="basicModel.CustomerRecommendation" FromRole="Customer" ToRole="Recommendation" />
+    <NavigationProperty Name="Customers" Relationship="basicModel.CustomerCustomer" FromRole="Customer" ToRole="Customer1" />
+    <NavigationProperty Name="Customers1" Relationship="basicModel.CustomerCustomer" FromRole="Customer1" ToRole="Customer" />
   </EntityType>
   <Association Name="CustomerOrderedCoupon">
     <End Type="basicModel.Customer" Role="Customer" Multiplicity="1" />
@@ -162,7 +169,7 @@
   </Association>
   <Association Name="BusinessLocation">
     <End Type="basicModel.Business" Role="Business" Multiplicity="*" />
-    <End Type="basicModel.Location" Role="Location" Multiplicity="1" />
+    <End Type="basicModel.Location" Role="Location" Multiplicity="0..1" />
   </Association>
   <EntityType Name="Recommendation">
     <Key>
@@ -195,5 +202,17 @@
   <Association Name="CustomerRecommendation">
     <End Type="basicModel.Customer" Role="Customer" Multiplicity="1" />
     <End Type="basicModel.Recommendation" Role="Recommendation" Multiplicity="*" />
+  </Association>
+  <EntityType Name="CouponInterests">
+    <Key>
+      <PropertyRef Name="InterestID" />
+      <PropertyRef Name="CouponId" />
+    </Key>
+    <Property Name="CouponId" Type="Int32" Nullable="false" />
+    <Property Name="InterestID" Type="basicModel.InterestType" Nullable="false" />
+  </EntityType>
+  <Association Name="CustomerCustomer">
+    <End Type="basicModel.Customer" Role="Customer" Multiplicity="*" />
+    <End Type="basicModel.Customer" Role="Customer1" Multiplicity="*" />
   </Association>
 </Schema>

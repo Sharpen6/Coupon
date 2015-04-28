@@ -28,6 +28,8 @@
         <EntityTypeShape EntityType="basicModel.Recommendation" Width="1.5" PointX="7.75" PointY="2.625" />
         <EntityTypeShape EntityType="basicModel.CustomerIntrests" Width="1.5" PointX="8.125" PointY="0.5" />
         <AssociationConnector Association="basicModel.CustomerRecommendation" />
+        <EntityTypeShape EntityType="basicModel.CouponInterests" Width="1.5" PointX="9.75" PointY="0.5" />
+        <AssociationConnector Association="basicModel.CustomerCustomer" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

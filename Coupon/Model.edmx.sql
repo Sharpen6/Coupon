@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 04/28/2015 14:35:35
+-- Date Created: 04/28/2015 14:55:15
 -- Generated from EDMX file: C:\Users\Sagi\Documents\GitHub\Coupon\Coupon\Model.edmx
 -- --------------------------------------------------
 
@@ -44,6 +44,12 @@ GO
 IF OBJECT_ID(N'[dbo].[FK_CustomerRecommendation]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[Recommendations] DROP CONSTRAINT [FK_CustomerRecommendation];
 GO
+IF OBJECT_ID(N'[dbo].[FK_CustomerCustomer_Customer]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[CustomerCustomer] DROP CONSTRAINT [FK_CustomerCustomer_Customer];
+GO
+IF OBJECT_ID(N'[dbo].[FK_CustomerCustomer_Customer1]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[CustomerCustomer] DROP CONSTRAINT [FK_CustomerCustomer_Customer1];
+GO
 IF OBJECT_ID(N'[dbo].[FK_Admin_inherits_User]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[Users_Admin] DROP CONSTRAINT [FK_Admin_inherits_User];
 GO
@@ -82,6 +88,9 @@ GO
 IF OBJECT_ID(N'[dbo].[CustomerIntrests]', 'U') IS NOT NULL
     DROP TABLE [dbo].[CustomerIntrests];
 GO
+IF OBJECT_ID(N'[dbo].[CouponInterests]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[CouponInterests];
+GO
 IF OBJECT_ID(N'[dbo].[Users_Admin]', 'U') IS NOT NULL
     DROP TABLE [dbo].[Users_Admin];
 GO
@@ -90,6 +99,9 @@ IF OBJECT_ID(N'[dbo].[Users_Owner]', 'U') IS NOT NULL
 GO
 IF OBJECT_ID(N'[dbo].[Users_Customer]', 'U') IS NOT NULL
     DROP TABLE [dbo].[Users_Customer];
+GO
+IF OBJECT_ID(N'[dbo].[CustomerCustomer]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[CustomerCustomer];
 GO
 
 -- --------------------------------------------------
@@ -115,7 +127,7 @@ CREATE TABLE [dbo].[Businesses] (
     [Category] int  NOT NULL,
     [Admin_UserName] varchar(500)  NOT NULL,
     [Owner_UserName] varchar(500)  NOT NULL,
-    [Location_Id] int  NOT NULL
+    [Location_Id] int  NULL
 );
 GO
 
@@ -178,6 +190,13 @@ CREATE TABLE [dbo].[CustomerIntrests] (
 );
 GO
 
+-- Creating table 'CouponInterests'
+CREATE TABLE [dbo].[CouponInterests] (
+    [CouponId] int  NOT NULL,
+    [InterestID] int  NOT NULL
+);
+GO
+
 -- Creating table 'Users_Admin'
 CREATE TABLE [dbo].[Users_Admin] (
     [UserName] varchar(500)  NOT NULL
@@ -193,6 +212,13 @@ GO
 -- Creating table 'Users_Customer'
 CREATE TABLE [dbo].[Users_Customer] (
     [UserName] varchar(500)  NOT NULL
+);
+GO
+
+-- Creating table 'CustomerCustomer'
+CREATE TABLE [dbo].[CustomerCustomer] (
+    [Customers1_UserName] varchar(500)  NOT NULL,
+    [Customers_UserName] varchar(500)  NOT NULL
 );
 GO
 
@@ -248,6 +274,12 @@ ADD CONSTRAINT [PK_CustomerIntrests]
     PRIMARY KEY CLUSTERED ([CustomerUserName], [InterestID] ASC);
 GO
 
+-- Creating primary key on [InterestID], [CouponId] in table 'CouponInterests'
+ALTER TABLE [dbo].[CouponInterests]
+ADD CONSTRAINT [PK_CouponInterests]
+    PRIMARY KEY CLUSTERED ([InterestID], [CouponId] ASC);
+GO
+
 -- Creating primary key on [UserName] in table 'Users_Admin'
 ALTER TABLE [dbo].[Users_Admin]
 ADD CONSTRAINT [PK_Users_Admin]
@@ -264,6 +296,12 @@ GO
 ALTER TABLE [dbo].[Users_Customer]
 ADD CONSTRAINT [PK_Users_Customer]
     PRIMARY KEY CLUSTERED ([UserName] ASC);
+GO
+
+-- Creating primary key on [Customers1_UserName], [Customers_UserName] in table 'CustomerCustomer'
+ALTER TABLE [dbo].[CustomerCustomer]
+ADD CONSTRAINT [PK_CustomerCustomer]
+    PRIMARY KEY CLUSTERED ([Customers1_UserName], [Customers_UserName] ASC);
 GO
 
 -- --------------------------------------------------
@@ -403,6 +441,30 @@ GO
 CREATE INDEX [IX_FK_CustomerRecommendation]
 ON [dbo].[Recommendations]
     ([Customer_UserName]);
+GO
+
+-- Creating foreign key on [Customers1_UserName] in table 'CustomerCustomer'
+ALTER TABLE [dbo].[CustomerCustomer]
+ADD CONSTRAINT [FK_CustomerCustomer_Customer]
+    FOREIGN KEY ([Customers1_UserName])
+    REFERENCES [dbo].[Users_Customer]
+        ([UserName])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating foreign key on [Customers_UserName] in table 'CustomerCustomer'
+ALTER TABLE [dbo].[CustomerCustomer]
+ADD CONSTRAINT [FK_CustomerCustomer_Customer1]
+    FOREIGN KEY ([Customers_UserName])
+    REFERENCES [dbo].[Users_Customer]
+        ([UserName])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_CustomerCustomer_Customer1'
+CREATE INDEX [IX_FK_CustomerCustomer_Customer1]
+ON [dbo].[CustomerCustomer]
+    ([Customers_UserName]);
 GO
 
 -- Creating foreign key on [UserName] in table 'Users_Admin'

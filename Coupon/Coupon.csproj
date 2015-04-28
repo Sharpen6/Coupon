@@ -62,6 +62,9 @@
     <Compile Include="Coupon.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="CouponInterests.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Customer.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>

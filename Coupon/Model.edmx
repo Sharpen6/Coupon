@@ -14,9 +14,11 @@
     <EntitySet Name="Locations" EntityType="basicModel.Store.Locations" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Recommendations" EntityType="basicModel.Store.Recommendations" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="CustomerIntrests" EntityType="basicModel.Store.CustomerIntrests" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="CouponInterests" EntityType="basicModel.Store.CouponInterests" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Users_Admin" EntityType="basicModel.Store.Users_Admin" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Users_Owner" EntityType="basicModel.Store.Users_Owner" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Users_Customer" EntityType="basicModel.Store.Users_Customer" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="CustomerCustomer" EntityType="basicModel.Store.CustomerCustomer" store:Type="Tables" Schema="dbo" />
     <AssociationSet Name="AdminBusiness" Association="basicModel.Store.AdminBusiness">
       <End Role="Admin" EntitySet="Users_Admin" />
       <End Role="Business" EntitySet="Businesses" />
@@ -53,6 +55,14 @@
       <End Role="Customer" EntitySet="Users_Customer" />
       <End Role="Recommendation" EntitySet="Recommendations" />
     </AssociationSet>
+    <AssociationSet Name="FK_CustomerCustomer_Customer" Association="basicModel.Store.FK_CustomerCustomer_Customer">
+      <End Role="Customer" EntitySet="Users_Customer" />
+      <End Role="CustomerCustomer" EntitySet="CustomerCustomer" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CustomerCustomer_Customer1" Association="basicModel.Store.FK_CustomerCustomer_Customer1">
+      <End Role="Customer1" EntitySet="Users_Customer" />
+      <End Role="CustomerCustomer" EntitySet="CustomerCustomer" />
+    </AssociationSet>
     <AssociationSet Name="FK_Admin_inherits_User" Association="basicModel.Store.FK_Admin_inherits_User">
       <End Role="User" EntitySet="Users" />
       <End Role="Admin" EntitySet="Users_Admin" />
@@ -87,7 +97,7 @@
     <Property Name="Category" Type="int" Nullable="false" />
     <Property Name="Admin_UserName" Type="varchar" MaxLength="500" Nullable="false" />
     <Property Name="Owner_UserName" Type="varchar" MaxLength="500" Nullable="false" />
-    <Property Name="Location_Id" Type="int" Nullable="false" />
+    <Property Name="Location_Id" Type="int" Nullable="true" />
   </EntityType>
   <EntityType Name="Coupons">
     <Key>
@@ -149,6 +159,14 @@
     <Property Name="CustomerUserName" Type="nvarchar(max)" Nullable="false" />
     <Property Name="InterestID" Type="int" Nullable="false" />
   </EntityType>
+  <EntityType Name="CouponInterests">
+    <Key>
+      <PropertyRef Name="InterestID" />
+      <PropertyRef Name="CouponId" />
+    </Key>
+    <Property Name="CouponId" Type="int" Nullable="false" />
+    <Property Name="InterestID" Type="int" Nullable="false" />
+  </EntityType>
   <EntityType Name="Users_Admin">
     <Key>
       <PropertyRef Name="UserName" />
@@ -166,6 +184,14 @@
       <PropertyRef Name="UserName" />
     </Key>
     <Property Name="UserName" Type="varchar" Nullable="false" MaxLength="500" />
+  </EntityType>
+  <EntityType Name="CustomerCustomer">
+    <Key>
+      <PropertyRef Name="Customers1_UserName" />
+      <PropertyRef Name="Customers_UserName" />
+    </Key>
+    <Property Name="Customers1_UserName" Type="varchar" Nullable="false" MaxLength="500" />
+    <Property Name="Customers_UserName" Type="varchar" Nullable="false" MaxLength="500" />
   </EntityType>
   <Association Name="AdminBusiness">
     <End Role="Admin" Type="basicModel.Store.Users_Admin" Multiplicity="1" />
@@ -253,7 +279,7 @@
   </Association>
   <Association Name="BusinessLocation">
     <End Role="Business" Type="basicModel.Store.Businesses" Multiplicity="*" />
-    <End Role="Location" Type="basicModel.Store.Locations" Multiplicity="1" />
+    <End Role="Location" Type="basicModel.Store.Locations" Multiplicity="0..1" />
     <ReferentialConstraint>
       <Principal Role="Location">
         <PropertyRef Name="Id" />
@@ -272,6 +298,30 @@
       </Principal>
       <Dependent Role="Recommendation">
         <PropertyRef Name="Customer_UserName" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CustomerCustomer_Customer">
+    <End Role="Customer" Type="basicModel.Store.Users_Customer" Multiplicity="1" />
+    <End Role="CustomerCustomer" Type="basicModel.Store.CustomerCustomer" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customer">
+        <PropertyRef Name="UserName" />
+      </Principal>
+      <Dependent Role="CustomerCustomer">
+        <PropertyRef Name="Customers1_UserName" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CustomerCustomer_Customer1">
+    <End Role="CustomerCustomer" Type="basicModel.Store.CustomerCustomer" Multiplicity="*" />
+    <End Role="Customer1" Type="basicModel.Store.Users_Customer" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Customer1">
+        <PropertyRef Name="UserName" />
+      </Principal>
+      <Dependent Role="CustomerCustomer">
+        <PropertyRef Name="Customers_UserName" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -366,6 +416,11 @@
             <End Role="Customer" EntitySet="Users" />
             <End Role="Recommendation" EntitySet="Recommendations" />
           </AssociationSet>
+          <EntitySet Name="CouponInterests" EntityType="basicModel.CouponInterests" />
+          <AssociationSet Name="CustomerCustomer" Association="basicModel.CustomerCustomer">
+            <End Role="Customer" EntitySet="Users" />
+            <End Role="Customer1" EntitySet="Users" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="User">
           <Key>
@@ -454,6 +509,8 @@
           <NavigationProperty Name="OrderedCoupons" Relationship="basicModel.CustomerOrderedCoupon" FromRole="Customer" ToRole="OrderedCoupon" />
           <NavigationProperty Name="Visits" Relationship="basicModel.CustomerVisit" FromRole="Customer" ToRole="Visit" />
           <NavigationProperty Name="Recommendations" Relationship="basicModel.CustomerRecommendation" FromRole="Customer" ToRole="Recommendation" />
+          <NavigationProperty Name="Customers" Relationship="basicModel.CustomerCustomer" FromRole="Customer" ToRole="Customer1" />
+          <NavigationProperty Name="Customers1" Relationship="basicModel.CustomerCustomer" FromRole="Customer1" ToRole="Customer" />
         </EntityType>
         <Association Name="CustomerOrderedCoupon">
           <End Type="basicModel.Customer" Role="Customer" Multiplicity="1" />
@@ -485,7 +542,7 @@
         </Association>
         <Association Name="BusinessLocation">
           <End Type="basicModel.Business" Role="Business" Multiplicity="*" />
-          <End Type="basicModel.Location" Role="Location" Multiplicity="1" />
+          <End Type="basicModel.Location" Role="Location" Multiplicity="0..1" />
         </Association>
         <EntityType Name="Recommendation">
           <Key>
@@ -518,6 +575,18 @@
         <Association Name="CustomerRecommendation">
           <End Type="basicModel.Customer" Role="Customer" Multiplicity="1" />
           <End Type="basicModel.Recommendation" Role="Recommendation" Multiplicity="*" />
+        </Association>
+        <EntityType Name="CouponInterests" >
+          <Key>
+            <PropertyRef Name="InterestID" />
+            <PropertyRef Name="CouponId" />
+          </Key>
+          <Property Name="CouponId" Type="Int32" Nullable="false" />
+          <Property Name="InterestID" Type="basicModel.InterestType" Nullable="false" />
+        </EntityType>
+        <Association Name="CustomerCustomer">
+          <End Type="basicModel.Customer" Role="Customer" Multiplicity="*" />
+          <End Type="basicModel.Customer" Role="Customer1" Multiplicity="*" />
         </Association>
       </Schema>
     </edmx:ConceptualModels>
@@ -621,6 +690,14 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="CouponInterests">
+      <EntityTypeMapping TypeName="IsTypeOf(basicModel.CouponInterests)">
+        <MappingFragment StoreEntitySet="CouponInterests">
+          <ScalarProperty Name="InterestID" ColumnName="InterestID" />
+          <ScalarProperty Name="CouponId" ColumnName="CouponId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <AssociationSetMapping Name="AdminBusiness" TypeName="basicModel.AdminBusiness" StoreEntitySet="Businesses">
       <EndProperty Name="Admin">
         <ScalarProperty Name="UserName" ColumnName="Admin_UserName" />
@@ -684,6 +761,7 @@
       <EndProperty Name="Business">
         <ScalarProperty Name="BusinessID" ColumnName="BusinessID" />
       </EndProperty>
+      <Condition ColumnName="Location_Id" IsNull="false" />
     </AssociationSetMapping>
     <AssociationSetMapping Name="CustomerRecommendation" TypeName="basicModel.CustomerRecommendation" StoreEntitySet="Recommendations">
       <EndProperty Name="Customer">
@@ -691,6 +769,14 @@
       </EndProperty>
       <EndProperty Name="Recommendation">
         <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="CustomerCustomer" TypeName="basicModel.CustomerCustomer" StoreEntitySet="CustomerCustomer">
+      <EndProperty Name="Customer">
+        <ScalarProperty Name="UserName" ColumnName="Customers1_UserName" />
+      </EndProperty>
+      <EndProperty Name="Customer1">
+        <ScalarProperty Name="UserName" ColumnName="Customers_UserName" />
       </EndProperty>
     </AssociationSetMapping>
   </EntityContainerMapping>
