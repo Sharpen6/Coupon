@@ -49,7 +49,7 @@ namespace UnitTestProject
             RemoveOwner(username);
         }
 
-        [TestMethod]
+        /*[TestMethod]
         public void TestUpdateOwnerPhoneKidumet()
         {
             string username = TestOwnerAdd();
@@ -62,7 +62,7 @@ namespace UnitTestProject
                 Assert.AreEqual(be.Users.Find(username).PhoneKidomet, 052);
             }
             RemoveOwner(username);
-        }
+        }*/
 
 
         [TestMethod]

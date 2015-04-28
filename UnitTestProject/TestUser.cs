@@ -18,6 +18,20 @@ namespace UnitTestProject
             }
         }
 
+        [TestMethod]
+        public void TestUpdateUser()
+        {
+            using (basicEntities be = new basicEntities())
+            {
+                string username = TestUserAdd();
+
+                be.Users.Find(username).Name = "sos";
+                be.SaveChanges();
+
+                Assert.AreEqual(be.Users.Find(username).Name, "sos");
+                RemoveUser(username);
+            }
+        }
         public static string TestUserAdd()
         {
             using (basicEntities be = new basicEntities())
@@ -29,7 +43,7 @@ namespace UnitTestProject
             }
         }
 
-        [TestMethod]
+        /*[TestMethod]
         public void TestUpdatePhoneUser()
         {
             string username = TestUserAdd();
@@ -44,8 +58,8 @@ namespace UnitTestProject
             }
             RemoveUser(username);
         }
-
-        [TestMethod]
+        */
+        /*[TestMethod]
         public void TestUpdatePhoneKidumet()
         {
             string username = TestUserAdd();
@@ -59,7 +73,7 @@ namespace UnitTestProject
             }
             RemoveUser(username);
         }
-
+        */
         [TestMethod]
         public void TestRemoveUser()
         {

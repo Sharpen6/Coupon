@@ -26,6 +26,7 @@ namespace Coupon
         public string DiscountPrice { get; set; }
         public string ExperationDate { get; set; }
         public string AvarageRanking { get; set; }
+        public int MaxNum { get; set; }
     
         public virtual Business Business { get; set; }
         public virtual ICollection<OrderedCoupon> OrderedCoupons { get; set; }

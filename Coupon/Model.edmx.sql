@@ -2,8 +2,8 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 04/28/2015 19:03:06
--- Generated from EDMX file: C:\Users\DorinS\Documents\GitHub\Coupon\Coupon\Model.edmx
+-- Date Created: 04/28/2015 20:47:36
+-- Generated from EDMX file: C:\Users\Sagi\Documents\GitHub\Coupon\Coupon\Model.edmx
 -- --------------------------------------------------
 
 SET QUOTED_IDENTIFIER OFF;
@@ -140,6 +140,7 @@ CREATE TABLE [dbo].[Coupons] (
     [DiscountPrice] nvarchar(max)  NOT NULL,
     [ExperationDate] nvarchar(max)  NOT NULL,
     [AvarageRanking] nvarchar(max)  NULL,
+    [MaxNum] int  NOT NULL,
     [Business_BusinessID] varchar(500)  NOT NULL
 );
 GO
@@ -185,7 +186,7 @@ GO
 
 -- Creating table 'CustomerIntrests'
 CREATE TABLE [dbo].[CustomerIntrests] (
-    [CustomerUserName] nvarchar(max)  NOT NULL,
+    [CustomerUserName] varchar(500)  NOT NULL,
     [InterestID] int  NOT NULL
 );
 GO
@@ -315,6 +316,7 @@ ADD CONSTRAINT [FK_AdminBusiness]
     REFERENCES [dbo].[Users_Admin]
         ([UserName])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
 
 -- Creating non-clustered index for FOREIGN KEY 'FK_AdminBusiness'
 CREATE INDEX [IX_FK_AdminBusiness]
@@ -329,6 +331,7 @@ ADD CONSTRAINT [FK_BusinessCoupon]
     REFERENCES [dbo].[Businesses]
         ([BusinessID])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
 
 -- Creating non-clustered index for FOREIGN KEY 'FK_BusinessCoupon'
 CREATE INDEX [IX_FK_BusinessCoupon]
@@ -343,6 +346,7 @@ ADD CONSTRAINT [FK_OwnerBusiness]
     REFERENCES [dbo].[Users_Owner]
         ([UserName])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
 
 -- Creating non-clustered index for FOREIGN KEY 'FK_OwnerBusiness'
 CREATE INDEX [IX_FK_OwnerBusiness]
@@ -357,6 +361,7 @@ ADD CONSTRAINT [FK_CouponOrderedCoupon]
     REFERENCES [dbo].[Coupons]
         ([Id])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
 
 -- Creating non-clustered index for FOREIGN KEY 'FK_CouponOrderedCoupon'
 CREATE INDEX [IX_FK_CouponOrderedCoupon]
@@ -371,6 +376,7 @@ ADD CONSTRAINT [FK_CustomerOrderedCoupon]
     REFERENCES [dbo].[Users_Customer]
         ([UserName])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
 
 -- Creating non-clustered index for FOREIGN KEY 'FK_CustomerOrderedCoupon'
 CREATE INDEX [IX_FK_CustomerOrderedCoupon]
@@ -385,6 +391,7 @@ ADD CONSTRAINT [FK_LocationVisit]
     REFERENCES [dbo].[Locations]
         ([Id])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
 
 -- Creating non-clustered index for FOREIGN KEY 'FK_LocationVisit'
 CREATE INDEX [IX_FK_LocationVisit]
@@ -399,6 +406,7 @@ ADD CONSTRAINT [FK_CustomerVisit]
     REFERENCES [dbo].[Users_Customer]
         ([UserName])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
 
 -- Creating non-clustered index for FOREIGN KEY 'FK_CustomerVisit'
 CREATE INDEX [IX_FK_CustomerVisit]
@@ -413,6 +421,7 @@ ADD CONSTRAINT [FK_BusinessLocation]
     REFERENCES [dbo].[Locations]
         ([Id])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
 
 -- Creating non-clustered index for FOREIGN KEY 'FK_BusinessLocation'
 CREATE INDEX [IX_FK_BusinessLocation]
@@ -427,6 +436,7 @@ ADD CONSTRAINT [FK_CustomerRecommendation]
     REFERENCES [dbo].[Users_Customer]
         ([UserName])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
 
 -- Creating non-clustered index for FOREIGN KEY 'FK_CustomerRecommendation'
 CREATE INDEX [IX_FK_CustomerRecommendation]
@@ -450,6 +460,7 @@ ADD CONSTRAINT [FK_CustomerCustomer_Customer1]
     REFERENCES [dbo].[Users_Customer]
         ([UserName])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
 
 -- Creating non-clustered index for FOREIGN KEY 'FK_CustomerCustomer_Customer1'
 CREATE INDEX [IX_FK_CustomerCustomer_Customer1]

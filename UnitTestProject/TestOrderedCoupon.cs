@@ -32,7 +32,7 @@ namespace UnitTestProject
                 owner = TestOwner.AddOwner("owner123", "adam", "admin123123", 054, 3134195, "adamin@gmail.com");
                 admin = TestAdmin.AddAdmin("admin123", "adam", "admin123123", 054, 3134195, "adamin@gmail.com");
                 b = TestBusiness.AddBusinesses("123", admin, owner, "beer-Sheva", "bla", Category.CarsAccessories);
-                cop = TestCoupon.CreateCoupon(2, "Fly PIZZA", "100", "40", b, "10/10/2014");
+                cop = TestCoupon.CreateCoupon(2, "Fly PIZZA", "100", "40", b, "10/10/2014",8);
                 customer = TestCustomer.AddCustomer("Customer123", "adam", "admin123123", 054, 3134195, "adamin@gmail.com");
                 
                 be.Users.Add(owner);
@@ -68,7 +68,7 @@ namespace UnitTestProject
                 owner = TestOwner.AddOwner("owner123", "adam", "admin123123", 054, 3134195, "adamin@gmail.com");
                 admin = TestAdmin.AddAdmin("admin123", "adam", "admin123123", 054, 3134195, "adamin@gmail.com");
                 b = TestBusiness.AddBusinesses("123", admin, owner, "beer-Sheva", "bla", Category.CarsAccessories);
-                cop = TestCoupon.CreateCoupon(2, "Fly PIZZA", "100", "40", b, "10/10/2014");
+                cop = TestCoupon.CreateCoupon(2, "Fly PIZZA", "100", "40", b, "10/10/2014",8);
                 customer = TestCustomer.AddCustomer("Customer123", "adam", "admin123123", 054, 3134195, "adamin@gmail.com");
 
                 be.Users.Add(owner);
@@ -111,7 +111,7 @@ namespace UnitTestProject
                 owner = TestOwner.AddOwner("owner123", "adam", "admin123123", 054, 3134195, "adamin@gmail.com");
                 admin = TestAdmin.AddAdmin("admin123", "adam", "admin123123", 054, 3134195, "adamin@gmail.com");
                 b = TestBusiness.AddBusinesses("123", admin, owner, "beer-Sheva", "bla", Category.CarsAccessories);
-                cop = TestCoupon.CreateCoupon(2, "Fly PIZZA", "100", "40", b, "10/10/2014");
+                cop = TestCoupon.CreateCoupon(2, "Fly PIZZA", "100", "40", b, "10/10/2014",8);
                 customer = TestCustomer.AddCustomer("Customer123", "adam", "admin123123", 054, 3134195, "adamin@gmail.com");
 
                 be.Users.Add(owner);

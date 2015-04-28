@@ -59,7 +59,9 @@
   <ItemGroup>
     <Compile Include="TestBusiness.cs" />
     <Compile Include="TestCustomer.cs" />
+    <Compile Include="TestCouponInterests.cs" />
     <Compile Include="TestDeleteAllTables.cs" />
+    <Compile Include="TestCustomerInterests.cs" />
     <Compile Include="TestRecommendation.cs" />
     <Compile Include="TestOrderedCoupon.cs" />
     <Compile Include="TestCoupon.cs" />

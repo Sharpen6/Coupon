@@ -14,7 +14,7 @@ namespace UnitTestProject
     {
         User customer;
         Visit visit;
-
+        Location l;
         [TestInitialize]
         public void TestInit()
         {
@@ -44,27 +44,58 @@ namespace UnitTestProject
                 visit = new Visit();
                 visit.Id = 1;
                 visit.Date = "01/01/2004";
+                l = new Location();
+                l.Coordinates = "34N 40' 50.12";
+                visit.Location = l;
+                ((Customer)customer).Visits.Add(visit);
+                be.Users.Add(customer);
+                be.Visits.Add(visit);              
+                be.SaveChanges();
+
+                Assert.AreEqual(be.Visits.Find(visit.Id).Location, visit.Location);
+            }
+        }
+
+        [TestMethod]
+        public void TestRemoveVisit()
+        {
+            using (basicEntities be = new basicEntities())
+            {
+
+                visit = new Visit();
+                visit.Id = 1;
+                visit.Date = "01/01/2004";
                 Location l = new Location();
                 l.Coordinates = "34N 40' 50.12";
                 visit.Location = l;
                 ((Customer)customer).Visits.Add(visit);
                 be.Users.Add(customer);
                 be.Visits.Add(visit);
-               
+
                 be.SaveChanges();
 
-                Assert.AreEqual(be.Visits.Find(visit.Id).Location, visit.Location);
+                
+                be.Visits.Remove(be.Visits.Find(visit.Id));
+                be.Users.Remove(be.Users.Find("customer"));
+                be.Locations.Remove(be.Locations.Find(l.Id));
+                be.SaveChanges();
+
+
+                Assert.IsNull(be.Visits.Find(visit.Id));
             }
         }
-        
         [TestCleanup]
         public void Cleanup()
         {
             using (basicEntities be = new basicEntities())
             {
-                be.Visits.Remove(be.Visits.Find(visit.Id));
-                be.Users.Remove(be.Users.Find("customer"));
-                be.SaveChanges();
+                if (be.Visits.Find(visit.Id) != null)
+                {                   
+                    be.Visits.Remove(be.Visits.Find(visit.Id));
+                    be.Users.Remove(be.Users.Find("customer"));
+                    be.Locations.Remove(be.Locations.Find(l.Id));
+                    be.SaveChanges();
+                }
             }
         }
     }

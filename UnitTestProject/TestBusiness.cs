@@ -38,7 +38,19 @@ namespace UnitTestProject
                 return b.BusinessID;
             }
         }
+        [TestMethod]
+        public void TestUpdateBusiness()
+        {
+            using (basicEntities be = new basicEntities())
+            {
+                Businessid = TestBusinessAdd();
 
+                be.Businesses.Find(Businessid).Address = "tel ron";
+                be.SaveChanges();
+
+                Assert.AreEqual(be.Businesses.Find(Businessid).Address, "tel ron");
+            }
+        }
 
         [TestMethod]
         public void TestRemoveBusiness()

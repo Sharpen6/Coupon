@@ -73,8 +73,12 @@ namespace UnitTestProject
         {
             using (basicEntities be = new basicEntities())
             {
-                if (be.Locations.Find(loc.Id)!=null)
+                if (be.Locations.Find(loc.Id) != null)
+                {
                     be.Locations.Remove(be.Locations.Find(loc.Id));
+                    be.SaveChanges();
+                }
+
             }
         }
     }

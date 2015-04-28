@@ -18,6 +18,23 @@ namespace UnitTestProject
 
             }
         }
+
+        [TestMethod]
+        public void TestUpdateAdmin()
+        {
+            using (basicEntities be = new basicEntities())
+            {
+                string username = TestAdminAdd();
+
+                be.Users.Find(username).Name = "xerxses";
+                be.SaveChanges();
+
+                Assert.AreEqual(be.Users.Find(username).Name, "xerxses");
+
+                RemoveAdmin(username);
+
+            }
+        }
         public static string TestAdminAdd()
         {
             using (basicEntities be = new basicEntities())
@@ -48,7 +65,7 @@ namespace UnitTestProject
             RemoveAdmin(username);
         }
 
-        [TestMethod]
+        /*[TestMethod]
         public void TestUpdateAdminPhoneKidumet()
         {
             string username = TestAdminAdd();
@@ -61,7 +78,7 @@ namespace UnitTestProject
                 Assert.AreEqual(be.Users.Find(username).PhoneKidomet, 052);
             }
             RemoveAdmin(username);
-        }
+        }*/
 
         [TestMethod]
         public void TestRemoveAdmin()

@@ -31,7 +31,7 @@ namespace UnitTestProject
             using (basicEntities be = new basicEntities())
             {
                 Business b = be.Businesses.Find(Businessid);
-                Coupon.Coupon cop = CreateCoupon(2, "Fly PIZZA", "100", "40", b, "10/10/2014");
+                Coupon.Coupon cop = CreateCoupon(2, "Fly PIZZA", "100", "40", b, "10/10/2014",8);
                 be.Coupons.Add(cop);
                 be.SaveChanges();
                 return cop.Id;
@@ -40,7 +40,7 @@ namespace UnitTestProject
             }
         }
 
-        public static Coupon.Coupon CreateCoupon(int id, string name, string orgprice, string discount, Business b, string datee)
+        public static Coupon.Coupon CreateCoupon(int id, string name, string orgprice, string discount, Business b, string datee,int maxNum)
         {
             Coupon.Coupon cop = new Coupon.Coupon();
             cop.Id = id;
@@ -49,7 +49,7 @@ namespace UnitTestProject
             cop.DiscountPrice = discount;
             cop.Business = b;
             cop.ExperationDate = datee;
-
+            cop.MaxNum = maxNum;
             return cop;
         }
 
