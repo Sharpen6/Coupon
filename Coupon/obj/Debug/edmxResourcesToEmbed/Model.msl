@@ -163,7 +163,7 @@
     </AssociationSetMapping>
     <AssociationSetMapping Name="CustomerRecommendation" TypeName="basicModel.CustomerRecommendation" StoreEntitySet="Recommendations">
       <EndProperty Name="Customer">
-        <ScalarProperty Name="UserName" ColumnName="CustomerRecommendation_Recommendation_UserName" />
+        <ScalarProperty Name="UserName" ColumnName="Customer_UserName" />
       </EndProperty>
       <EndProperty Name="Recommendation">
         <ScalarProperty Name="Id" ColumnName="Id" />

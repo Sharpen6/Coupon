@@ -93,7 +93,7 @@ namespace UnitTestProject
             {
                 oc = new OrderedCoupon();
                 oc.Id = 4;
-                oc.Status = SourceType.NotUsed;
+                oc.Status = StatusType.NotUsed;
                 oc.PurchaseDate = "27/04/1990";
                 oc.Coupon = cop;
                 oc.UseDate = "";

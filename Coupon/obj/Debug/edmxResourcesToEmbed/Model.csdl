@@ -40,11 +40,11 @@
       <End Role="Location" EntitySet="Locations" />
     </AssociationSet>
     <EntitySet Name="Recommendations" EntityType="basicModel.Recommendation" />
+    <EntitySet Name="CustomerIntrests" EntityType="basicModel.CustomerIntrests" />
     <AssociationSet Name="CustomerRecommendation" Association="basicModel.CustomerRecommendation">
       <End Role="Customer" EntitySet="Users" />
       <End Role="Recommendation" EntitySet="Recommendations" />
     </AssociationSet>
-    <EntitySet Name="CustomerIntrests" EntityType="basicModel.CustomerIntrests" />
   </EntityContainer>
   <EntityType Name="User">
     <Key>
@@ -119,9 +119,9 @@
     <NavigationProperty Name="Customer" Relationship="basicModel.CustomerOrderedCoupon" FromRole="OrderedCoupon" ToRole="Customer" />
   </EntityType>
   <EnumType Name="SourceType">
-    <Member Name="Used" />
-    <Member Name="NotUsed" />
-    <Member Name="Canceled" />
+    <Member Name="GooglePlus" />
+    <Member Name="Facebook" />
+    <Member Name="Twitter" />
   </EnumType>
   <Association Name="CouponOrderedCoupon">
     <End Type="basicModel.Coupon" Role="Coupon" Multiplicity="1" />
@@ -172,11 +172,8 @@
     <Property Name="Source" Type="basicModel.SourceType" Nullable="false" />
     <Property Name="Description" Type="String" Nullable="false" />
     <Property Name="Link" Type="String" Nullable="false" />
+    <NavigationProperty Name="Customer" Relationship="basicModel.CustomerRecommendation" FromRole="Recommendation" ToRole="Customer" />
   </EntityType>
-  <Association Name="CustomerRecommendation">
-    <End Type="basicModel.Customer" Role="Customer" Multiplicity="1" />
-    <End Type="basicModel.Recommendation" Role="Recommendation" Multiplicity="*" />
-  </Association>
   <EntityType Name="CustomerIntrests">
     <Key>
       <PropertyRef Name="CustomerUserName" />
@@ -195,4 +192,8 @@
     <Member Name="NotUsed" />
     <Member Name="Canceled" />
   </EnumType>
+  <Association Name="CustomerRecommendation">
+    <End Type="basicModel.Customer" Role="Customer" Multiplicity="1" />
+    <End Type="basicModel.Recommendation" Role="Recommendation" Multiplicity="*" />
+  </Association>
 </Schema>

@@ -26,8 +26,8 @@
         <AssociationConnector Association="basicModel.CustomerVisit" />
         <AssociationConnector Association="basicModel.BusinessLocation" />
         <EntityTypeShape EntityType="basicModel.Recommendation" Width="1.5" PointX="7.75" PointY="2.625" />
-        <AssociationConnector Association="basicModel.CustomerRecommendation" />
         <EntityTypeShape EntityType="basicModel.CustomerIntrests" Width="1.5" PointX="8.125" PointY="0.5" />
+        <AssociationConnector Association="basicModel.CustomerRecommendation" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

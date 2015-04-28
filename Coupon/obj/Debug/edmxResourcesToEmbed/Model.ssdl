@@ -134,7 +134,7 @@
     <Property Name="Source" Type="int" Nullable="false" />
     <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
     <Property Name="Link" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="CustomerRecommendation_Recommendation_UserName" Type="varchar" MaxLength="500" Nullable="false" />
+    <Property Name="Customer_UserName" Type="varchar" MaxLength="500" Nullable="false" />
   </EntityType>
   <EntityType Name="CustomerIntrests">
     <Key>
@@ -266,7 +266,7 @@
         <PropertyRef Name="UserName" />
       </Principal>
       <Dependent Role="Recommendation">
-        <PropertyRef Name="CustomerRecommendation_Recommendation_UserName" />
+        <PropertyRef Name="Customer_UserName" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

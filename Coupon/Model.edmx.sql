@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 04/28/2015 13:36:05
+-- Date Created: 04/28/2015 14:35:35
 -- Generated from EDMX file: C:\Users\Sagi\Documents\GitHub\Coupon\Coupon\Model.edmx
 -- --------------------------------------------------
 
@@ -167,7 +167,7 @@ CREATE TABLE [dbo].[Recommendations] (
     [Source] int  NOT NULL,
     [Description] nvarchar(max)  NOT NULL,
     [Link] nvarchar(max)  NOT NULL,
-    [CustomerRecommendation_Recommendation_UserName] varchar(500)  NOT NULL
+    [Customer_UserName] varchar(500)  NOT NULL
 );
 GO
 
@@ -390,10 +390,10 @@ ON [dbo].[Businesses]
     ([Location_Id]);
 GO
 
--- Creating foreign key on [CustomerRecommendation_Recommendation_UserName] in table 'Recommendations'
+-- Creating foreign key on [Customer_UserName] in table 'Recommendations'
 ALTER TABLE [dbo].[Recommendations]
 ADD CONSTRAINT [FK_CustomerRecommendation]
-    FOREIGN KEY ([CustomerRecommendation_Recommendation_UserName])
+    FOREIGN KEY ([Customer_UserName])
     REFERENCES [dbo].[Users_Customer]
         ([UserName])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
@@ -402,7 +402,7 @@ GO
 -- Creating non-clustered index for FOREIGN KEY 'FK_CustomerRecommendation'
 CREATE INDEX [IX_FK_CustomerRecommendation]
 ON [dbo].[Recommendations]
-    ([CustomerRecommendation_Recommendation_UserName]);
+    ([Customer_UserName]);
 GO
 
 -- Creating foreign key on [UserName] in table 'Users_Admin'

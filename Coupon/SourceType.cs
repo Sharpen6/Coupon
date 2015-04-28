@@ -13,8 +13,8 @@ namespace Coupon
     
     public enum SourceType : int
     {
-        Used = 0,
-        NotUsed = 1,
-        Canceled = 2
+        GooglePlus = 0,
+        Facebook = 1,
+        Twitter = 2
     }
 }

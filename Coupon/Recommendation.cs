@@ -18,5 +18,7 @@ namespace Coupon
         public SourceType Source { get; set; }
         public string Description { get; set; }
         public string Link { get; set; }
+    
+        public virtual Customer Customer { get; set; }
     }
 }
