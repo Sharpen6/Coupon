@@ -34,6 +34,38 @@ namespace UnitTestProject
         }
 
         [TestMethod]
+        public void TestUpdatePhoneOwner()
+        {
+            string username = TestOwnerAdd();
+            using (basicEntities be = new basicEntities())
+            {
+
+                User user = be.Users.Find(username);
+                user.PhoneNum = 2222222;
+                be.SaveChanges();
+
+                Assert.AreEqual(be.Users.Find(username).PhoneNum, 2222222);
+            }
+            RemoveOwner(username);
+        }
+
+        [TestMethod]
+        public void TestUpdateOwnerPhoneKidumet()
+        {
+            string username = TestOwnerAdd();
+            using (basicEntities be = new basicEntities())
+            {
+                User user = be.Users.Find(username);
+                user.PhoneKidomet = 052;
+                be.SaveChanges();
+
+                Assert.AreEqual(be.Users.Find(username).PhoneKidomet, 052);
+            }
+            RemoveOwner(username);
+        }
+
+
+        [TestMethod]
         public void TestRemoveOwner()
         {
             string username = TestOwnerAdd();

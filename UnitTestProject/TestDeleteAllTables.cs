@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace UnitTestProject
 {
-    [TestClass]
+    //[TestClass]
     public class TestDeleteAllTables
     {
 

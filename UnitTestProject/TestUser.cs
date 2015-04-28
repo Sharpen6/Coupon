@@ -36,11 +36,11 @@ namespace UnitTestProject
             using (basicEntities be = new basicEntities())
             {
 
-                User user = be.Users.Find("User123");
+                User user = be.Users.Find(username);
                 user.PhoneNum = 2222222;
                 be.SaveChanges();
 
-                Assert.AreEqual(be.Users.Find("User123").PhoneNum, 2222222);
+                Assert.AreEqual(be.Users.Find(username).PhoneNum, 2222222);
             }
             RemoveUser(username);
         }
@@ -51,11 +51,11 @@ namespace UnitTestProject
             string username = TestUserAdd();
             using (basicEntities be = new basicEntities())
             {
-                User user = be.Users.Find("User123");
+                User user = be.Users.Find(username);
                 user.PhoneKidomet = 052;
                 be.SaveChanges();
 
-                Assert.AreEqual(be.Users.Find("User123").PhoneKidomet, 052);
+                Assert.AreEqual(be.Users.Find(username).PhoneKidomet, 052);
             }
             RemoveUser(username);
         }
