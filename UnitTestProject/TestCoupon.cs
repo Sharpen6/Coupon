@@ -58,8 +58,12 @@ namespace UnitTestProject
             using (basicEntities be = new basicEntities())
             {
                 Coupon.Coupon CouponToRemove = be.Coupons.Find(CouponID);
+                string Businessid = CouponToRemove.Business.BusinessID;
                 be.Coupons.Remove(CouponToRemove);
                 be.SaveChanges();
+                TestBusiness.RemoveBusinesses(Businessid);
+                be.SaveChanges();
+
             }
         }
 
@@ -72,9 +76,6 @@ namespace UnitTestProject
             {
                 RemoveCoupon(coupon);
                 Assert.AreEqual(be.Coupons.Find(coupon), null);
-
-
-                
             }
         }
 

@@ -11,7 +11,7 @@ namespace UnitTestProject
     public class TestRecommendation
     {
         Recommendation rec;
-
+        Customer customer;
         /*[TestInitialize]
         public void TestInit()
         {
@@ -39,7 +39,7 @@ namespace UnitTestProject
         {
             using (basicEntities be = new basicEntities())
             {
-                Customer customer = TestCustomer.AddCustomer("Customer123", "adam", "admin123123", 054, 3134195, "adamin@gmail.com");
+                customer = TestCustomer.AddCustomer("Customer123", "adam", "admin123123", 054, 3134195, "adamin@gmail.com");
                 
                 rec = new Recommendation();
                 rec.Description = "blabla";
@@ -60,7 +60,7 @@ namespace UnitTestProject
         {
             using (basicEntities be = new basicEntities())
             {
-                Customer customer = TestCustomer.AddCustomer("Customer123", "adam", "admin123123", 054, 3134195, "adamin@gmail.com");
+                customer = TestCustomer.AddCustomer("Customer123", "adam", "admin123123", 054, 3134195, "adamin@gmail.com");
 
                 rec = new Recommendation();
                 rec.Description = "blabla";
@@ -75,17 +75,18 @@ namespace UnitTestProject
 
 
                 be.Recommendations.Remove(rec);
+                be.Users.Remove(be.Users.Find(customer.UserName));
                 be.SaveChanges();
 
                 Assert.IsNull(be.Recommendations.Find(rec.Id));
             }
         }
         [TestMethod]
-        public void TestModifyRecommendation()
+        public void TestUpdateRecommendation()
         {
             using (basicEntities be = new basicEntities())
             {
-                Customer customer = TestCustomer.AddCustomer("Customer123", "adam", "admin123123", 054, 3134195, "adamin@gmail.com");
+                customer = TestCustomer.AddCustomer("Customer123", "adam", "admin123123", 054, 3134195, "adamin@gmail.com");
 
                 rec = new Recommendation();
                 rec.Description = "blabla";
@@ -111,11 +112,13 @@ namespace UnitTestProject
             using (basicEntities be = new basicEntities())
             {
                 Recommendation r = be.Recommendations.Find(rec.Id);
-                if (r!=null)
+                if (r != null)
+                {
                     be.Recommendations.Remove(be.Recommendations.Find(r.Id));
-                //TestCustomer.RemoveCustomer("Customer123");
-                //be.Users.Remove(be.Users.Find(customer.UserName));
-                be.SaveChanges();
+                    //TestCustomer.RemoveCustomer("Customer123");
+                    be.Users.Remove(be.Users.Find(customer.UserName));
+                    be.SaveChanges();
+                }
             }
         }
     }

@@ -95,6 +95,7 @@ namespace UnitTestProject
                 be.Businesses.Remove(be.Businesses.Find(b.BusinessID));
                 be.Users.Remove(be.Users.Find(admin.UserName));
                 be.Users.Remove(be.Users.Find(owner.UserName));
+                be.Users.Remove(be.Users.Find(customer.UserName));
                 be.SaveChanges();
 
                 Assert.IsNull(be.OrderedCoupons.Find(oc.SerialNum));
@@ -151,6 +152,7 @@ namespace UnitTestProject
                     be.Businesses.Remove(be.Businesses.Find(b.BusinessID));
                     be.Users.Remove(be.Users.Find(admin.UserName));
                     be.Users.Remove(be.Users.Find(owner.UserName));
+                    be.Users.Remove(be.Users.Find(customer.UserName));
                     be.SaveChanges();
                 }
             }
