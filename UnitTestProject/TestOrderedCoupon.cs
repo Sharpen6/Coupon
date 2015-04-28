@@ -10,118 +10,149 @@ namespace UnitTestProject
     [TestClass]
     public class TestOrderedCoupon
     {
-        User customer;
-        User admin;
-        User owner;
-        Business bus;
+        Owner owner;
+        Admin admin;
+        Business b ;
         Coupon.Coupon cop;
+        Customer customer;
         OrderedCoupon oc;
 
         [TestInitialize]
         public void TestInit()
         {
-            using (basicEntities be = new basicEntities())
-            {
-                owner = be.Users.Find("owner");
-                if (owner == null)
-                {
-
-                    owner = new Owner();
-                    owner.Name = "adam";
-                    owner.UserName = "owner";
-                    owner.Password = "admin123123";
-                    owner.PhoneKidomet = 054;
-                    owner.PhoneNum = 3134195;
-                    owner.Email = "adamin@gmail.com";
-                }
-
-
-                admin = be.Users.Find("admin");
-                if (admin == null)
-                {
-                    admin = new Admin();
-                    admin.Name = "adam";
-                    admin.UserName = "admin";
-                    admin.Password = "admin123123";
-                    admin.PhoneKidomet = 054;
-                    admin.PhoneNum = 3134195;
-                    admin.Email = "adamin@gmail.com";
-                }
-
-                customer = be.Users.Find("customer");
-                if (customer == null)
-                {
-                    customer = new Customer();
-                    customer.Name = "adam";
-                    customer.UserName = "customer";
-                    customer.Password = "admin123123";
-                    customer.PhoneKidomet = 054;
-                    customer.PhoneNum = 3134195;
-                    customer.Email = "adamin@gmail.com";
-                }
-                
-                bus = be.Businesses.Find("123");
-                if (bus == null)
-                {
-                    bus = new Business();
-                    bus.BusinessID = "123";
-                    bus.Admin = (Admin)admin;
-                    bus.Owner = (Owner)owner;
-                    bus.Address = "beer sheva";
-                    bus.Name = "plastics maker";
-                    bus.Category = Category.CarsAccessories;
-                }
-
-
-                cop = new Coupon.Coupon();
-
-                cop.Id = 2;
-                cop.Name = "Fly PIZZA";
-                cop.OriginalPrice = "100";
-                cop.DiscountPrice = "40";
-                cop.Business = bus;
-                cop.ExperationDate = "10/10/2014";
-                cop.AvarageRanking = "0";
-                cop.Description = "blabla";
-            }
+            
+            
         }
-
+        
         [TestMethod]
         public void TestAddOrderedCoupon()
         {
             using (basicEntities be = new basicEntities())
             {
+                owner = TestOwner.AddOwner("owner123", "adam", "admin123123", 054, 3134195, "adamin@gmail.com");
+                admin = TestAdmin.AddAdmin("admin123", "adam", "admin123123", 054, 3134195, "adamin@gmail.com");
+                b = TestBusiness.AddBusinesses("123", admin, owner, "beer-Sheva", "bla", Category.CarsAccessories);
+                cop = TestCoupon.CreateCoupon(2, "Fly PIZZA", "100", "40", b, "10/10/2014");
+                customer = TestCustomer.AddCustomer("Customer123", "adam", "admin123123", 054, 3134195, "adamin@gmail.com");
+                
+                be.Users.Add(owner);
+                be.Users.Add(admin);
+                be.Businesses.Add(b);
+                be.Coupons.Add(cop);
+                be.SaveChanges();
+
                 oc = new OrderedCoupon();
-                oc.Id = 4;
+                oc.SerialNum = 4;
                 oc.Status = StatusType.NotUsed;
                 oc.PurchaseDate = "27/04/1990";
                 oc.Coupon = cop;
                 oc.UseDate = "";
                 oc.Rank = "0";
                 oc.Opinion = "";
-
-                oc.Customer = (Customer)customer;
+                oc.Customer = customer;
 
                 be.OrderedCoupons.Add(oc);
-                             
                 be.SaveChanges();
+                
 
-                Assert.AreEqual(be.OrderedCoupons.Find(oc.Id).PurchaseDate, oc.PurchaseDate);
+                Assert.AreEqual(be.OrderedCoupons.Find(oc.SerialNum).PurchaseDate, oc.PurchaseDate);
                
             }
         }
 
+        [TestMethod]
+        public void TestRemoveOrderedCoupon()
+        {
+            using (basicEntities be = new basicEntities())
+            {
+                owner = TestOwner.AddOwner("owner123", "adam", "admin123123", 054, 3134195, "adamin@gmail.com");
+                admin = TestAdmin.AddAdmin("admin123", "adam", "admin123123", 054, 3134195, "adamin@gmail.com");
+                b = TestBusiness.AddBusinesses("123", admin, owner, "beer-Sheva", "bla", Category.CarsAccessories);
+                cop = TestCoupon.CreateCoupon(2, "Fly PIZZA", "100", "40", b, "10/10/2014");
+                customer = TestCustomer.AddCustomer("Customer123", "adam", "admin123123", 054, 3134195, "adamin@gmail.com");
+
+                be.Users.Add(owner);
+                be.Users.Add(admin);
+                be.Businesses.Add(b);
+                be.Coupons.Add(cop);
+                be.SaveChanges();
+
+                oc = new OrderedCoupon();
+                oc.SerialNum = 4;
+                oc.Status = StatusType.NotUsed;
+                oc.PurchaseDate = "27/04/1990";
+                oc.Coupon = cop;
+                oc.UseDate = "";
+                oc.Rank = "0";
+                oc.Opinion = "";
+                oc.Customer = customer;
+
+                be.OrderedCoupons.Add(oc);
+                be.SaveChanges();
+
+                be.OrderedCoupons.Remove(be.OrderedCoupons.Find(oc.SerialNum));
+                be.Coupons.Remove(be.Coupons.Find(cop.Id));
+                be.Businesses.Remove(be.Businesses.Find(b.BusinessID));
+                be.Users.Remove(be.Users.Find(admin.UserName));
+                be.Users.Remove(be.Users.Find(owner.UserName));
+                be.SaveChanges();
+
+                Assert.IsNull(be.OrderedCoupons.Find(oc.SerialNum));
+
+            }
+        }
+
+        [TestMethod]
+        public void TestUpdateOrderedCoupon()
+        {
+            using (basicEntities be = new basicEntities())
+            {
+                owner = TestOwner.AddOwner("owner123", "adam", "admin123123", 054, 3134195, "adamin@gmail.com");
+                admin = TestAdmin.AddAdmin("admin123", "adam", "admin123123", 054, 3134195, "adamin@gmail.com");
+                b = TestBusiness.AddBusinesses("123", admin, owner, "beer-Sheva", "bla", Category.CarsAccessories);
+                cop = TestCoupon.CreateCoupon(2, "Fly PIZZA", "100", "40", b, "10/10/2014");
+                customer = TestCustomer.AddCustomer("Customer123", "adam", "admin123123", 054, 3134195, "adamin@gmail.com");
+
+                be.Users.Add(owner);
+                be.Users.Add(admin);
+                be.Businesses.Add(b);
+                be.Coupons.Add(cop);
+                be.SaveChanges();
+
+                oc = new OrderedCoupon();
+                oc.SerialNum = 4;
+                oc.Status = StatusType.NotUsed;
+                oc.PurchaseDate = "27/04/1990";
+                oc.Coupon = cop;
+                oc.UseDate = "";
+                oc.Rank = "0";
+                oc.Opinion = "";
+                oc.Customer = customer;
+
+                be.OrderedCoupons.Add(oc);
+                be.SaveChanges();
+
+                oc.Rank = "5";
+                be.SaveChanges();
+
+                Assert.AreEqual(be.OrderedCoupons.Find(oc.SerialNum).Rank, oc.Rank);
+
+            }
+        }
         [TestCleanup]
         public void CleanUp()
         {
             using (basicEntities be = new basicEntities())
             {
-                be.OrderedCoupons.Remove(be.OrderedCoupons.Find(oc.Id));
-                be.Coupons.Remove(be.Coupons.Find(cop.Id));
-                be.Businesses.Remove(be.Businesses.Find(bus.BusinessID));
-                be.Users.Remove(be.Users.Find(admin.UserName));
-                be.Users.Remove(be.Users.Find(owner.UserName));
-                be.SaveChanges();
+                if (be.OrderedCoupons.Find(oc.SerialNum) != null)
+                {
+                    be.OrderedCoupons.Remove(be.OrderedCoupons.Find(oc.SerialNum));
+                    be.Coupons.Remove(be.Coupons.Find(cop.Id));
+                    be.Businesses.Remove(be.Businesses.Find(b.BusinessID));
+                    be.Users.Remove(be.Users.Find(admin.UserName));
+                    be.Users.Remove(be.Users.Find(owner.UserName));
+                    be.SaveChanges();
+                }
             }
         }
     }
