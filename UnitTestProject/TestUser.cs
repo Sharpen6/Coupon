@@ -12,16 +12,27 @@ namespace UnitTestProject
         {
             using (basicEntities be = new basicEntities())
             {
+                string username = TestUserAdd();
+                Assert.AreEqual(be.Users.Find(username).UserName, username);
+                RemoveUser(username);
+            }
+        }
+
+        public static string TestUserAdd()
+        {
+            using (basicEntities be = new basicEntities())
+            {
                 User u = AddUser("User123", "adam", "admin123123", 054, 3134195, "adamin@gmail.com");
                 be.Users.Add(u);
                 be.SaveChanges();
-                Assert.AreEqual(be.Users.Find(u.UserName).UserName, u.UserName);
+                return u.UserName;
             }
         }
 
         [TestMethod]
         public void TestUpdatePhoneUser()
         {
+            string username = TestUserAdd();
             using (basicEntities be = new basicEntities())
             {
 
@@ -31,29 +42,32 @@ namespace UnitTestProject
 
                 Assert.AreEqual(be.Users.Find("User123").PhoneNum, 2222222);
             }
+            RemoveUser(username);
         }
 
         [TestMethod]
         public void TestUpdatePhoneKidumet()
         {
+            string username = TestUserAdd();
             using (basicEntities be = new basicEntities())
             {
-
                 User user = be.Users.Find("User123");
                 user.PhoneKidomet = 052;
                 be.SaveChanges();
 
                 Assert.AreEqual(be.Users.Find("User123").PhoneKidomet, 052);
             }
+            RemoveUser(username);
         }
 
         [TestMethod]
         public void TestRemoveUser()
         {
+            string username = TestUserAdd();
             using (basicEntities be = new basicEntities())
             {
-                RemoveUser("User123");
-                Assert.AreEqual(be.Users.Find("User123"), null);
+                RemoveUser(username);
+                Assert.AreEqual(be.Users.Find(username), null);
             }
         }
 
@@ -75,7 +89,7 @@ namespace UnitTestProject
                 u.Name = Name;
                 u.UserName = UserName;
                 User sameKey = be.Users.Find(u.UserName);
-                while (sameKey != null && sameKey.UserName == u.UserName)
+                while (sameKey != null && sameKey.UserName.ToLower() == u.UserName.ToLower())
                 {
                     u.UserName += "1";
                     sameKey = be.Users.Find(u.UserName);

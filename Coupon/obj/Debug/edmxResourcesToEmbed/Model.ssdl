@@ -109,9 +109,9 @@
   </EntityType>
   <EntityType Name="OrderedCoupons">
     <Key>
-      <PropertyRef Name="Id" />
+      <PropertyRef Name="SerialNum" />
     </Key>
-    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="SerialNum" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Status" Type="int" Nullable="false" />
     <Property Name="PurchaseDate" Type="nvarchar(max)" Nullable="false" />
     <Property Name="UseDate" Type="nvarchar(max)" Nullable="false" />

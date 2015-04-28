@@ -112,9 +112,9 @@
   </Association>
   <EntityType Name="OrderedCoupon">
     <Key>
-      <PropertyRef Name="Id" />
+      <PropertyRef Name="SerialNum" />
     </Key>
-    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="SerialNum" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="Status" Type="basicModel.StatusType" Nullable="false" />
     <Property Name="PurchaseDate" Type="String" Nullable="false" />
     <Property Name="UseDate" Type="String" Nullable="false" />

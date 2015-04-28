@@ -12,21 +12,33 @@ namespace UnitTestProject
         {
             using (basicEntities be = new basicEntities())
             {
+                string username = TestCustomerAdd();
+                Assert.AreEqual(be.Users.Find(username).UserName, username);
+                RemoveCustomer(username);
+
+            }
+        }
+
+        public string TestCustomerAdd()
+        {
+            using (basicEntities be = new basicEntities())
+            {
                 Customer c = AddCustomer("Customer123", "adam", "admin123123", 054, 3134195, "adamin@gmail.com");
                 be.Users.Add(c);
                 be.SaveChanges();
-                Assert.AreEqual(be.Users.Find(c.UserName).UserName, c.UserName);
-
+              
+                return  c.UserName;
             }
         }
 
         [TestMethod]
         public void TestRemoveCustomer()
         {
+            string username = TestCustomerAdd();
             using (basicEntities be = new basicEntities())
             {
-                RemoveCustomer("Customer123");
-                Assert.AreEqual(be.Users.Find("Customer123"), null);
+                RemoveCustomer(username);
+                Assert.AreEqual(be.Users.Find(username), null);
             }
         }
 
@@ -38,7 +50,7 @@ namespace UnitTestProject
                 u.Name = Name;
                 u.UserName = UserName;
                 User sameKey = be.Users.Find(u.UserName);
-                while (sameKey != null && sameKey.UserName == u.UserName)
+                while (sameKey != null && sameKey.UserName.ToLower() == u.UserName.ToLower())
                 {
                     u.UserName += "1";
                     sameKey = be.Users.Find(u.UserName);

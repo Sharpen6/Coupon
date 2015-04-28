@@ -14,7 +14,7 @@ namespace Coupon
     
     public partial class OrderedCoupon
     {
-        public int Id { get; set; }
+        public int SerialNum { get; set; }
         public StatusType Status { get; set; }
         public string PurchaseDate { get; set; }
         public string UseDate { get; set; }

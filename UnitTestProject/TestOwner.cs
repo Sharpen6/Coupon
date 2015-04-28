@@ -7,15 +7,28 @@ namespace UnitTestProject
     [TestClass]
     public class TestOwner
     {
+
         [TestMethod]
         public void TestAddOwner()
+        {
+            using (basicEntities be = new basicEntities())
+            {
+                string username = TestOwnerAdd();
+                Assert.AreEqual(be.Users.Find(username).UserName, username);
+                RemoveOwner(username);
+
+            }
+        }
+
+        public static string TestOwnerAdd()
         {
             using (basicEntities be = new basicEntities())
             {
                 Owner o = AddOwner("owner123", "adam", "admin123123", 054, 3134195, "adamin@gmail.com");
                 be.Users.Add(o);
                 be.SaveChanges();
-                Assert.AreEqual(be.Users.Find(o.UserName).UserName, o.UserName);
+                return o.UserName;
+
 
             }
         }
@@ -23,10 +36,11 @@ namespace UnitTestProject
         [TestMethod]
         public void TestRemoveOwner()
         {
+            string username = TestOwnerAdd();
             using (basicEntities be = new basicEntities())
             {
-                RemoveOwner("owner123");
-                Assert.AreEqual(be.Users.Find("owner123"), null);
+                RemoveOwner(username);
+                Assert.AreEqual(be.Users.Find(username), null);
             }
         }
 
@@ -38,7 +52,7 @@ namespace UnitTestProject
                 u.Name = Name;
                 u.UserName = UserName;
                 User sameKey = be.Users.Find(u.UserName);
-                while (sameKey != null && sameKey.UserName == u.UserName)
+                while (sameKey != null && sameKey.UserName.ToLower() == u.UserName.ToLower())
                 {
                     u.UserName += "1";
                     sameKey = be.Users.Find(u.UserName);

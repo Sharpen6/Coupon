@@ -12,21 +12,34 @@ namespace UnitTestProject
         {
             using (basicEntities be = new basicEntities())
             {
+                string username=TestAdminAdd();
+                Assert.AreEqual(be.Users.Find(username).UserName, username);
+                RemoveAdmin(username);
+
+            }
+        }
+        public static string TestAdminAdd()
+        {
+            using (basicEntities be = new basicEntities())
+            {
                 Admin A = AddAdmin("Admin123", "adam", "admin123123", 054, 3134195, "adamin@gmail.com");
                 be.Users.Add(A);
                 be.SaveChanges();
-                Assert.AreEqual(be.Users.Find(A.UserName).UserName, A.UserName);
+
+                return A.UserName;
+ 
 
             }
         }
 
-  //      [TestMethod]
+        [TestMethod]
         public void TestRemoveAdmin()
         {
+            string username=TestAdminAdd();
             using (basicEntities be = new basicEntities())
             {
-                RemoveAdmin("Admin123");
-                Assert.AreEqual(be.Users.Find("Admin123"), null);
+                RemoveAdmin(username);
+                Assert.AreEqual(be.Users.Find(username), null);
             }
         }
 
@@ -38,7 +51,7 @@ namespace UnitTestProject
                 u.Name = Name;
                 u.UserName = UserName;
                 User sameKey = be.Users.Find(u.UserName);
-                while (sameKey != null && sameKey.UserName == u.UserName)
+                while (sameKey != null && sameKey.UserName.ToLower() == u.UserName.ToLower())
                 {
                     u.UserName += "1";
                     sameKey = be.Users.Find(u.UserName);
@@ -57,6 +70,7 @@ namespace UnitTestProject
         {
             using (basicEntities be = new basicEntities())
             {
+               
                 User AdminToRemove = be.Users.Find(admin);
 
                 be.Users.Remove(AdminToRemove);

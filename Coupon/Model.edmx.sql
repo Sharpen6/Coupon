@@ -2,8 +2,8 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 04/28/2015 14:55:15
--- Generated from EDMX file: C:\Users\Sagi\Documents\GitHub\Coupon\Coupon\Model.edmx
+-- Date Created: 04/28/2015 19:03:06
+-- Generated from EDMX file: C:\Users\DorinS\Documents\GitHub\Coupon\Coupon\Model.edmx
 -- --------------------------------------------------
 
 SET QUOTED_IDENTIFIER OFF;
@@ -146,7 +146,7 @@ GO
 
 -- Creating table 'OrderedCoupons'
 CREATE TABLE [dbo].[OrderedCoupons] (
-    [Id] int IDENTITY(1,1) NOT NULL,
+    [SerialNum] int IDENTITY(1,1) NOT NULL,
     [Status] int  NOT NULL,
     [PurchaseDate] nvarchar(max)  NOT NULL,
     [UseDate] nvarchar(max)  NOT NULL,
@@ -185,7 +185,7 @@ GO
 
 -- Creating table 'CustomerIntrests'
 CREATE TABLE [dbo].[CustomerIntrests] (
-    [CustomerUserName] varchar(500)  NOT NULL,
+    [CustomerUserName] nvarchar(max)  NOT NULL,
     [InterestID] int  NOT NULL
 );
 GO
@@ -244,10 +244,10 @@ ADD CONSTRAINT [PK_Coupons]
     PRIMARY KEY CLUSTERED ([Id] ASC);
 GO
 
--- Creating primary key on [Id] in table 'OrderedCoupons'
+-- Creating primary key on [SerialNum] in table 'OrderedCoupons'
 ALTER TABLE [dbo].[OrderedCoupons]
 ADD CONSTRAINT [PK_OrderedCoupons]
-    PRIMARY KEY CLUSTERED ([Id] ASC);
+    PRIMARY KEY CLUSTERED ([SerialNum] ASC);
 GO
 
 -- Creating primary key on [Id] in table 'Visits'
@@ -315,7 +315,6 @@ ADD CONSTRAINT [FK_AdminBusiness]
     REFERENCES [dbo].[Users_Admin]
         ([UserName])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
-GO
 
 -- Creating non-clustered index for FOREIGN KEY 'FK_AdminBusiness'
 CREATE INDEX [IX_FK_AdminBusiness]
@@ -330,7 +329,6 @@ ADD CONSTRAINT [FK_BusinessCoupon]
     REFERENCES [dbo].[Businesses]
         ([BusinessID])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
-GO
 
 -- Creating non-clustered index for FOREIGN KEY 'FK_BusinessCoupon'
 CREATE INDEX [IX_FK_BusinessCoupon]
@@ -345,7 +343,6 @@ ADD CONSTRAINT [FK_OwnerBusiness]
     REFERENCES [dbo].[Users_Owner]
         ([UserName])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
-GO
 
 -- Creating non-clustered index for FOREIGN KEY 'FK_OwnerBusiness'
 CREATE INDEX [IX_FK_OwnerBusiness]
@@ -360,7 +357,6 @@ ADD CONSTRAINT [FK_CouponOrderedCoupon]
     REFERENCES [dbo].[Coupons]
         ([Id])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
-GO
 
 -- Creating non-clustered index for FOREIGN KEY 'FK_CouponOrderedCoupon'
 CREATE INDEX [IX_FK_CouponOrderedCoupon]
@@ -375,7 +371,6 @@ ADD CONSTRAINT [FK_CustomerOrderedCoupon]
     REFERENCES [dbo].[Users_Customer]
         ([UserName])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
-GO
 
 -- Creating non-clustered index for FOREIGN KEY 'FK_CustomerOrderedCoupon'
 CREATE INDEX [IX_FK_CustomerOrderedCoupon]
@@ -390,7 +385,6 @@ ADD CONSTRAINT [FK_LocationVisit]
     REFERENCES [dbo].[Locations]
         ([Id])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
-GO
 
 -- Creating non-clustered index for FOREIGN KEY 'FK_LocationVisit'
 CREATE INDEX [IX_FK_LocationVisit]
@@ -405,7 +399,6 @@ ADD CONSTRAINT [FK_CustomerVisit]
     REFERENCES [dbo].[Users_Customer]
         ([UserName])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
-GO
 
 -- Creating non-clustered index for FOREIGN KEY 'FK_CustomerVisit'
 CREATE INDEX [IX_FK_CustomerVisit]
@@ -420,7 +413,6 @@ ADD CONSTRAINT [FK_BusinessLocation]
     REFERENCES [dbo].[Locations]
         ([Id])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
-GO
 
 -- Creating non-clustered index for FOREIGN KEY 'FK_BusinessLocation'
 CREATE INDEX [IX_FK_BusinessLocation]
@@ -435,7 +427,6 @@ ADD CONSTRAINT [FK_CustomerRecommendation]
     REFERENCES [dbo].[Users_Customer]
         ([UserName])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
-GO
 
 -- Creating non-clustered index for FOREIGN KEY 'FK_CustomerRecommendation'
 CREATE INDEX [IX_FK_CustomerRecommendation]
@@ -459,7 +450,6 @@ ADD CONSTRAINT [FK_CustomerCustomer_Customer1]
     REFERENCES [dbo].[Users_Customer]
         ([UserName])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
-GO
 
 -- Creating non-clustered index for FOREIGN KEY 'FK_CustomerCustomer_Customer1'
 CREATE INDEX [IX_FK_CustomerCustomer_Customer1]

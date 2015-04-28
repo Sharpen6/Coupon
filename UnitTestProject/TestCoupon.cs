@@ -10,24 +10,31 @@ namespace UnitTestProject
     [TestClass]
     public class TestCoupon
     {
-
-        [TestInitialize]
-        public void TestInit()
-        {
-            TestBusiness b = new TestBusiness();
-            b.TestInit();
-            b.TestAddBusiness();
-        }
+        string Businessid;
+        int coupon;
+  
         [TestMethod]
         public void TestAddCoupon()
         {
+            coupon=TestCouponAdd();
             using (basicEntities be = new basicEntities())
             {
+                Assert.AreEqual(be.Coupons.Find(coupon).Id, coupon);
+            }
 
-                Business b = be.Businesses.Find("123");
+        }
+
+        public int TestCouponAdd()
+        {
+            TestBusiness bn = new TestBusiness();
+            Businessid = bn.TestBusinessAdd();
+            using (basicEntities be = new basicEntities())
+            {
+                Business b = be.Businesses.Find(Businessid);
                 Coupon.Coupon cop = CreateCoupon(2, "Fly PIZZA", "100", "40", b, "10/10/2014");
                 be.Coupons.Add(cop);
                 be.SaveChanges();
+                return cop.Id;
 
 
             }
@@ -59,28 +66,32 @@ namespace UnitTestProject
         [TestMethod]
         public void TestRemoveCoupon()
         {
-            int CouponID = 0;
+
+             coupon = TestCouponAdd();
             using (basicEntities be = new basicEntities())
             {
-                var query = from b in be.Coupons
-                            select b;
-                if (query.Count() > 0)
-                {
-                    Coupon.Coupon CouponToRemove = be.Coupons.Find(CouponID);
-                    while (CouponToRemove == null)
-                    {
-                        CouponID = CouponID + 1;
-                        CouponToRemove = be.Coupons.Find(CouponID);
-                    }
-                    RemoveCoupon(CouponID);
-                }
-            }
-                using (basicEntities be = new basicEntities())
-                {
-                    Assert.AreEqual(be.Coupons.Find(CouponID), null);
+                RemoveCoupon(coupon);
+                Assert.AreEqual(be.Coupons.Find(coupon), null);
 
 
                 
+            }
+        }
+
+        [TestCleanup]
+        public void Cleanup()
+        {
+            using (basicEntities be = new basicEntities())
+            {
+                if (be.Coupons.Find(coupon) != null)
+                {
+
+                    be.Coupons.Remove(be.Coupons.Find(coupon));
+                    be.SaveChanges();
+                    TestBusiness.RemoveBusinesses(Businessid);
+                    be.SaveChanges();
+               
+                }
             }
         }
     }

@@ -8,14 +8,10 @@ namespace UnitTestProject
     [TestClass]
     public class TestBusiness
     {
-        [TestInitialize]
-        public void TestInit()
-        {
-            TestAdmin a = new TestAdmin();
-            a.TestAddAdmin();
-            TestOwner b = new TestOwner();
-            b.TestAddOwner();
-        }
+        string admins;
+        string owners;
+        string Businessid;
+
 
 
         [TestMethod]
@@ -23,23 +19,35 @@ namespace UnitTestProject
         {
             using (basicEntities be = new basicEntities())
             {
-                Owner owner = (Owner)be.Users.Find("owner123");
-                Admin admin = (Admin)be.Users.Find("Admin123");
+                 Businessid = TestBusinessAdd();
+                Assert.AreEqual(be.Businesses.Find(Businessid).BusinessID, Businessid);
+            }
+        }
+
+        public string TestBusinessAdd()
+        {
+            admins = TestAdmin.TestAdminAdd();
+            owners = TestOwner.TestOwnerAdd();
+            using (basicEntities be = new basicEntities())
+            {
+                Owner owner = (Owner)be.Users.Find(owners);
+                Admin admin = (Admin)be.Users.Find(admins);
                 Business b = AddBusinesses("123", admin, owner, "beer-Sheva", "bla", Category.CarsAccessories);
                 be.Businesses.Add(b);
                 be.SaveChanges();
-                Assert.AreEqual(be.Businesses.Find(b.BusinessID).Name, b.Name);
+                return b.BusinessID;
             }
         }
 
 
-     //   [TestMethod]
+        [TestMethod]
         public void TestRemoveBusiness()
         {
+            Businessid = TestBusinessAdd();
             using (basicEntities be = new basicEntities())
             {
-                RemoveBusinesses("123");
-                Assert.AreEqual(be.Businesses.Find("123"), null);
+                RemoveBusinesses(Businessid);
+                Assert.AreEqual(be.Businesses.Find(Businessid), null);
             }
         }
 
@@ -51,7 +59,7 @@ namespace UnitTestProject
                 b.BusinessID = BusinessID;
 
                 Business sameKey = be.Businesses.Find(b.BusinessID);
-                while (sameKey != null && sameKey.BusinessID == b.BusinessID)
+                while (sameKey != null && sameKey.BusinessID.ToLower() == b.BusinessID.ToLower())
                 {
                     b.BusinessID += "1";
                     sameKey = be.Businesses.Find(b.BusinessID);
@@ -71,10 +79,32 @@ namespace UnitTestProject
         {
             using (basicEntities be = new basicEntities())
             {
+
                 Business BusinessesToRemove = be.Businesses.Find(BusinessID);
+                string owner =BusinessesToRemove.Admin.UserName;
+                string admin = BusinessesToRemove.Owner.UserName;
                 be.Businesses.Remove(BusinessesToRemove);
+
+                be.SaveChanges();
+                TestOwner.RemoveOwner(owner);
+                TestAdmin.RemoveAdmin(admin);
                 be.SaveChanges();
 
+            }
+        }
+
+        [TestCleanup]
+        public void Cleanup()
+        {
+            using (basicEntities be = new basicEntities())
+            {
+                if(be.Businesses.Find(Businessid)!=null)
+                {
+                be.Businesses.Remove(be.Businesses.Find(Businessid));
+                be.SaveChanges();
+                TestOwner.RemoveOwner(owners);
+                TestAdmin.RemoveAdmin(admins);
+                }
             }
         }
     }

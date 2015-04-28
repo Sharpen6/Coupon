@@ -54,7 +54,7 @@
     <EntitySetMapping Name="OrderedCoupons">
       <EntityTypeMapping TypeName="IsTypeOf(basicModel.OrderedCoupon)">
         <MappingFragment StoreEntitySet="OrderedCoupons">
-          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="SerialNum" ColumnName="SerialNum" />
           <ScalarProperty Name="Status" ColumnName="Status" />
           <ScalarProperty Name="PurchaseDate" ColumnName="PurchaseDate" />
           <ScalarProperty Name="UseDate" ColumnName="UseDate" />
@@ -134,7 +134,7 @@
         <ScalarProperty Name="Id" ColumnName="Coupon_Id" />
       </EndProperty>
       <EndProperty Name="OrderedCoupon">
-        <ScalarProperty Name="Id" ColumnName="Id" />
+        <ScalarProperty Name="SerialNum" ColumnName="SerialNum" />
       </EndProperty>
     </AssociationSetMapping>
     <AssociationSetMapping Name="CustomerOrderedCoupon" TypeName="basicModel.CustomerOrderedCoupon" StoreEntitySet="OrderedCoupons">
@@ -142,7 +142,7 @@
         <ScalarProperty Name="UserName" ColumnName="Customer_UserName" />
       </EndProperty>
       <EndProperty Name="OrderedCoupon">
-        <ScalarProperty Name="Id" ColumnName="Id" />
+        <ScalarProperty Name="SerialNum" ColumnName="SerialNum" />
       </EndProperty>
     </AssociationSetMapping>
     <AssociationSetMapping Name="LocationVisit" TypeName="basicModel.LocationVisit" StoreEntitySet="Visits">
