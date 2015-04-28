@@ -110,8 +110,10 @@ namespace UnitTestProject
         {
             using (basicEntities be = new basicEntities())
             {
-                be.Recommendations.Remove(be.Recommendations.Find(rec.Id));
-                TestCustomer.RemoveCustomer("Customer123");
+                Recommendation r = be.Recommendations.Find(rec.Id);
+                if (r!=null)
+                    be.Recommendations.Remove(be.Recommendations.Find(r.Id));
+                //TestCustomer.RemoveCustomer("Customer123");
                 //be.Users.Remove(be.Users.Find(customer.UserName));
                 be.SaveChanges();
             }
