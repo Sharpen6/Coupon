@@ -14,5 +14,12 @@ namespace Coupon
     
     public partial class Customer : User
     {
+        public Customer()
+        {
+            this.OrderedCoupons = new HashSet<OrderedCoupon>();
+        }
+    
+    
+        public virtual ICollection<OrderedCoupon> OrderedCoupons { get; set; }
     }
 }

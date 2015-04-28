@@ -19,6 +19,7 @@
         <AssociationConnector Association="basicModel.CouponOrderedCoupon" />
         <EntityTypeShape EntityType="basicModel.Customer" Width="1.5" PointX="5.625" PointY="2" />
         <InheritanceConnector EntityType="basicModel.Customer" />
+        <AssociationConnector Association="basicModel.CustomerOrderedCoupon" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

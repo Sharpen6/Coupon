@@ -7,94 +7,120 @@ using System.Threading.Tasks;
 using Coupon;
 namespace UnitTestProject
 {
-   // [TestClass]
+    [TestClass]
     public class TestOrderedCoupon
     {
-        [TestMethod]
-        public void TestAddOrderedCoupon()
+        User customer;
+        User admin;
+        User owner;
+        Business bus;
+        Coupon.Coupon cop;
+        OrderedCoupon oc;
+
+        [TestInitialize]
+        public void TestInit()
         {
             using (basicEntities be = new basicEntities())
             {
-                Business existing = be.Businesses.Find("123");
-                if (existing != null)
-                    be.Businesses.Remove(existing);
-
-                User u = new Owner();
-
-                u.Name = "adam";
-                u.UserName = "owner";
-                User sameKey = be.Users.Find(u.UserName);
-                while (sameKey != null && sameKey.UserName == u.UserName)
+                owner = be.Users.Find("owner");
+                if (owner == null)
                 {
-                    u.UserName += "1";
-                    sameKey = be.Users.Find(u.UserName);
+
+                    owner = new Owner();
+                    owner.Name = "adam";
+                    owner.UserName = "owner";
+                    owner.Password = "admin123123";
+                    owner.PhoneKidomet = 054;
+                    owner.PhoneNum = 3134195;
+                    owner.Email = "adamin@gmail.com";
                 }
-                sameKey = be.Users.Find(u.UserName);
-                u.Password = "admin123123";
-                u.PhoneKidomet = 054;
-                u.PhoneNum = 3134195;
-                u.Email = "adamin@gmail.com";
 
-                be.Users.Add(u);
-                be.SaveChanges();
 
-                User a = new Admin();
-
-                a.Name = "adam";
-                a.UserName = "admin";
-                sameKey = be.Users.Find(a.UserName);
-                while (sameKey != null && sameKey.UserName == a.UserName)
+                admin = be.Users.Find("admin");
+                if (admin == null)
                 {
-                    a.UserName += "1";
-                    sameKey = be.Users.Find(a.UserName);
+                    admin = new Admin();
+                    admin.Name = "adam";
+                    admin.UserName = "admin";
+                    admin.Password = "admin123123";
+                    admin.PhoneKidomet = 054;
+                    admin.PhoneNum = 3134195;
+                    admin.Email = "adamin@gmail.com";
                 }
-                sameKey = be.Users.Find(a.UserName);
-                a.Password = "admin123123";
-                a.PhoneKidomet = 054;
-                a.PhoneNum = 3134195;
-                a.Email = "adamin@gmail.com";
 
-                be.Users.Add(a);
-                be.SaveChanges();
+                customer = be.Users.Find("customer");
+                if (customer == null)
+                {
+                    customer = new Customer();
+                    customer.Name = "adam";
+                    customer.UserName = "customer";
+                    customer.Password = "admin123123";
+                    customer.PhoneKidomet = 054;
+                    customer.PhoneNum = 3134195;
+                    customer.Email = "adamin@gmail.com";
+                }
+                
+                bus = be.Businesses.Find("123");
+                if (bus == null)
+                {
+                    bus = new Business();
+                    bus.BusinessID = "123";
+                    bus.Admin = (Admin)admin;
+                    bus.Owner = (Owner)owner;
+                    bus.Address = "beer sheva";
+                    bus.Name = "plastics maker";
+                    bus.Category = Category.CarsAccessories;
+                }
 
 
-
-
-
-                Business b = new Business();
-
-
-                b.BusinessID = "123";
-                b.Admin = (Admin)a;
-                b.Owner = (Owner)u;
-                b.Address = "beer sheva";
-                b.Name = "plastics maker";
-                b.Category = Category.CarsAccessories;
-
-
-                be.Businesses.Add(b);
-                be.SaveChanges();
-
-                Coupon.Coupon cop = new Coupon.Coupon();
+                cop = new Coupon.Coupon();
 
                 cop.Id = 2;
                 cop.Name = "Fly PIZZA";
                 cop.OriginalPrice = "100";
                 cop.DiscountPrice = "40";
-                cop.Business = b;
+                cop.Business = bus;
                 cop.ExperationDate = "10/10/2014";
-                
-                be.Coupons.Add(cop);
+                cop.AvarageRanking = "0";
+                cop.Description = "blabla";
+            }
+        }
 
-                be.SaveChanges();
-
-
-                OrderedCoupon oc = new OrderedCoupon();
+        [TestMethod]
+        public void TestAddOrderedCoupon()
+        {
+            using (basicEntities be = new basicEntities())
+            {
+                oc = new OrderedCoupon();
                 oc.Id = 4;
                 oc.Status = SourceType.NotUsed;
                 oc.PurchaseDate = "27/04/1990";
                 oc.Coupon = cop;
+                oc.UseDate = "";
+                oc.Rank = "0";
+                oc.Opinion = "";
+
+                oc.Customer = (Customer)customer;
+
                 be.OrderedCoupons.Add(oc);
+                             
+                be.SaveChanges();
+
+                Assert.AreEqual(be.OrderedCoupons.Find(oc.Id).PurchaseDate, oc.PurchaseDate);
+               
+            }
+        }
+
+        [TestCleanup]
+        public void CleanUp()
+        {
+            using (basicEntities be = new basicEntities())
+            {
+                be.OrderedCoupons.Remove(be.OrderedCoupons.Find(oc.Id));
+                be.Coupons.Remove(be.Coupons.Find(cop.Id));
+                be.Businesses.Remove(be.Businesses.Find(bus.BusinessID));
+                be.Users.Remove(be.Users.Find(admin.UserName));
+                be.Users.Remove(be.Users.Find(owner.UserName));
                 be.SaveChanges();
             }
         }

@@ -21,6 +21,10 @@
       <End Role="Coupon" EntitySet="Coupons" />
       <End Role="OrderedCoupon" EntitySet="OrderedCoupons" />
     </AssociationSet>
+    <AssociationSet Name="CustomerOrderedCoupon" Association="basicModel.CustomerOrderedCoupon">
+      <End Role="Customer" EntitySet="Users" />
+      <End Role="OrderedCoupon" EntitySet="OrderedCoupons" />
+    </AssociationSet>
   </EntityContainer>
   <EntityType Name="User">
     <Key>
@@ -91,6 +95,7 @@
     <Property Name="Opinion" Type="String" Nullable="true" />
     <Property Name="Rank" Type="String" Nullable="true" />
     <NavigationProperty Name="Coupon" Relationship="basicModel.CouponOrderedCoupon" FromRole="OrderedCoupon" ToRole="Coupon" />
+    <NavigationProperty Name="Customer" Relationship="basicModel.CustomerOrderedCoupon" FromRole="OrderedCoupon" ToRole="Customer" />
   </EntityType>
   <EnumType Name="SourceType">
     <Member Name="Used" />
@@ -101,5 +106,11 @@
     <End Type="basicModel.Coupon" Role="Coupon" Multiplicity="1" />
     <End Type="basicModel.OrderedCoupon" Role="OrderedCoupon" Multiplicity="*" />
   </Association>
-  <EntityType Name="Customer" BaseType="basicModel.User" />
+  <EntityType Name="Customer" BaseType="basicModel.User">
+    <NavigationProperty Name="OrderedCoupons" Relationship="basicModel.CustomerOrderedCoupon" FromRole="Customer" ToRole="OrderedCoupon" />
+  </EntityType>
+  <Association Name="CustomerOrderedCoupon">
+    <End Type="basicModel.Customer" Role="Customer" Multiplicity="1" />
+    <End Type="basicModel.OrderedCoupon" Role="OrderedCoupon" Multiplicity="*" />
+  </Association>
 </Schema>

@@ -29,6 +29,10 @@
       <End Role="Coupon" EntitySet="Coupons" />
       <End Role="OrderedCoupon" EntitySet="OrderedCoupons" />
     </AssociationSet>
+    <AssociationSet Name="CustomerOrderedCoupon" Association="basicModel.Store.CustomerOrderedCoupon">
+      <End Role="Customer" EntitySet="Users_Customer" />
+      <End Role="OrderedCoupon" EntitySet="OrderedCoupons" />
+    </AssociationSet>
     <AssociationSet Name="FK_Admin_inherits_User" Association="basicModel.Store.FK_Admin_inherits_User">
       <End Role="User" EntitySet="Users" />
       <End Role="Admin" EntitySet="Users_Admin" />
@@ -88,6 +92,7 @@
     <Property Name="Opinion" Type="nvarchar(max)" Nullable="true" />
     <Property Name="Rank" Type="nvarchar(max)" Nullable="true" />
     <Property Name="Coupon_Id" Type="int" Nullable="false" />
+    <Property Name="Customer_UserName" Type="varchar" MaxLength="500" Nullable="false" />
   </EntityType>
   <EntityType Name="Users_Admin">
     <Key>
@@ -152,6 +157,18 @@
       </Principal>
       <Dependent Role="OrderedCoupon">
         <PropertyRef Name="Coupon_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="CustomerOrderedCoupon">
+    <End Role="Customer" Type="basicModel.Store.Users_Customer" Multiplicity="1" />
+    <End Role="OrderedCoupon" Type="basicModel.Store.OrderedCoupons" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customer">
+        <PropertyRef Name="UserName" />
+      </Principal>
+      <Dependent Role="OrderedCoupon">
+        <PropertyRef Name="Customer_UserName" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -220,6 +237,10 @@
           <EntitySet Name="OrderedCoupons" EntityType="basicModel.OrderedCoupon" />
           <AssociationSet Name="CouponOrderedCoupon" Association="basicModel.CouponOrderedCoupon">
             <End Role="Coupon" EntitySet="Coupons" />
+            <End Role="OrderedCoupon" EntitySet="OrderedCoupons" />
+          </AssociationSet>
+          <AssociationSet Name="CustomerOrderedCoupon" Association="basicModel.CustomerOrderedCoupon">
+            <End Role="Customer" EntitySet="Users" />
             <End Role="OrderedCoupon" EntitySet="OrderedCoupons" />
           </AssociationSet>
         </EntityContainer>
@@ -294,6 +315,7 @@
           <Property Name="Opinion" Type="String" Nullable="true" />
           <Property Name="Rank" Type="String" Nullable="true" />
           <NavigationProperty Name="Coupon" Relationship="basicModel.CouponOrderedCoupon" FromRole="OrderedCoupon" ToRole="Coupon" />
+          <NavigationProperty Name="Customer" Relationship="basicModel.CustomerOrderedCoupon" FromRole="OrderedCoupon" ToRole="Customer" />
         </EntityType>
         <EnumType Name="SourceType" >
           <Member Name="Used" />
@@ -305,7 +327,12 @@
           <End Type="basicModel.OrderedCoupon" Role="OrderedCoupon" Multiplicity="*" />
         </Association>
         <EntityType Name="Customer" BaseType="basicModel.User" >
+          <NavigationProperty Name="OrderedCoupons" Relationship="basicModel.CustomerOrderedCoupon" FromRole="Customer" ToRole="OrderedCoupon" />
         </EntityType>
+        <Association Name="CustomerOrderedCoupon">
+          <End Type="basicModel.Customer" Role="Customer" Multiplicity="1" />
+          <End Type="basicModel.OrderedCoupon" Role="OrderedCoupon" Multiplicity="*" />
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -401,6 +428,14 @@
     <AssociationSetMapping Name="CouponOrderedCoupon" TypeName="basicModel.CouponOrderedCoupon" StoreEntitySet="OrderedCoupons">
       <EndProperty Name="Coupon">
         <ScalarProperty Name="Id" ColumnName="Coupon_Id" />
+      </EndProperty>
+      <EndProperty Name="OrderedCoupon">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="CustomerOrderedCoupon" TypeName="basicModel.CustomerOrderedCoupon" StoreEntitySet="OrderedCoupons">
+      <EndProperty Name="Customer">
+        <ScalarProperty Name="UserName" ColumnName="Customer_UserName" />
       </EndProperty>
       <EndProperty Name="OrderedCoupon">
         <ScalarProperty Name="Id" ColumnName="Id" />

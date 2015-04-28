@@ -22,5 +22,6 @@ namespace Coupon
         public string Rank { get; set; }
     
         public virtual Coupon Coupon { get; set; }
+        public virtual Customer Customer { get; set; }
     }
 }

@@ -95,5 +95,13 @@
         <ScalarProperty Name="Id" ColumnName="Id" />
       </EndProperty>
     </AssociationSetMapping>
+    <AssociationSetMapping Name="CustomerOrderedCoupon" TypeName="basicModel.CustomerOrderedCoupon" StoreEntitySet="OrderedCoupons">
+      <EndProperty Name="Customer">
+        <ScalarProperty Name="UserName" ColumnName="Customer_UserName" />
+      </EndProperty>
+      <EndProperty Name="OrderedCoupon">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
   </EntityContainerMapping>
 </Mapping>
