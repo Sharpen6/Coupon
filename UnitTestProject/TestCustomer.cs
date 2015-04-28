@@ -6,7 +6,8 @@ namespace UnitTestProject
 {
     [TestClass]
     public class TestCustomer
-    {    [TestMethod]
+    {
+        [TestMethod]
         public void TestAddCustomer()
         {
             using (basicEntities be = new basicEntities())
@@ -18,7 +19,7 @@ namespace UnitTestProject
 
             }
         }
-      
+
         [TestMethod]
         public void TestRemoveCustomer()
         {
@@ -29,7 +30,7 @@ namespace UnitTestProject
             }
         }
 
-        public Customer AddCustomer(string UserName, String Name, String Password, int PhoneKidumet, int PhoneNum, string Email)
+        public static Customer AddCustomer(string UserName, String Name, String Password, int PhoneKidumet, int PhoneNum, string Email)
         {
             using (basicEntities be = new basicEntities())
             {
@@ -51,17 +52,17 @@ namespace UnitTestProject
             }
         }
 
-        public void RemoveCustomer(string Customer)
+        public static void RemoveCustomer(string Customer)
         {
             using (basicEntities be = new basicEntities())
             {
                 User userToRemove = be.Users.Find(Customer);
-                
+
                 be.Users.Remove(userToRemove);
                 be.SaveChanges();
             }
         }
-    
-        
+
+
     }
 }

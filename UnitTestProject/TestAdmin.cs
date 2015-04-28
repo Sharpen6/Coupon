@@ -14,13 +14,13 @@ namespace UnitTestProject
             {
                 Admin A = AddAdmin("Admin123", "adam", "admin123123", 054, 3134195, "adamin@gmail.com");
                 be.Users.Add(A);
-                 be.SaveChanges();
+                be.SaveChanges();
                 Assert.AreEqual(be.Users.Find(A.UserName).UserName, A.UserName);
 
             }
         }
 
-        [TestMethod]
+  //      [TestMethod]
         public void TestRemoveAdmin()
         {
             using (basicEntities be = new basicEntities())
@@ -30,7 +30,7 @@ namespace UnitTestProject
             }
         }
 
-        public Admin AddAdmin(string UserName, String Name, String Password, int PhoneKidumet, int PhoneNum, string Email)
+        public static Admin AddAdmin(string UserName, String Name, String Password, int PhoneKidumet, int PhoneNum, string Email)
         {
             using (basicEntities be = new basicEntities())
             {
@@ -53,7 +53,7 @@ namespace UnitTestProject
             }
         }
 
-        public void RemoveAdmin(string admin)
+        public static void RemoveAdmin(string admin)
         {
             using (basicEntities be = new basicEntities())
             {

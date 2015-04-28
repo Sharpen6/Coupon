@@ -4,7 +4,7 @@ using Coupon;
 
 namespace UnitTestProject
 {
-  [TestClass]
+    [TestClass]
     public class TestOwner
     {
         [TestMethod]
@@ -12,14 +12,14 @@ namespace UnitTestProject
         {
             using (basicEntities be = new basicEntities())
             {
-                Owner o=AddOwner("owner123","adam","admin123123",054, 3134195, "adamin@gmail.com");
+                Owner o = AddOwner("owner123", "adam", "admin123123", 054, 3134195, "adamin@gmail.com");
                 be.Users.Add(o);
                 be.SaveChanges();
                 Assert.AreEqual(be.Users.Find(o.UserName).UserName, o.UserName);
 
             }
         }
-      
+
         [TestMethod]
         public void TestRemoveOwner()
         {
@@ -29,8 +29,8 @@ namespace UnitTestProject
                 Assert.AreEqual(be.Users.Find("owner123"), null);
             }
         }
-   
-        public Owner AddOwner(string UserName, String Name, String Password, int PhoneKidumet, int PhoneNum, string Email)
+
+        public static Owner AddOwner(string UserName, String Name, String Password, int PhoneKidumet, int PhoneNum, string Email)
         {
             using (basicEntities be = new basicEntities())
             {
@@ -53,12 +53,12 @@ namespace UnitTestProject
             }
         }
 
-        public void RemoveOwner(string owner)
+        public static void RemoveOwner(string owner)
         {
             using (basicEntities be = new basicEntities())
             {
                 User userToRemove = be.Users.Find(owner);
-                
+
                 be.Users.Remove(userToRemove);
                 be.SaveChanges();
             }

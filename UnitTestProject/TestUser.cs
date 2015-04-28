@@ -57,7 +57,7 @@ namespace UnitTestProject
             }
         }
 
-        public void RemoveUser(string user)
+        public static void RemoveUser(string user)
         {
             using (basicEntities be = new basicEntities())
             {
@@ -67,7 +67,7 @@ namespace UnitTestProject
             }
         }
 
-        public User AddUser(string UserName, String Name, String Password, int PhoneKidumet, int PhoneNum, string Email)
+        public static User AddUser(string UserName, String Name, String Password, int PhoneKidumet, int PhoneNum, string Email)
         {
             using (basicEntities be = new basicEntities())
             {

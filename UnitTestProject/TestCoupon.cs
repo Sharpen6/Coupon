@@ -7,31 +7,33 @@ using System.Threading.Tasks;
 using Coupon;
 namespace UnitTestProject
 {
-   [TestClass]
+    [TestClass]
     public class TestCoupon
     {
-        TestOwner t=new TestOwner();
-        TestAdmin t1=new TestAdmin();
-        TestBusiness t2=new TestBusiness();
+
+        [TestInitialize]
+        public void TestInit()
+        {
+            TestBusiness b = new TestBusiness();
+            b.TestInit();
+            b.TestAddBusiness();
+        }
         [TestMethod]
         public void TestAddCoupon()
         {
             using (basicEntities be = new basicEntities())
             {
-                Owner u = t.AddOwner("CouponOwnerr", "adam", "admin123123", 054, 3134195, "adamin@gmail.com");
-                be.Users.Add(u);   
-                Admin a = t1.AddAdmin("CouponAdmin", "adam", "admin123123", 054, 3134195, "adamin@gmail.com");    
-                be.Users.Add(a);
-                Business b = t2.AddBusinesses("123", a, u, "beer-sheva", "d", Category.CarsAccessories);
-                be.Businesses.Add(b);
-                Coupon.Coupon cop = CreateCoupon(2, "Fly PIZZA", "100", "40", b, "10/10/2014");       
+
+                Business b = be.Businesses.Find("123");
+                Coupon.Coupon cop = CreateCoupon(2, "Fly PIZZA", "100", "40", b, "10/10/2014");
                 be.Coupons.Add(cop);
                 be.SaveChanges();
+
 
             }
         }
 
-        public   Coupon.Coupon CreateCoupon(int id, string name, string orgprice, string discount, Business b, string datee)
+        public static Coupon.Coupon CreateCoupon(int id, string name, string orgprice, string discount, Business b, string datee)
         {
             Coupon.Coupon cop = new Coupon.Coupon();
             cop.Id = id;
@@ -44,14 +46,12 @@ namespace UnitTestProject
             return cop;
         }
 
-        public void RemoveCoupon(string CouponID)
+        public static void RemoveCoupon(int CouponID)
         {
             using (basicEntities be = new basicEntities())
             {
                 Coupon.Coupon CouponToRemove = be.Coupons.Find(CouponID);
                 be.Coupons.Remove(CouponToRemove);
-              //  t2.RemoveBusinesses(CouponToRemove.Business.BusinessID);
-                RemoveCoupon("2");
                 be.SaveChanges();
             }
         }
@@ -59,13 +59,29 @@ namespace UnitTestProject
         [TestMethod]
         public void TestRemoveCoupon()
         {
+            int CouponID = 0;
             using (basicEntities be = new basicEntities())
             {
-       
-                Assert.AreEqual(be.Businesses.Find("2"), null);
+                var query = from b in be.Coupons
+                            select b;
+                if (query.Count() > 0)
+                {
+                    Coupon.Coupon CouponToRemove = be.Coupons.Find(CouponID);
+                    while (CouponToRemove == null)
+                    {
+                        CouponID = CouponID + 1;
+                        CouponToRemove = be.Coupons.Find(CouponID);
+                    }
+                    RemoveCoupon(CouponID);
+                }
+            }
+                using (basicEntities be = new basicEntities())
+                {
+                    Assert.AreEqual(be.Coupons.Find(CouponID), null);
 
 
+                
             }
         }
-   }
+    }
 }

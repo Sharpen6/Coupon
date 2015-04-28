@@ -28,12 +28,9 @@ namespace UnitTestProject
                 loc = new Location();
 
                 loc.Id = 4;
-                loc.Coordinates = "34N 40' 50.12";
-                
-                be.Locations.Add(loc);
-               
+                loc.Coordinates = "34N 40' 50.12";          
+                be.Locations.Add(loc);             
                 be.SaveChanges();
-
                 Assert.AreEqual(be.Locations.Find(loc.Id).Coordinates, loc.Coordinates);
             }
         }
@@ -44,7 +41,6 @@ namespace UnitTestProject
             using (basicEntities be = new basicEntities())
             {
                 be.Locations.Remove(be.Locations.Find(loc.Id));
-                be.SaveChanges();
             }
         }
     }
