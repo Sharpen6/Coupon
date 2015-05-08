@@ -102,6 +102,7 @@
     <Property Name="AvarageRanking" Type="String" />
     <NavigationProperty Name="OrderedCoupons" Relationship="basicModel.CouponOrderedCoupon" FromRole="Coupon" ToRole="OrderedCoupon" />
     <Property Name="MaxNum" Type="Int32" Nullable="false" />
+    <Property Name="RankCount" Type="Int32" Nullable="false" />
   </EntityType>
   <Association Name="BusinessCoupon">
     <End Type="basicModel.Business" Role="Business" Multiplicity="1" />

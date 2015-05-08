@@ -49,6 +49,7 @@
           <ScalarProperty Name="ExperationDate" ColumnName="ExperationDate" />
           <ScalarProperty Name="AvarageRanking" ColumnName="AvarageRanking" />
           <ScalarProperty Name="MaxNum" ColumnName="MaxNum" />
+          <ScalarProperty Name="RankCount" ColumnName="RankCount" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

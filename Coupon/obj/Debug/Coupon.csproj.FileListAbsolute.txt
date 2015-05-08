@@ -28,3 +28,13 @@ C:\Users\DorinS\Documents\GitHub\Coupon\Coupon\bin\Debug\EntityFramework.SqlServ
 C:\Users\DorinS\Documents\GitHub\Coupon\Coupon\bin\Debug\EntityFramework.xml
 C:\Users\DorinS\Documents\GitHub\Coupon\Coupon\bin\Debug\EntityFramework.SqlServer.xml
 C:\Users\DorinS\Documents\GitHub\Coupon\Coupon\obj\Debug\Coupon.csprojResolveAssemblyReference.cache
+C:\Users\User\Documents\GitHub\Coupon\Coupon\bin\Debug\Coupon.exe.config
+C:\Users\User\Documents\GitHub\Coupon\Coupon\obj\Debug\Coupon.exe
+C:\Users\User\Documents\GitHub\Coupon\Coupon\obj\Debug\Coupon.pdb
+C:\Users\User\Documents\GitHub\Coupon\Coupon\bin\Debug\Coupon.exe
+C:\Users\User\Documents\GitHub\Coupon\Coupon\bin\Debug\Coupon.pdb
+C:\Users\User\Documents\GitHub\Coupon\Coupon\bin\Debug\EntityFramework.dll
+C:\Users\User\Documents\GitHub\Coupon\Coupon\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\User\Documents\GitHub\Coupon\Coupon\bin\Debug\EntityFramework.xml
+C:\Users\User\Documents\GitHub\Coupon\Coupon\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\User\Documents\GitHub\Coupon\Coupon\obj\Debug\Coupon.csprojResolveAssemblyReference.cache

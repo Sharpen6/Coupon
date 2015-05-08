@@ -2,8 +2,8 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 04/28/2015 20:47:36
--- Generated from EDMX file: C:\Users\Sagi\Documents\GitHub\Coupon\Coupon\Model.edmx
+-- Date Created: 05/08/2015 16:07:37
+-- Generated from EDMX file: C:\Users\User\Documents\GitHub\Coupon\Coupon\Model.edmx
 -- --------------------------------------------------
 
 SET QUOTED_IDENTIFIER OFF;
@@ -17,92 +17,11 @@ GO
 -- Dropping existing FOREIGN KEY constraints
 -- --------------------------------------------------
 
-IF OBJECT_ID(N'[dbo].[FK_AdminBusiness]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[Businesses] DROP CONSTRAINT [FK_AdminBusiness];
-GO
-IF OBJECT_ID(N'[dbo].[FK_BusinessCoupon]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[Coupons] DROP CONSTRAINT [FK_BusinessCoupon];
-GO
-IF OBJECT_ID(N'[dbo].[FK_OwnerBusiness]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[Businesses] DROP CONSTRAINT [FK_OwnerBusiness];
-GO
-IF OBJECT_ID(N'[dbo].[FK_CouponOrderedCoupon]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[OrderedCoupons] DROP CONSTRAINT [FK_CouponOrderedCoupon];
-GO
-IF OBJECT_ID(N'[dbo].[FK_CustomerOrderedCoupon]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[OrderedCoupons] DROP CONSTRAINT [FK_CustomerOrderedCoupon];
-GO
-IF OBJECT_ID(N'[dbo].[FK_LocationVisit]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[Visits] DROP CONSTRAINT [FK_LocationVisit];
-GO
-IF OBJECT_ID(N'[dbo].[FK_CustomerVisit]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[Visits] DROP CONSTRAINT [FK_CustomerVisit];
-GO
-IF OBJECT_ID(N'[dbo].[FK_BusinessLocation]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[Businesses] DROP CONSTRAINT [FK_BusinessLocation];
-GO
-IF OBJECT_ID(N'[dbo].[FK_CustomerRecommendation]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[Recommendations] DROP CONSTRAINT [FK_CustomerRecommendation];
-GO
-IF OBJECT_ID(N'[dbo].[FK_CustomerCustomer_Customer]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[CustomerCustomer] DROP CONSTRAINT [FK_CustomerCustomer_Customer];
-GO
-IF OBJECT_ID(N'[dbo].[FK_CustomerCustomer_Customer1]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[CustomerCustomer] DROP CONSTRAINT [FK_CustomerCustomer_Customer1];
-GO
-IF OBJECT_ID(N'[dbo].[FK_Admin_inherits_User]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[Users_Admin] DROP CONSTRAINT [FK_Admin_inherits_User];
-GO
-IF OBJECT_ID(N'[dbo].[FK_Owner_inherits_User]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[Users_Owner] DROP CONSTRAINT [FK_Owner_inherits_User];
-GO
-IF OBJECT_ID(N'[dbo].[FK_Customer_inherits_User]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[Users_Customer] DROP CONSTRAINT [FK_Customer_inherits_User];
-GO
 
 -- --------------------------------------------------
 -- Dropping existing tables
 -- --------------------------------------------------
 
-IF OBJECT_ID(N'[dbo].[Users]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[Users];
-GO
-IF OBJECT_ID(N'[dbo].[Businesses]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[Businesses];
-GO
-IF OBJECT_ID(N'[dbo].[Coupons]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[Coupons];
-GO
-IF OBJECT_ID(N'[dbo].[OrderedCoupons]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[OrderedCoupons];
-GO
-IF OBJECT_ID(N'[dbo].[Visits]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[Visits];
-GO
-IF OBJECT_ID(N'[dbo].[Locations]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[Locations];
-GO
-IF OBJECT_ID(N'[dbo].[Recommendations]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[Recommendations];
-GO
-IF OBJECT_ID(N'[dbo].[CustomerIntrests]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[CustomerIntrests];
-GO
-IF OBJECT_ID(N'[dbo].[CouponInterests]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[CouponInterests];
-GO
-IF OBJECT_ID(N'[dbo].[Users_Admin]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[Users_Admin];
-GO
-IF OBJECT_ID(N'[dbo].[Users_Owner]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[Users_Owner];
-GO
-IF OBJECT_ID(N'[dbo].[Users_Customer]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[Users_Customer];
-GO
-IF OBJECT_ID(N'[dbo].[CustomerCustomer]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[CustomerCustomer];
-GO
 
 -- --------------------------------------------------
 -- Creating all tables
@@ -141,6 +60,7 @@ CREATE TABLE [dbo].[Coupons] (
     [ExperationDate] nvarchar(max)  NOT NULL,
     [AvarageRanking] nvarchar(max)  NULL,
     [MaxNum] int  NOT NULL,
+    [RankCount] int  NOT NULL,
     [Business_BusinessID] varchar(500)  NOT NULL
 );
 GO
@@ -316,7 +236,6 @@ ADD CONSTRAINT [FK_AdminBusiness]
     REFERENCES [dbo].[Users_Admin]
         ([UserName])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
-GO
 
 -- Creating non-clustered index for FOREIGN KEY 'FK_AdminBusiness'
 CREATE INDEX [IX_FK_AdminBusiness]
@@ -331,7 +250,6 @@ ADD CONSTRAINT [FK_BusinessCoupon]
     REFERENCES [dbo].[Businesses]
         ([BusinessID])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
-GO
 
 -- Creating non-clustered index for FOREIGN KEY 'FK_BusinessCoupon'
 CREATE INDEX [IX_FK_BusinessCoupon]
@@ -346,7 +264,6 @@ ADD CONSTRAINT [FK_OwnerBusiness]
     REFERENCES [dbo].[Users_Owner]
         ([UserName])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
-GO
 
 -- Creating non-clustered index for FOREIGN KEY 'FK_OwnerBusiness'
 CREATE INDEX [IX_FK_OwnerBusiness]
@@ -361,7 +278,6 @@ ADD CONSTRAINT [FK_CouponOrderedCoupon]
     REFERENCES [dbo].[Coupons]
         ([Id])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
-GO
 
 -- Creating non-clustered index for FOREIGN KEY 'FK_CouponOrderedCoupon'
 CREATE INDEX [IX_FK_CouponOrderedCoupon]
@@ -376,7 +292,6 @@ ADD CONSTRAINT [FK_CustomerOrderedCoupon]
     REFERENCES [dbo].[Users_Customer]
         ([UserName])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
-GO
 
 -- Creating non-clustered index for FOREIGN KEY 'FK_CustomerOrderedCoupon'
 CREATE INDEX [IX_FK_CustomerOrderedCoupon]
@@ -391,7 +306,6 @@ ADD CONSTRAINT [FK_LocationVisit]
     REFERENCES [dbo].[Locations]
         ([Id])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
-GO
 
 -- Creating non-clustered index for FOREIGN KEY 'FK_LocationVisit'
 CREATE INDEX [IX_FK_LocationVisit]
@@ -406,7 +320,6 @@ ADD CONSTRAINT [FK_CustomerVisit]
     REFERENCES [dbo].[Users_Customer]
         ([UserName])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
-GO
 
 -- Creating non-clustered index for FOREIGN KEY 'FK_CustomerVisit'
 CREATE INDEX [IX_FK_CustomerVisit]
@@ -421,7 +334,6 @@ ADD CONSTRAINT [FK_BusinessLocation]
     REFERENCES [dbo].[Locations]
         ([Id])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
-GO
 
 -- Creating non-clustered index for FOREIGN KEY 'FK_BusinessLocation'
 CREATE INDEX [IX_FK_BusinessLocation]
@@ -436,7 +348,6 @@ ADD CONSTRAINT [FK_CustomerRecommendation]
     REFERENCES [dbo].[Users_Customer]
         ([UserName])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
-GO
 
 -- Creating non-clustered index for FOREIGN KEY 'FK_CustomerRecommendation'
 CREATE INDEX [IX_FK_CustomerRecommendation]
@@ -460,7 +371,6 @@ ADD CONSTRAINT [FK_CustomerCustomer_Customer1]
     REFERENCES [dbo].[Users_Customer]
         ([UserName])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
-GO
 
 -- Creating non-clustered index for FOREIGN KEY 'FK_CustomerCustomer_Customer1'
 CREATE INDEX [IX_FK_CustomerCustomer_Customer1]

@@ -111,6 +111,7 @@
     <Property Name="ExperationDate" Type="nvarchar(max)" Nullable="false" />
     <Property Name="AvarageRanking" Type="nvarchar(max)" Nullable="true" />
     <Property Name="MaxNum" Type="int" Nullable="false" />
+    <Property Name="RankCount" Type="int" Nullable="false" />
     <Property Name="Business_BusinessID" Type="varchar" MaxLength="500" Nullable="false" />
   </EntityType>
   <EntityType Name="OrderedCoupons">
@@ -476,6 +477,7 @@
           <Property Name="AvarageRanking" Type="String" />
           <NavigationProperty Name="OrderedCoupons" Relationship="basicModel.CouponOrderedCoupon" FromRole="Coupon" ToRole="OrderedCoupon" />
           <Property Name="MaxNum" Type="Int32" Nullable="false" />
+          <Property Name="RankCount" Type="Int32" Nullable="false" />
         </EntityType>
         <Association Name="BusinessCoupon">
           <End Type="basicModel.Business" Role="Business" Multiplicity="1" />
@@ -644,6 +646,7 @@
           <ScalarProperty Name="ExperationDate" ColumnName="ExperationDate" />
           <ScalarProperty Name="AvarageRanking" ColumnName="AvarageRanking" />
           <ScalarProperty Name="MaxNum" ColumnName="MaxNum" />
+          <ScalarProperty Name="RankCount" ColumnName="RankCount" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

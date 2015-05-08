@@ -106,6 +106,7 @@
     <Property Name="ExperationDate" Type="nvarchar(max)" Nullable="false" />
     <Property Name="AvarageRanking" Type="nvarchar(max)" Nullable="true" />
     <Property Name="MaxNum" Type="int" Nullable="false" />
+    <Property Name="RankCount" Type="int" Nullable="false" />
     <Property Name="Business_BusinessID" Type="varchar" MaxLength="500" Nullable="false" />
   </EntityType>
   <EntityType Name="OrderedCoupons">

@@ -34,3 +34,15 @@ C:\Users\DorinS\Documents\GitHub\Coupon\UnitTestProject\bin\Debug\EntityFramewor
 C:\Users\DorinS\Documents\GitHub\Coupon\UnitTestProject\obj\Debug\UnitTestProject.csprojResolveAssemblyReference.cache
 C:\Users\DorinS\Documents\GitHub\Coupon\UnitTestProject\obj\Debug\UnitTestProject.dll
 C:\Users\DorinS\Documents\GitHub\Coupon\UnitTestProject\obj\Debug\UnitTestProject.pdb
+C:\Users\User\Documents\GitHub\Coupon\UnitTestProject\bin\Debug\UnitTestProject.dll.config
+C:\Users\User\Documents\GitHub\Coupon\UnitTestProject\bin\Debug\UnitTestProject.dll
+C:\Users\User\Documents\GitHub\Coupon\UnitTestProject\bin\Debug\UnitTestProject.pdb
+C:\Users\User\Documents\GitHub\Coupon\UnitTestProject\bin\Debug\Coupon.exe
+C:\Users\User\Documents\GitHub\Coupon\UnitTestProject\bin\Debug\EntityFramework.dll
+C:\Users\User\Documents\GitHub\Coupon\UnitTestProject\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\User\Documents\GitHub\Coupon\UnitTestProject\bin\Debug\Coupon.pdb
+C:\Users\User\Documents\GitHub\Coupon\UnitTestProject\bin\Debug\EntityFramework.xml
+C:\Users\User\Documents\GitHub\Coupon\UnitTestProject\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\User\Documents\GitHub\Coupon\UnitTestProject\obj\Debug\UnitTestProject.csprojResolveAssemblyReference.cache
+C:\Users\User\Documents\GitHub\Coupon\UnitTestProject\obj\Debug\UnitTestProject.dll
+C:\Users\User\Documents\GitHub\Coupon\UnitTestProject\obj\Debug\UnitTestProject.pdb

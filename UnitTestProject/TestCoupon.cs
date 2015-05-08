@@ -50,6 +50,7 @@ namespace UnitTestProject
             cop.Business = b;
             cop.ExperationDate = datee;
             cop.MaxNum = maxNum;
+            cop.RankCount = 0;
             return cop;
         }
 

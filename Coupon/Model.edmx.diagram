@@ -12,7 +12,7 @@
         <InheritanceConnector EntityType="basicModel.Admin" />
         <EntityTypeShape EntityType="basicModel.Business" Width="1.5" PointX="0.5" PointY="4.5" />
         <AssociationConnector Association="basicModel.AdminBusiness" />
-        <EntityTypeShape EntityType="basicModel.Coupon" Width="1.5" PointX="0.5" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="basicModel.Coupon" Width="1.5" PointX="0.5" PointY="0.625" IsExpanded="true" />
         <AssociationConnector Association="basicModel.BusinessCoupon" />
         <AssociationConnector Association="basicModel.OwnerBusiness" />
         <EntityTypeShape EntityType="basicModel.OrderedCoupon" Width="1.5" PointX="3" PointY="0.75" />
@@ -25,7 +25,7 @@
         <AssociationConnector Association="basicModel.LocationVisit" />
         <AssociationConnector Association="basicModel.CustomerVisit" />
         <AssociationConnector Association="basicModel.BusinessLocation" />
-        <EntityTypeShape EntityType="basicModel.Recommendation" Width="1.5" PointX="7.75" PointY="2.625" />
+        <EntityTypeShape EntityType="basicModel.Recommendation" Width="1.5" PointX="8.5" PointY="2.25" />
         <EntityTypeShape EntityType="basicModel.CustomerIntrests" Width="1.5" PointX="8.125" PointY="0.5" />
         <AssociationConnector Association="basicModel.CustomerRecommendation" />
         <EntityTypeShape EntityType="basicModel.CouponInterests" Width="1.5" PointX="9.75" PointY="0.5" />
