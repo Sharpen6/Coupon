@@ -28,10 +28,11 @@ namespace UnitTestProject
                 loc = new Location();
 
                 loc.Id = 4;
-                loc.Coordinates = "34N 40' 50.12";          
+                loc.Longitude = 34.791462;
+                loc.Latitude = 31.252973;
                 be.Locations.Add(loc);             
                 be.SaveChanges();
-                Assert.AreEqual(be.Locations.Find(loc.Id).Coordinates, loc.Coordinates);
+                Assert.AreEqual(be.Locations.Find(loc.Id).Longitude, loc.Longitude);
             }
         }
         [TestMethod]
@@ -42,7 +43,8 @@ namespace UnitTestProject
                 loc = new Location();
 
                 loc.Id = 4;
-                loc.Coordinates = "34N 40' 50.12";
+                loc.Longitude = 34.791462;
+                loc.Latitude = 31.252973;
                 be.Locations.Add(loc);
                 be.SaveChanges();
 
@@ -59,13 +61,15 @@ namespace UnitTestProject
                 loc = new Location();
 
                 loc.Id = 4;
-                loc.Coordinates = "34N 40' 50.12";
+                loc.Longitude = 34.791462;
+                loc.Latitude = 31.252973;
                 be.Locations.Add(loc);
                 be.SaveChanges();
 
-                loc.Coordinates = "36S 24' 51.35";
+                loc.Longitude = 34.791462;
+                loc.Latitude = 35;
                 be.SaveChanges();
-                Assert.AreEqual(be.Locations.Find(loc.Id).Coordinates, loc.Coordinates);
+                Assert.AreEqual(be.Locations.Find(loc.Id).Latitude, loc.Latitude);
             }
         }
         [TestCleanup]

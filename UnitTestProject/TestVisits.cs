@@ -45,7 +45,8 @@ namespace UnitTestProject
                 visit.Id = 1;
                 visit.Date = "01/01/2004";
                 l = new Location();
-                l.Coordinates = "34N 40' 50.12";
+                l.Longitude = 34.791462;
+                l.Latitude = 31.252973;
                 visit.Location = l;
                 ((Customer)customer).Visits.Add(visit);
                 be.Users.Add(customer);
@@ -66,7 +67,8 @@ namespace UnitTestProject
                 visit.Id = 1;
                 visit.Date = "01/01/2004";
                 Location l = new Location();
-                l.Coordinates = "34N 40' 50.12";
+                l.Longitude = 34.791462;
+                l.Latitude = 31.252973;
                 visit.Location = l;
                 ((Customer)customer).Visits.Add(visit);
                 be.Users.Add(customer);

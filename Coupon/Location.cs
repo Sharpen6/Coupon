@@ -20,7 +20,8 @@ namespace Coupon
         }
     
         public int Id { get; set; }
-        public string Coordinates { get; set; }
+        public double Latitude { get; set; }
+        public double Longitude { get; set; }
     
         public virtual ICollection<Business> Businesses { get; set; }
     }

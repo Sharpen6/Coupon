@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 05/08/2015 16:07:37
+-- Date Created: 05/08/2015 16:15:56
 -- Generated from EDMX file: C:\Users\User\Documents\GitHub\Coupon\Coupon\Model.edmx
 -- --------------------------------------------------
 
@@ -17,11 +17,92 @@ GO
 -- Dropping existing FOREIGN KEY constraints
 -- --------------------------------------------------
 
+IF OBJECT_ID(N'[dbo].[FK_AdminBusiness]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Businesses] DROP CONSTRAINT [FK_AdminBusiness];
+GO
+IF OBJECT_ID(N'[dbo].[FK_BusinessCoupon]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Coupons] DROP CONSTRAINT [FK_BusinessCoupon];
+GO
+IF OBJECT_ID(N'[dbo].[FK_OwnerBusiness]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Businesses] DROP CONSTRAINT [FK_OwnerBusiness];
+GO
+IF OBJECT_ID(N'[dbo].[FK_CouponOrderedCoupon]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[OrderedCoupons] DROP CONSTRAINT [FK_CouponOrderedCoupon];
+GO
+IF OBJECT_ID(N'[dbo].[FK_CustomerOrderedCoupon]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[OrderedCoupons] DROP CONSTRAINT [FK_CustomerOrderedCoupon];
+GO
+IF OBJECT_ID(N'[dbo].[FK_LocationVisit]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Visits] DROP CONSTRAINT [FK_LocationVisit];
+GO
+IF OBJECT_ID(N'[dbo].[FK_CustomerVisit]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Visits] DROP CONSTRAINT [FK_CustomerVisit];
+GO
+IF OBJECT_ID(N'[dbo].[FK_BusinessLocation]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Businesses] DROP CONSTRAINT [FK_BusinessLocation];
+GO
+IF OBJECT_ID(N'[dbo].[FK_CustomerRecommendation]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Recommendations] DROP CONSTRAINT [FK_CustomerRecommendation];
+GO
+IF OBJECT_ID(N'[dbo].[FK_CustomerCustomer_Customer]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[CustomerCustomer] DROP CONSTRAINT [FK_CustomerCustomer_Customer];
+GO
+IF OBJECT_ID(N'[dbo].[FK_CustomerCustomer_Customer1]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[CustomerCustomer] DROP CONSTRAINT [FK_CustomerCustomer_Customer1];
+GO
+IF OBJECT_ID(N'[dbo].[FK_Admin_inherits_User]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Users_Admin] DROP CONSTRAINT [FK_Admin_inherits_User];
+GO
+IF OBJECT_ID(N'[dbo].[FK_Owner_inherits_User]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Users_Owner] DROP CONSTRAINT [FK_Owner_inherits_User];
+GO
+IF OBJECT_ID(N'[dbo].[FK_Customer_inherits_User]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Users_Customer] DROP CONSTRAINT [FK_Customer_inherits_User];
+GO
 
 -- --------------------------------------------------
 -- Dropping existing tables
 -- --------------------------------------------------
 
+IF OBJECT_ID(N'[dbo].[Users]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Users];
+GO
+IF OBJECT_ID(N'[dbo].[Businesses]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Businesses];
+GO
+IF OBJECT_ID(N'[dbo].[Coupons]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Coupons];
+GO
+IF OBJECT_ID(N'[dbo].[OrderedCoupons]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[OrderedCoupons];
+GO
+IF OBJECT_ID(N'[dbo].[Visits]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Visits];
+GO
+IF OBJECT_ID(N'[dbo].[Locations]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Locations];
+GO
+IF OBJECT_ID(N'[dbo].[Recommendations]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Recommendations];
+GO
+IF OBJECT_ID(N'[dbo].[CustomerIntrests]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[CustomerIntrests];
+GO
+IF OBJECT_ID(N'[dbo].[CouponInterests]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[CouponInterests];
+GO
+IF OBJECT_ID(N'[dbo].[Users_Admin]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Users_Admin];
+GO
+IF OBJECT_ID(N'[dbo].[Users_Owner]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Users_Owner];
+GO
+IF OBJECT_ID(N'[dbo].[Users_Customer]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Users_Customer];
+GO
+IF OBJECT_ID(N'[dbo].[CustomerCustomer]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[CustomerCustomer];
+GO
 
 -- --------------------------------------------------
 -- Creating all tables
@@ -90,7 +171,8 @@ GO
 -- Creating table 'Locations'
 CREATE TABLE [dbo].[Locations] (
     [Id] int IDENTITY(1,1) NOT NULL,
-    [Coordinates] nvarchar(max)  NOT NULL
+    [Latitude] float  NOT NULL,
+    [Longitude] float  NOT NULL
 );
 GO
 
