@@ -34,5 +34,6 @@ namespace Coupon
         public virtual DbSet<Recommendation> Recommendations { get; set; }
         public virtual DbSet<CustomerIntrests> CustomerIntrests { get; set; }
         public virtual DbSet<CouponInterests> CouponInterests { get; set; }
+        public virtual DbSet<Interest> Interests { get; set; }
     }
 }

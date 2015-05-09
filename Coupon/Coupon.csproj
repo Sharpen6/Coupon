@@ -41,8 +41,10 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -53,6 +55,8 @@
     <Compile Include="Admin.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="business layer\Login.cs" />
+    <Compile Include="business layer\Search.cs" />
     <Compile Include="Business.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
@@ -69,6 +73,11 @@
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="CustomerIntrests.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data Layer\InterestDB.cs" />
+    <Compile Include="Data Layer\UserDB.cs" />
+    <Compile Include="Interest.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="InterestType.cs">
@@ -97,6 +106,31 @@
     </Compile>
     <Compile Include="Owner.cs">
       <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Presentation_Layer\Coupon4U.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Presentation_Layer\Coupon4U.Designer.cs">
+      <DependentUpon>Coupon4U.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Presentation_Layer\LoginControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Presentation_Layer\LoginControl.Designer.cs">
+      <DependentUpon>LoginControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Presentation_Layer\program.cs" />
+    <Compile Include="Presentation_Layer\searchCoupon.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Presentation_Layer\searchCoupon.Designer.cs">
+      <DependentUpon>searchCoupon.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Presentation_Layer\WelcomeControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Presentation_Layer\WelcomeControl.Designer.cs">
+      <DependentUpon>WelcomeControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -142,6 +176,20 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Model.edmx.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Presentation_Layer\Coupon4U.resx">
+      <DependentUpon>Coupon4U.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Presentation_Layer\LoginControl.resx">
+      <DependentUpon>LoginControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Presentation_Layer\searchCoupon.resx">
+      <DependentUpon>searchCoupon.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Presentation_Layer\WelcomeControl.resx">
+      <DependentUpon>WelcomeControl.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

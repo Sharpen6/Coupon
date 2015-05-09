@@ -50,6 +50,15 @@
       <End Role="Customer" EntitySet="Users" />
       <End Role="Customer1" EntitySet="Users" />
     </AssociationSet>
+    <EntitySet Name="Interests" EntityType="basicModel.Interest" />
+    <AssociationSet Name="CustomerInterest" Association="basicModel.CustomerInterest">
+      <End Role="Customer" EntitySet="Users" />
+      <End Role="Interest" EntitySet="Interests" />
+    </AssociationSet>
+    <AssociationSet Name="InterestCoupon" Association="basicModel.InterestCoupon">
+      <End Role="Interest" EntitySet="Interests" />
+      <End Role="Coupon" EntitySet="Coupons" />
+    </AssociationSet>
   </EntityContainer>
   <EntityType Name="User">
     <Key>
@@ -217,5 +226,20 @@
   <Association Name="CustomerCustomer">
     <End Type="basicModel.Customer" Role="Customer" Multiplicity="*" />
     <End Type="basicModel.Customer" Role="Customer1" Multiplicity="*" />
+  </Association>
+  <EntityType Name="Interest">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Description" Type="String" Nullable="false" />
+  </EntityType>
+  <Association Name="CustomerInterest">
+    <End Type="basicModel.Customer" Role="Customer" Multiplicity="*" />
+    <End Type="basicModel.Interest" Role="Interest" Multiplicity="*" />
+  </Association>
+  <Association Name="InterestCoupon">
+    <End Type="basicModel.Interest" Role="Interest" Multiplicity="*" />
+    <End Type="basicModel.Coupon" Role="Coupon" Multiplicity="*" />
   </Association>
 </Schema>

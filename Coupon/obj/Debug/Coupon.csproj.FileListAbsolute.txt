@@ -38,3 +38,8 @@ C:\Users\User\Documents\GitHub\Coupon\Coupon\bin\Debug\EntityFramework.SqlServer
 C:\Users\User\Documents\GitHub\Coupon\Coupon\bin\Debug\EntityFramework.xml
 C:\Users\User\Documents\GitHub\Coupon\Coupon\bin\Debug\EntityFramework.SqlServer.xml
 C:\Users\User\Documents\GitHub\Coupon\Coupon\obj\Debug\Coupon.csprojResolveAssemblyReference.cache
+C:\Users\DorinS\Documents\GitHub\Coupon\Coupon\obj\Debug\Coupon.Presentation_Layer.Coupon4U.resources
+C:\Users\DorinS\Documents\GitHub\Coupon\Coupon\obj\Debug\Coupon.Presentation_Layer.LoginControl.resources
+C:\Users\DorinS\Documents\GitHub\Coupon\Coupon\obj\Debug\Coupon.Presentation_Layer.searchCoupon.resources
+C:\Users\DorinS\Documents\GitHub\Coupon\Coupon\obj\Debug\Coupon.Presentation_Layer.WelcomeControl.resources
+C:\Users\DorinS\Documents\GitHub\Coupon\Coupon\obj\Debug\Coupon.csproj.GenerateResource.Cache

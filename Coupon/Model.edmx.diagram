@@ -30,6 +30,9 @@
         <AssociationConnector Association="basicModel.CustomerRecommendation" />
         <EntityTypeShape EntityType="basicModel.CouponInterests" Width="1.5" PointX="9.75" PointY="0.5" />
         <AssociationConnector Association="basicModel.CustomerCustomer" />
+        <EntityTypeShape EntityType="basicModel.Interest" Width="1.5" PointX="13.375" PointY="2.375" />
+        <AssociationConnector Association="basicModel.CustomerInterest" />
+        <AssociationConnector Association="basicModel.InterestCoupon" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
