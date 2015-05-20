@@ -10,7 +10,7 @@ namespace Coupon
 {
     class Program
     {
-       /* static void Main(string[] args)
+        static void Main(string[] args)
         {
             using (basicEntities be = new basicEntities())
             {
@@ -24,8 +24,8 @@ namespace Coupon
                 u.Email = "adam@gmail.com";
 
                 be.Users.Add(u);
-                be.SaveChanges();*/
+                be.SaveChanges();
             }
         }
-    
-
+    }
+}
